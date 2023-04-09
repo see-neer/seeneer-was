@@ -15,4 +15,9 @@ public class Member {
 
     @Column(columnDefinition = "VARCHAR(50)")
     private String name;
+
+    public Member(MemberId memberId, String name) {
+        this.memberId = memberId;
+        this.name = name;
+    }
 }

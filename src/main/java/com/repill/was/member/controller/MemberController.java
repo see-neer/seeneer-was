@@ -1,8 +1,13 @@
 package com.repill.was.member.controller;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.repill.was.global.config.SwaggerConfig;
 import com.repill.was.global.shard.response.CommonResponse;
 import com.repill.was.member.controller.dto.MemberLoginRequest;
+import com.repill.was.member.entity.Member;
+import com.repill.was.member.entity.MemberId;
+import com.repill.was.member.entity.MemberRepository;
+import com.repill.was.member.entity.QMember;
 import com.repill.was.member.facade.MemberFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.repill.was.member.entity.QMember.member;
+
 @Api(tags = {SwaggerConfig.SwaggerTags.MEMBER})
 @RestController
 @MemberV1Controller
@@ -20,6 +27,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberFacade memberFacade;
+    private final MemberRepository memberRepository;
+    private final JPAQueryFactory queryFactory;
+
+    @ApiOperation("로그인22")
+    @PostMapping("/login22")
+    public CommonResponse<Object> login2() {
+        memberRepository.save(new Member(new MemberId(1L), "33"));
+        return null;
+    }
+
+    @ApiOperation("로그인223")
+    @PostMapping("/login223")
+    public CommonResponse<Object> login23() {
+        String s = queryFactory
+                .select(member.name)
+                .from(member)
+                .fetchOne();
+        return CommonResponse.success(s);
+    }
 
     @ApiOperation("로그인")
     @PostMapping("/login")
