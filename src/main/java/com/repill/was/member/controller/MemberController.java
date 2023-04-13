@@ -7,8 +7,8 @@ import com.repill.was.member.controller.dto.MemberLoginRequest;
 import com.repill.was.member.entity.Member;
 import com.repill.was.member.entity.MemberId;
 import com.repill.was.member.entity.MemberRepository;
-import com.repill.was.member.entity.QMember;
 import com.repill.was.member.facade.MemberFacade;
+import com.repill.was.member.webclient.TestWebClient;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +29,8 @@ public class MemberController {
     private final MemberFacade memberFacade;
     private final MemberRepository memberRepository;
     private final JPAQueryFactory queryFactory;
+
+    private final TestWebClient testWebClient;
 
     @ApiOperation("로그인22")
     @PostMapping("/login22")
@@ -59,5 +61,11 @@ public class MemberController {
     @PreAuthorize("hasRole('ADMIN')")
     public CommonResponse<Object> test(@AuthenticationPrincipal String adminAccountId) {
         return CommonResponse.success(adminAccountId);
+    }
+
+    @ApiOperation("테스트")
+    @PostMapping("/test/webclient")
+    public void testWebClient() {
+        testWebClient.test();;
     }
 }
