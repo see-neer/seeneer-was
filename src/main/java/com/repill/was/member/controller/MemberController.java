@@ -70,8 +70,7 @@ public class MemberController {
 
     @ApiOperation("테스트")
     @PostMapping("/test/webclient")
-    public String testWebClient()
-            throws UnsupportedEncodingException, URISyntaxException, ParseException, JsonProcessingException {
+    public TestDto testWebClient() throws URISyntaxException {
         return testWebClient.test();
     }
 }

@@ -8,6 +8,5 @@ import org.apache.tomcat.util.json.ParseException;
 
 public interface TestWebClient {
 
-    String test()
-            throws UnsupportedEncodingException, URISyntaxException, ParseException, JsonProcessingException;
+    TestDto test() throws URISyntaxException;
 }
