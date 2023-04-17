@@ -106,6 +106,6 @@ public class WebClientFactory {
     }
 
     public enum ServiceDestination {
-        AGGREGATION
+        PUBLIC_DATA
     }
 }
