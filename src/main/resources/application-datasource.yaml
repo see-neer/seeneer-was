@@ -4,9 +4,9 @@ spring:
             on-profile: local
 
     master-datasource:
-        jdbcUrl: jdbc:mysql://127.0.0.1:3306/repill?characterEncoding=utf8&autoReconnect=true&useSSL=false
+        jdbcUrl: jdbc:mysql://re-pill-dev-2.cpevubgjdt0p.ap-northeast-2.rds.amazonaws.com:3306/repill?characterEncoding=utf8&autoReconnect=true&useSSL=false
         username: root
-        password:
+        password: password
         maximumPoolSize: 5
         minimumIdle: 5
     jpa:
