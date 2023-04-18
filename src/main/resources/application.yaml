@@ -1,7 +1,25 @@
 spring:
   profiles:
     active: local
-    include: jwt, datasource, webclient
+    include: jwt, datasource, webclient, test
+  application:
+    name: was
+  main:
+    banner-mode: off
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    cache: false
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+server:
+  port: 9090
+
+---
+spring:
+  profiles:
+    active: dev
+    include: jwt, datasource, webclient, test
   application:
     name: was
   main:
