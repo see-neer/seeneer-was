@@ -40,7 +40,7 @@ public class MemberController {
     @ApiOperation("로그인22")
     @PostMapping("/login22")
     public CommonResponse<Object> login2() {
-        memberRepository.save(new Member(new MemberId(1L), "33"));
+        memberRepository.save(new Member(memberRepository.nextId(), "33"));
         return null;
     }
 
@@ -72,5 +72,11 @@ public class MemberController {
     @PostMapping("/test/webclient")
     public TestDto testWebClient() throws URISyntaxException {
         return testWebClient.test();
+    }
+
+    @ApiOperation("test")
+    @PostMapping("/slack-test")
+    public CommonResponse<Object> test() throws Exception {
+        throw new Exception("22");
     }
 }

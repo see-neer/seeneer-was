@@ -37,6 +37,7 @@ dependencies {
 	implementation 'org.springframework.integration:spring-integration-webflux'
 	implementation 'net.logstash.logback:logstash-logback-encoder:7.3'
 	implementation "io.springfox:springfox-boot-starter:3.0.0"
+	implementation("io.opentelemetry.instrumentation:opentelemetry-logback-mdc-1.0:1.24.0-alpha")
 	implementation "io.springfox:springfox-swagger-ui:3.0.0"
 	implementation 'com.google.code.gson:gson:2.8.9'
 	//querydsl 추가

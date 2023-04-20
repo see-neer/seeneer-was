@@ -3,8 +3,12 @@ package com.repill.was.global.exception;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.repill.was.global.shard.response.CommonResponse;
 import com.repill.was.global.shard.response.ErrorCode;
+import com.repill.was.global.shard.slack.SlackApiClientImpl;
+import io.opentelemetry.api.trace.Span;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
@@ -19,12 +23,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.time.LocalDateTime;
+
 import static com.repill.was.global.shard.response.CommonResponse.*;
 import static com.repill.was.global.shard.response.CommonResponse.Error;
 
 @Slf4j
 @ControllerAdvice
+@RequiredArgsConstructor
 public class GlobalExceptionHandler {
+
+    private final SlackApiClientImpl slackApiClient;
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
 
     // 예상하지 못한 error는 공통 Error Message
     @ResponseBody
@@ -32,7 +43,32 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResponse<Object> handleException(Exception exception) {
         log.error(exception.getMessage(), exception);
+        sendErrorMessageToSlack(exception, activeProfile);
         return fail(exception.getMessage(), ErrorCode.COMMON_SYSTEM_ERROR.name(), ErrorType.ERROR);
+    }
+
+    private void sendErrorMessageToSlack(Exception e, String activeProfile) {
+        String traceId = Span.current().getSpanContext().getTraceId();
+        String time = LocalDateTime.now().toString();
+        String message = "";
+        message += "*환경 : [ " + activeProfile + " ] * \n";
+        message += "*TraceId : " + traceId + "* \n";
+        message += "*Time : " + time + "* \n";
+        message += "*Message : " + e.getMessage() + "* \n";
+        message += getStackTrace(e);
+        slackApiClient.sendErrorMessage("{\"text\": \"" + message + "\"}");
+    }
+    private static String getStackTrace(Exception e) {
+        String trace = "";
+        String trace2 = "";
+        trace2 += "```" + "\n";
+        for (StackTraceElement log : e.getStackTrace()) {
+            trace += log + "\n";
+        }
+        String substring = trace.substring(0, 1500);
+        trace2 += substring;
+        trace2 += "```";
+        return trace2;
     }
 
     // 비즈니스 로직상 예상 할 수 있는 에러는 커스터마이징 Error Message

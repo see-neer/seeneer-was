@@ -32,3 +32,8 @@ spring:
     exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 server:
   port: 9090
+
+logging:
+  config: classpath:logs/logback-local.xml
+  level:
+    sql: debug
