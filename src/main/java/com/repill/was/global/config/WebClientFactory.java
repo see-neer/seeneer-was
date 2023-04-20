@@ -106,10 +106,6 @@ public class WebClientFactory {
     }
 
     public enum ServiceDestination {
-<<<<<<< Updated upstream
-        PUBLIC_DATA
-=======
-        AGGREGATION, SLACK
->>>>>>> Stashed changes
+        PUBLIC_DATA, SLACK
     }
 }
