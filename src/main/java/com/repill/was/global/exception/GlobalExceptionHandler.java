@@ -37,20 +37,27 @@ public class GlobalExceptionHandler {
     @Value("${spring.profiles.active}")
     private String activeProfile;
 
+    public enum ExceptionErrorType {
+        HARD, SOFT
+    }
+
     // 예상하지 못한 error는 공통 Error Message
     @ResponseBody
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResponse<Object> handleException(Exception exception) {
         log.error(exception.getMessage(), exception);
-        sendErrorMessageToSlack(exception, activeProfile);
+        sendErrorMessageToSlack(exception, activeProfile, ExceptionErrorType.HARD);
         return fail(exception.getMessage(), ErrorCode.COMMON_SYSTEM_ERROR.name(), ErrorType.ERROR);
     }
 
-    private void sendErrorMessageToSlack(Exception e, String activeProfile) {
+    private void sendErrorMessageToSlack(Exception e, String activeProfile, ExceptionErrorType type) {
         String traceId = Span.current().getSpanContext().getTraceId();
         String time = LocalDateTime.now().toString();
         String message = "";
+        if(activeProfile.equals("prod") && ExceptionErrorType.HARD.equals(type)) {
+            message = "<!subteam^S032ZFBSD7F>\n";
+        }
         message += "*환경 : [ " + activeProfile + " ] * \n";
         message += "*TraceId : " + traceId + "* \n";
         message += "*Time : " + time + "* \n";
@@ -77,6 +84,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResponse<Object> BusinessException(Exception exception) {
         log.error(exception.getMessage(), exception);
+        sendErrorMessageToSlack(exception, activeProfile, ExceptionErrorType.SOFT);
         return fail(exception.getMessage(), ErrorCode.COMMON_ILLEGAL_STATUS.name(), ErrorType.WARNING);
     }
 

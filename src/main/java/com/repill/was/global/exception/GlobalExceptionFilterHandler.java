@@ -1,13 +1,16 @@
 package com.repill.was.global.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.repill.was.global.shard.enums.Headers;
 import com.repill.was.global.shard.response.CommonResponse;
 import com.repill.was.global.shard.response.CommonResponse.ErrorType;
 import com.repill.was.global.shard.response.ErrorCode;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
@@ -22,12 +25,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
 @Slf4j
 public class GlobalExceptionFilterHandler extends OncePerRequestFilter {
 
+    private static final String JWT_SCHEME_FORMAT = "Bearer ";
+
+    private String secretKey;
+
+    public GlobalExceptionFilterHandler(@Value("${spring.jwt.secret}") String secretKey) {
+        this.secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+    }
     private ObjectMapper mapper = new ObjectMapper();
 
     @Override
@@ -63,18 +74,30 @@ public class GlobalExceptionFilterHandler extends OncePerRequestFilter {
             response.copyBodyToResponse();
         }
     }
-    private static void logRequest(RequestWrapper request) throws IOException {
+    private void logRequest(RequestWrapper request) throws IOException {
+        String userId = null;
+        String token = resolveToken(request);
+        if(token != null) {
+            token = token.replace(JWT_SCHEME_FORMAT, "");
+            userId = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody()
+                    .getSubject();
+        }
         String queryString = request.getQueryString();
-        log.info("Request : {} uri=[{}] content-type=[{}]",
+        log.info("Request : {} uri=[{}] content-type=[{}] userId= {}",
                 request.getMethod(),
                 queryString == null ? request.getRequestURI() : request.getRequestURI() + queryString,
-                request.getContentType()
+                request.getContentType(),
+                userId
         );
 
         logPayload("Request", request.getContentType(), request.getInputStream());
     }
 
-    private static void logResponse(ContentCachingResponseWrapper response) throws IOException {
+    private static String resolveToken(HttpServletRequest req) {
+        return req.getHeader(Headers.AUTHORIZATION.getKey());
+    }
+
+    private void logResponse(ContentCachingResponseWrapper response) throws IOException {
         logPayload("Response", response.getContentType(), response.getContentInputStream());
     }
 
