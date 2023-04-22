@@ -1,11 +1,34 @@
 spring:
     config:
         activate:
-            on-profile: local, dev
+            on-profile: local
 
     master-datasource:
 #        jdbcUrl: jdbc:mysql://re-pill-dev-2.cpevubgjdt0p.ap-northeast-2.rds.amazonaws.com:3306/repill?characterEncoding=utf8&autoReconnect=true&useSSL=false
         jdbcUrl: jdbc:mysql://localhost:3306/repill?characterEncoding=utf8&autoReconnect=true&useSSL=false
+        username: root
+        password: password
+        maximumPoolSize: 5
+        minimumIdle: 5
+    jpa:
+        database: mysql
+        open-in-view: false
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                format_sql: true
+                use_sql_comments: true
+        show-sql: true
+
+---
+spring:
+    config:
+        activate:
+            on-profile: dev
+
+    master-datasource:
+        jdbcUrl: jdbc:mysql://re-pill-dev-2.cpevubgjdt0p.ap-northeast-2.rds.amazonaws.com:3306/repill?characterEncoding=utf8&autoReconnect=true&useSSL=false
         username: root
         password: password
         maximumPoolSize: 5
