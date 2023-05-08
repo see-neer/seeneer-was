@@ -106,6 +106,6 @@ public class WebClientFactory {
     }
 
     public enum ServiceDestination {
-        PUBLIC_DATA, SLACK
+        PUBLIC_DATA, SLACK, KAKAO
     }
 }

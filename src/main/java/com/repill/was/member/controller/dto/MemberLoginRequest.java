@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class MemberLoginRequest {
     private String userId;
     private String userPassword;
+    private String accessToken;
 }

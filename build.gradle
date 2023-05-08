@@ -39,7 +39,9 @@ dependencies {
 	implementation "io.springfox:springfox-boot-starter:3.0.0"
 	implementation("io.opentelemetry.instrumentation:opentelemetry-logback-mdc-1.0:1.24.0-alpha")
 	implementation "io.springfox:springfox-swagger-ui:3.0.0"
+	implementation group: 'org.json', name: 'json', version: '20200518'
 	implementation 'com.google.code.gson:gson:2.8.9'
+	dependencies { implementation 'com.google.code.gson:gson:2.8.7' }
 	//querydsl 추가
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"

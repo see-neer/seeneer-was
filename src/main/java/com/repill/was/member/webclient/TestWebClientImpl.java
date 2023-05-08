@@ -10,6 +10,9 @@ import com.repill.was.global.shard.response.CommonResponse.ErrorType;
 import com.repill.was.member.webclient.dto.TestDto;
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import org.json.JSONObject;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -57,5 +60,18 @@ public class TestWebClientImpl implements TestWebClient {
                 .onStatus(HttpStatus::is5xxServerError, this::mapToSeverError)
                 .bodyToMono(TestDto.class)
                 .block();
+    }
+
+    @Override
+    public String login(String code) {
+        String block = webClientFactory
+                .get(ServiceDestination.KAKAO)
+                .method(HttpMethod.GET)
+                .header()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/v2/user/me"))
+                .retrieve().bodyToMono(String.class).block();
+
+        return block;
     }
 }
