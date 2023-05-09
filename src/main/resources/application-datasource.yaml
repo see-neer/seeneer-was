@@ -8,6 +8,7 @@ spring:
         jdbcUrl: jdbc:mysql://localhost:3306/repill?characterEncoding=utf8&autoReconnect=true&useSSL=false
         username: root
         password: password
+<<<<<<< Updated upstream
         maximumPoolSize: 5
         minimumIdle: 5
     jpa:
@@ -31,6 +32,8 @@ spring:
         jdbcUrl: jdbc:mysql://re-pill-dev-2.cpevubgjdt0p.ap-northeast-2.rds.amazonaws.com:3306/repill?characterEncoding=utf8&autoReconnect=true&useSSL=false
         username: root
         password: password
+=======
+>>>>>>> Stashed changes
         maximumPoolSize: 5
         minimumIdle: 5
     jpa:

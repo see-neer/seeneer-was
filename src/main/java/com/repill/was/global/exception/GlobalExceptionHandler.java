@@ -37,16 +37,20 @@ public class GlobalExceptionHandler {
     @Value("${spring.profiles.active}")
     private String activeProfile;
 
+<<<<<<< Updated upstream
     public enum ExceptionErrorType {
         HARD, SOFT
     }
 
+=======
+>>>>>>> Stashed changes
     // 예상하지 못한 error는 공통 Error Message
     @ResponseBody
     @ExceptionHandler({Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public CommonResponse<Object> handleException(Exception exception) {
         log.error(exception.getMessage(), exception);
+<<<<<<< Updated upstream
         sendErrorMessageToSlack(exception, activeProfile, ExceptionErrorType.HARD);
         return fail(exception.getMessage(), ErrorCode.COMMON_SYSTEM_ERROR.name(), ErrorType.ERROR);
     }
@@ -58,6 +62,16 @@ public class GlobalExceptionHandler {
         if(activeProfile.equals("prod") && ExceptionErrorType.HARD.equals(type)) {
             message = "<!subteam^S032ZFBSD7F>\n";
         }
+=======
+        sendErrorMessageToSlack(exception, activeProfile);
+        return fail(exception.getMessage(), ErrorCode.COMMON_SYSTEM_ERROR.name(), ErrorType.ERROR);
+    }
+
+    private void sendErrorMessageToSlack(Exception e, String activeProfile) {
+        String traceId = Span.current().getSpanContext().getTraceId();
+        String time = LocalDateTime.now().toString();
+        String message = "";
+>>>>>>> Stashed changes
         message += "*환경 : [ " + activeProfile + " ] * \n";
         message += "*TraceId : " + traceId + "* \n";
         message += "*Time : " + time + "* \n";

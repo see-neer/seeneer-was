@@ -7,10 +7,15 @@ import com.repill.was.global.shard.response.CommonResponse.ErrorType;
 import com.repill.was.global.shard.response.ErrorCode;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
+<<<<<<< Updated upstream
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.logging.MDC;
 import org.springframework.beans.factory.annotation.Value;
+=======
+import lombok.extern.slf4j.Slf4j;
+import org.jboss.logging.MDC;
+>>>>>>> Stashed changes
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
@@ -25,7 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+<<<<<<< Updated upstream
 import java.util.Base64;
+=======
+>>>>>>> Stashed changes
 import java.util.List;
 import java.util.UUID;
 
@@ -74,6 +82,7 @@ public class GlobalExceptionFilterHandler extends OncePerRequestFilter {
             response.copyBodyToResponse();
         }
     }
+<<<<<<< Updated upstream
     private void logRequest(RequestWrapper request) throws IOException {
         String userId = null;
         String token = resolveToken(request);
@@ -88,16 +97,28 @@ public class GlobalExceptionFilterHandler extends OncePerRequestFilter {
                 queryString == null ? request.getRequestURI() : request.getRequestURI() + queryString,
                 request.getContentType(),
                 userId
+=======
+    private static void logRequest(RequestWrapper request) throws IOException {
+        String queryString = request.getQueryString();
+        log.info("Request : {} uri=[{}] content-type=[{}]",
+                request.getMethod(),
+                queryString == null ? request.getRequestURI() : request.getRequestURI() + queryString,
+                request.getContentType()
+>>>>>>> Stashed changes
         );
 
         logPayload("Request", request.getContentType(), request.getInputStream());
     }
 
+<<<<<<< Updated upstream
     private static String resolveToken(HttpServletRequest req) {
         return req.getHeader(Headers.AUTHORIZATION.getKey());
     }
 
     private void logResponse(ContentCachingResponseWrapper response) throws IOException {
+=======
+    private static void logResponse(ContentCachingResponseWrapper response) throws IOException {
+>>>>>>> Stashed changes
         logPayload("Response", response.getContentType(), response.getContentInputStream());
     }
 

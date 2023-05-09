@@ -38,6 +38,7 @@ public class MemberController {
     private final MemberFacade memberFacade;
     private final TestWebClient testWebClient;
 
+<<<<<<< Updated upstream
     @ApiOperation("카카오 로그인 화면")
     @GetMapping("/login/kakao-pahe")
     public String loginKakaoPage() {
@@ -48,6 +49,13 @@ public class MemberController {
         url.append("&redirect_uri=http://localhost:8080/member/api/v1/kakao/callback");
         url.append("&response_type=code");
         return "redirect:" + url;
+=======
+    @ApiOperation("로그인22")
+    @PostMapping("/login22")
+    public CommonResponse<Object> login2() {
+        memberRepository.save(new Member(memberRepository.nextId(), "33"));
+        return null;
+>>>>>>> Stashed changes
     }
 
 //    @ApiOperation("카카오 로그인 실행")
@@ -66,10 +74,38 @@ public class MemberController {
 //        return CommonResponse.success(token);
 //    }
 
+<<<<<<< Updated upstream
+//    @ApiOperation("로그인")
+//    @PostMapping("/login")
+//    public CommonResponse<Object> login(@RequestBody MemberLoginRequest memberLoginRequest) {
+//        String login = testWebClient.login(memberLoginRequest.getAccessToken());
+//        return CommonResponse.success(token);
+//    }
+=======
     @ApiOperation("로그인")
     @PostMapping("/login")
     public CommonResponse<Object> login(@RequestBody MemberLoginRequest memberLoginRequest) {
-        String login = testWebClient.login(memberLoginRequest.getAccessToken());
+        String token = memberFacade.login(memberLoginRequest);
         return CommonResponse.success(token);
     }
+
+    @ApiOperation("테스트")
+    @PostMapping("/test")
+    @PreAuthorize("hasRole('ADMIN')")
+    public CommonResponse<Object> test(@AuthenticationPrincipal String adminAccountId) {
+        return CommonResponse.success(adminAccountId);
+    }
+
+    @ApiOperation("테스트")
+    @PostMapping("/test/webclient")
+    public void testWebClient() {
+        testWebClient.test();;
+    }
+
+    @ApiOperation("test")
+    @PostMapping("/slack-test")
+    public CommonResponse<Object> test() throws Exception {
+        throw new Exception("22");
+    }
+>>>>>>> Stashed changes
 }
