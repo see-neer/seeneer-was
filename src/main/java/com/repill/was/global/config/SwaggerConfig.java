@@ -116,6 +116,6 @@ public class SwaggerConfig {
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class SwaggerTags {
-        public static final String MEMBER = "MEMBER";
+        public static final String MEMBER = "member";
     }
 }

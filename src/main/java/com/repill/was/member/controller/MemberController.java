@@ -12,11 +12,11 @@ import com.repill.was.member.facade.MemberFacade;
 import com.repill.was.member.service.MemberService;
 import com.repill.was.member.webclient.TestWebClient;
 import com.repill.was.member.webclient.dto.TestDto;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.json.ParseException;
@@ -30,7 +30,6 @@ import javax.servlet.http.HttpSession;
 import static com.repill.was.member.entity.QMember.member;
 
 @Api(tags = {SwaggerConfig.SwaggerTags.MEMBER})
-@RestController
 @MemberV1Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -70,6 +69,6 @@ public class MemberController {
     @PostMapping("/login")
     public CommonResponse<Object> login(@RequestBody MemberLoginRequest memberLoginRequest) {
         String login = testWebClient.login(memberLoginRequest.getAccessToken());
-        return CommonResponse.success(token);
+        return CommonResponse.success(login);
     }
 }

@@ -64,14 +64,6 @@ public class TestWebClientImpl implements TestWebClient {
 
     @Override
     public String login(String code) {
-        String block = webClientFactory
-                .get(ServiceDestination.KAKAO)
-                .method(HttpMethod.GET)
-                .header()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/v2/user/me"))
-                .retrieve().bodyToMono(String.class).block();
-
-        return block;
+        return null;
     }
 }
