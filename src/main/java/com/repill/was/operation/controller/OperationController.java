@@ -1,16 +1,10 @@
-package com.repill.was.operation;
+package com.repill.was.operation.controller;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.repill.was.global.config.SwaggerConfig;
-import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.member.controller.MemberV1Controller;
-import com.repill.was.member.entity.Address;
-import com.repill.was.member.entity.AddressForMassMarketingDto;
-import com.repill.was.member.entity.AddressRepository;
-import io.swagger.annotations.Api;
+import com.repill.was.operation.entity.Address;
+import com.repill.was.operation.entity.AddressForMassMarketingDto;
+import com.repill.was.operation.entity.AddressRepository;
 import io.swagger.annotations.ApiOperation;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -11,13 +11,13 @@ import javax.persistence.*;
 public class Member {
 
     @EmbeddedId
-    MemberId memberId;
+    MemberId id;
 
     @Column(columnDefinition = "VARCHAR(50)")
     private String name;
 
     public Member(MemberId memberId, String name) {
-        this.memberId = memberId;
+        this.id = memberId;
         this.name = name;
     }
 }

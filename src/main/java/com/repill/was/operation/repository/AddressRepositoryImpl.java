@@ -1,9 +1,10 @@
-package com.repill.was.member.repository;
+package com.repill.was.operation.repository;
 
 import com.repill.was.global.sequencegenerator.SequenceGenerator;
-import com.repill.was.member.entity.*;
-import com.repill.was.member.repository.jpa.AddressJpaRepository;
-import com.repill.was.member.repository.jpa.MemberJpaRepository;
+import com.repill.was.operation.entity.Address;
+import com.repill.was.operation.entity.AddressId;
+import com.repill.was.operation.entity.AddressRepository;
+import com.repill.was.operation.repository.jpa.AddressJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

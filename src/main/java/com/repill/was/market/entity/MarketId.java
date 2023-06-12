@@ -1,4 +1,4 @@
-package com.repill.was.member.entity;
+package com.repill.was.market.entity;
 
 import com.repill.was.global.shard.ValueObject;
 import lombok.EqualsAndHashCode;
@@ -14,28 +14,28 @@ import java.util.stream.Collectors;
 @Embeddable
 @NoArgsConstructor
 @EqualsAndHashCode
-public class AddressId implements ValueObject<AddressId> {
+public class MarketId implements ValueObject<MarketId> {
 
     private Long id;
 
-    public AddressId(Long id) {
+    public MarketId(Long id) {
         this.id = id;
     }
 
-    static public List<AddressId> from(List<Long> ids){
-        return ids.stream().map(AddressId::new)
+    static public List<MarketId> from(List<Long> ids){
+        return ids.stream().map(MarketId::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public boolean sameValueAs(AddressId o) {
+    public boolean sameValueAs(MarketId o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AddressId oId = o;
+        MarketId oId = o;
         return Objects.equals(id, oId.id);
     }
 

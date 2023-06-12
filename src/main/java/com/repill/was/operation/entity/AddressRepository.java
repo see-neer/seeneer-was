@@ -1,4 +1,4 @@
-package com.repill.was.member.entity;
+package com.repill.was.operation.entity;
 
 public interface AddressRepository {
     AddressId nextId();

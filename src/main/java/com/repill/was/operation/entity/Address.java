@@ -1,4 +1,4 @@
-package com.repill.was.member.entity;
+package com.repill.was.operation.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import java.time.ZonedDateTime;
 public class Address {
 
     @EmbeddedId
-    AddressId addressId;
+    AddressId id;
 
     @Column(columnDefinition = "VARCHAR(50)")
     private String addressCodeA;

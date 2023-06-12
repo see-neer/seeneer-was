@@ -1,4 +1,4 @@
-package com.repill.was.member.entity;
+package com.repill.was.operation.entity;
 
 import com.repill.was.global.exception.BadRequestException;
 import lombok.Getter;
