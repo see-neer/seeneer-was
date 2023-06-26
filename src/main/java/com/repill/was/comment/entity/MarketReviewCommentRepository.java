@@ -1,4 +1,4 @@
-package com.repill.was.market.entity;
+package com.repill.was.comment.entity;
 
 public interface MarketReviewCommentRepository {
     MarketReviewCommentId nextId();

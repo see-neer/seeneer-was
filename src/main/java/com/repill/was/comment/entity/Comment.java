@@ -1,29 +1,29 @@
-package com.repill.was.market.entity;
+package com.repill.was.comment.entity;
 
+import com.repill.was.market.entity.MarketReviewId;
 import com.repill.was.member.entity.MemberId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Getter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-public class MarketReviewComment {
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn
+public class Comment {
 
     public enum Emoji {
         HELPFUL, THANK, GOOD, AMAZING
     }
 
-    @EmbeddedId
-    MarketReviewCommentId id;
-
-    @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "marketReviewId", nullable = false))
-    MarketReviewId marketReviewId;
+    @Id @GeneratedValue
+    private Long id;
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "postMemberId", nullable = false))
@@ -32,6 +32,17 @@ public class MarketReviewComment {
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "commentMemberId", nullable = false))
     MemberId commentMemberId;
+
+    private int parentOrderId;
+
+    // 셀프조인
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parents_id")
+    private Comment parents;
+
+    @OneToMany(mappedBy = "parents", cascade = CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Comment> child = new ArrayList<>();
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String contents;

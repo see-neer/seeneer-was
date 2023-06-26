@@ -1,7 +1,6 @@
 package com.repill.was.member.entity;
 
 import com.repill.was.market.entity.MarketId;
-import com.repill.was.market.entity.MarketReviewCommentId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

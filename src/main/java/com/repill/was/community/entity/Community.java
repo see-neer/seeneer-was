@@ -1,5 +1,6 @@
-package com.repill.was.market.entity;
+package com.repill.was.community.entity;
 
+import com.repill.was.member.entity.MemberId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,14 +12,17 @@ import java.time.ZonedDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class MarketReviewCommentReply {
+public class Community {
 
     @EmbeddedId
-    MarketReviewCommentReplyId id;
+    CommunityId communityId;
 
     @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "marketReviewCommentId", nullable = false))
-    MarketReviewCommentId marketReviewCommentId;
+    @AttributeOverride(name = "id", column = @Column(name = "memberId", nullable = false))
+    MemberId memberId;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String imageSrc;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String contents;

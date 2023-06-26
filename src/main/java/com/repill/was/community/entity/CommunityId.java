@@ -1,4 +1,4 @@
-package com.repill.was.market.entity;
+package com.repill.was.community.entity;
 
 import com.repill.was.global.shard.ValueObject;
 import lombok.EqualsAndHashCode;
@@ -14,28 +14,28 @@ import java.util.stream.Collectors;
 @Embeddable
 @NoArgsConstructor
 @EqualsAndHashCode
-public class MarketReviewCommentReplyId implements ValueObject<MarketReviewCommentReplyId> {
+public class CommunityId implements ValueObject<CommunityId> {
 
     private Long id;
 
-    public MarketReviewCommentReplyId(Long id) {
+    public CommunityId(Long id) {
         this.id = id;
     }
 
-    static public List<MarketReviewCommentReplyId> from(List<Long> ids){
-        return ids.stream().map(MarketReviewCommentReplyId::new)
+    static public List<CommunityId> from(List<Long> ids){
+        return ids.stream().map(CommunityId::new)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public boolean sameValueAs(MarketReviewCommentReplyId o) {
+    public boolean sameValueAs(CommunityId o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        MarketReviewCommentReplyId oId = o;
+        CommunityId oId = o;
         return Objects.equals(id, oId.id);
     }
 
