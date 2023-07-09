@@ -13,6 +13,12 @@ public class Member {
     @EmbeddedId
     MemberId id;
 
+    String address;
+
+    String favoriteHobby;
+
+    String favoriteSite;
+
     @Column(columnDefinition = "VARCHAR(50)")
     private String name;
 

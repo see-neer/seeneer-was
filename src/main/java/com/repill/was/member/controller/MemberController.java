@@ -50,7 +50,7 @@ public class MemberController {
     }
 
 //    @ApiOperation("카카오 로그인 실행")
-//    @GetMapping(value = "/kakao/callback", produces = "application/json")
+//    @GetMapping(value = "/kakao/callback", produuces = "application/json")
 //    public String loginKakao(@RequestParam("code") String code,
 //                             HttpSession session) {
 //

@@ -1,5 +1,6 @@
 package com.repill.was.market.entity;
 
+import com.repill.was.member.entity.MarketEmojiListConverter;
 import com.repill.was.member.entity.MemberId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,12 +8,18 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class MarketReview {
+
+    public enum Emoji {
+        HELPFUL, THANK, GOOD, AMAZING
+    }
 
     @EmbeddedId
     MarketReviewId id;
@@ -33,6 +40,10 @@ public class MarketReview {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String contents;
+
+    @Column(columnDefinition = "VARCHAR(100)", nullable = false)
+    @Convert(converter = MarketEmojiListConverter.class)
+    private Set<Emoji> emojis = new HashSet<>();
 
     @Column(columnDefinition = "TINYINT DEFAULT 1", nullable = false)
     private int score;

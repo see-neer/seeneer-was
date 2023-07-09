@@ -23,4 +23,5 @@ import java.util.stream.Collectors;
 @MarketV1Controller
 @RequiredArgsConstructor
 public class MarketController {
+
 }

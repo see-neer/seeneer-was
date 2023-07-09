@@ -18,4 +18,6 @@ public class Market {
 
     @EmbeddedId
     MarketId id;
+
+
 }

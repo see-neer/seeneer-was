@@ -7,9 +7,9 @@ import net.logstash.logback.util.StringUtils;
 import javax.persistence.AttributeConverter;
 
 @Slf4j
-public class MemberFollowerListConverter implements AttributeConverter<MemberFollowerListData, String> {
+public class MarketEmojiListConverter implements AttributeConverter<MarketEmojiListData, String> {
     @Override
-    public String convertToDatabaseColumn(MemberFollowerListData attribute) {
+    public String convertToDatabaseColumn(MarketEmojiListData attribute) {
         if (attribute == null) {
             return "";
         }
@@ -17,12 +17,12 @@ public class MemberFollowerListConverter implements AttributeConverter<MemberFol
     }
 
     @Override
-    public MemberFollowerListData convertToEntityAttribute(String dbData) {
+    public MarketEmojiListData convertToEntityAttribute(String dbData) {
         if (StringUtils.isEmpty(dbData)) {
             return null;
         }
         try {
-            return JsonUtils.fromJson(dbData, MemberFollowerListData.class);
+            return JsonUtils.fromJson(dbData, MarketEmojiListData.class);
         } catch (Exception e){
             log.error(e.getMessage(), e);
             return null;

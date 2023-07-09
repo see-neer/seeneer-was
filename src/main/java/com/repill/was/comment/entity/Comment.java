@@ -18,10 +18,6 @@ import java.util.List;
 @DiscriminatorColumn
 public class Comment {
 
-    public enum Emoji {
-        HELPFUL, THANK, GOOD, AMAZING
-    }
-
     @Id @GeneratedValue
     private Long id;
 
@@ -46,9 +42,6 @@ public class Comment {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String contents;
-
-    @Column(columnDefinition = "VARCHAR(85)", nullable = false)
-    private Emoji emoji;
 
     @Column(columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)", nullable = false)
     private ZonedDateTime createdAt;
