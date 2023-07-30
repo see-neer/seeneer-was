@@ -3,8 +3,11 @@ package com.repill.was.member.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.repill.was.global.config.SwaggerConfig;
+import com.repill.was.global.shard.enums.Category;
 import com.repill.was.global.shard.response.CommonResponse;
+import com.repill.was.member.controller.dto.MainResponse;
 import com.repill.was.member.controller.dto.MemberLoginRequest;
+import com.repill.was.member.entity.AccountId;
 import com.repill.was.member.entity.Member;
 import com.repill.was.member.entity.MemberId;
 import com.repill.was.member.entity.MemberRepository;
@@ -14,6 +17,10 @@ import com.repill.was.member.webclient.TestWebClient;
 import com.repill.was.member.webclient.dto.TestDto;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +43,17 @@ public class MemberController {
 
     private final MemberFacade memberFacade;
     private final TestWebClient testWebClient;
+
+    @ApiOperation("메인 화면 호출")
+    @GetMapping("/main")
+    public MainResponse login(@AuthenticationPrincipal AccountId accountId) {
+        List<String> categoryList = Arrays.stream(Category.values()).map(one -> one.name()).collect(Collectors.toList());
+        List<MainResponse.BannerInfo> bannerInfos = new ArrayList<>();
+        bannerInfos.add(MainResponse.BannerInfo.newMarketBanner("@2", "@2"));
+        bannerInfos.add(MainResponse.BannerInfo.newFestivalBanner("@2", "@2", "22", "@2"));
+        return MainResponse.from("안녕하세요. 온실입니다", categoryList, bannerInfos);
+    }
+
 
     @ApiOperation("카카오 로그인 화면")
     @GetMapping("/login/kakao-pahe")

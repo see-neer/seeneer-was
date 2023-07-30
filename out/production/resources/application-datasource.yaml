@@ -14,7 +14,7 @@ spring:
         database: mysql
         open-in-view: false
         hibernate:
-            ddl-auto: create
+            ddl-auto: update
         properties:
             hibernate:
                 format_sql: true
@@ -28,7 +28,7 @@ spring:
             on-profile: dev
 
     master-datasource:
-        jdbcUrl: jdbc:mysql://re-pill-dev-2.cpevubgjdt0p.ap-northeast-2.rds.amazonaws.com:3306/repill?characterEncoding=utf8&autoReconnect=true&useSSL=false
+        jdbcUrl: jdbc:mysql://re-pill-dev.cpevubgjdt0p.ap-northeast-2.rds.amazonaws.com:3306/repill?characterEncoding=utf8&autoReconnect=true&useSSL=false
         username: root
         password: password
         maximumPoolSize: 5
