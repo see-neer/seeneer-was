@@ -2,12 +2,22 @@
 spring:
   config:
     activate:
-      on-profile: local, test, dev
+      on-profile: local, dev
 
 webclient:
   serviceProperties:
     - service: PUBLIC_DATA
       base-url: http://apis.data.go.kr
+      read-timeout: 5000
+      write-timeout: 5000
+      connection-timeout: 5000
+      max-connections: 60
+      pending-acquire-max-count: 120
+      pending-acquire-timeout: 10000
+      max-idle-time: 60
+
+    - service: KAKAO
+      base-url: https://kauth.kakao.com
       read-timeout: 5000
       write-timeout: 5000
       connection-timeout: 5000
