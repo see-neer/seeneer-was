@@ -1,7 +1,7 @@
 package com.repill.was.market.entity;
 
-import com.repill.was.member.entity.MarketEmojiListConverter;
-import com.repill.was.member.entity.MemberId;
+import com.repill.was.member.entity.emoji.MarketEmojiListConverter;
+import com.repill.was.member.entity.member.MemberId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

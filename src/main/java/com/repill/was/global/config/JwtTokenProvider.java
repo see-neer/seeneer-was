@@ -1,8 +1,6 @@
 package com.repill.was.global.config;
 
-import com.repill.was.member.entity.Member;
-import com.repill.was.member.entity.MemberRepository;
-import com.repill.was.member.repository.jpa.MemberJpaRepository;
+import com.repill.was.member.entity.member.MemberRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

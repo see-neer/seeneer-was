@@ -1,7 +1,7 @@
-package com.repill.was.community.entity;
+package com.repill.was.member.entity.memberfavoritemarket;
 
+import com.repill.was.market.entity.MarketId;
 import com.repill.was.member.entity.member.MemberId;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,25 +11,22 @@ import java.time.ZonedDateTime;
 @Getter
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
-public class Community {
+@Table(indexes = {
+        @Index(name = "UK_MEMBER_ID_AND_MARKET_ID", columnList = "memberId, marketId", unique = true)
+})
+public class MemberFavoriteMarket {
 
     @EmbeddedId
-    CommunityId communityId;
+    MemberFavoriteMarketId id;
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "memberId", nullable = false))
     MemberId memberId;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String imageSrc;
-
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String contents;
+    @Embedded
+    @AttributeOverride(name = "id", column = @Column(name = "marketId", nullable = false))
+    MarketId marketId;
 
     @Column(columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)", nullable = false)
     private ZonedDateTime createdAt;
-
-    @Column(columnDefinition = "DATETIME(3)")
-    private ZonedDateTime updatedAt;
 }

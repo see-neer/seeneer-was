@@ -1,7 +1,6 @@
-package com.repill.was.community.entity;
+package com.repill.was.member.entity.recentlyviewditem;
 
 import com.repill.was.member.entity.member.MemberId;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,25 +10,25 @@ import java.time.ZonedDateTime;
 @Getter
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
-public class Community {
+public class RecentlyViewedItem {
+
+    public enum ItemType {
+        MARKET, FESTIVAL
+    }
 
     @EmbeddedId
-    CommunityId communityId;
+    private RecentlyViewedItemId id;
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "memberId", nullable = false))
     MemberId memberId;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String imageSrc;
+    @Column(columnDefinition = "VARCHAR(50)")
+    private ItemType itemType;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String contents;
+    @Column(columnDefinition = "BIGINT(20)", nullable = false)
+    private Long itemId;
 
     @Column(columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)", nullable = false)
     private ZonedDateTime createdAt;
-
-    @Column(columnDefinition = "DATETIME(3)")
-    private ZonedDateTime updatedAt;
 }

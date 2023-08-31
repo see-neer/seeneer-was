@@ -1,10 +1,6 @@
 package com.repill.was.comment.entity;
 
-import com.repill.was.market.entity.MarketReviewId;
-import com.repill.was.member.entity.MemberId;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.repill.was.member.entity.member.MemberId;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
