@@ -54,6 +54,17 @@ public class MemberController {
         return MainResponse.from(new MemberView(member.get()), categoryList);
     }
 
+    @ApiOperation("메인 화면 호출22222222")
+    @GetMapping("/main1231232")
+    public MainResponse asmdnsamdsa(@RequestParam Long accountId) {
+        List<CategoryView> categoryList = Arrays.stream(Category.values()).map(one -> new CategoryView(one.getDescription(), one.getSubDescription())).collect(Collectors.toList());
+        Optional<Member> member = memberQueries.findByAccountId(new AccountId(accountId));
+        if(member.isEmpty()) {
+            return MainResponse.from(null, categoryList);
+        }
+        return MainResponse.from(new MemberView(member.get()), categoryList);
+    }
+
     @ApiOperation("닉네임 중복 확인")
     @GetMapping("/check-duplicated-nickname")
     public Boolean checkDuplicateNickname(CheckDuplicateNickNameRequest checkDuplicateNickNameRequest) {
