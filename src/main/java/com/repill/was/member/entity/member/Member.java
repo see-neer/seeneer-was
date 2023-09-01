@@ -24,11 +24,27 @@ public class Member {
 
     String favoriteSite;
 
+    String imageSrc;
+
     @Column(columnDefinition = "VARCHAR(50)")
     private String name;
 
-    public Member(MemberId memberId, String name) {
-        this.id = memberId;
+
+    public Member(String imageSrc, String name) {
+        this.imageSrc = imageSrc;
         this.name = name;
+    }
+
+    public  Member(MemberId id, AccountId accountId, String address, String favoriteHobby, String favoriteSite, String name) {
+        this.id = id;
+        this.accountId = accountId;
+        this.address = address;
+        this.favoriteHobby = favoriteHobby;
+        this.favoriteSite = favoriteSite;
+        this.name = name;
+    }
+
+    public static Member notExistMember() {
+        return new Member(null, null);
     }
 }

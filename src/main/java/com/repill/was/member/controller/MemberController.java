@@ -7,6 +7,8 @@ import com.repill.was.global.shard.response.CommonResponse;
 import com.repill.was.member.controller.dto.request.CheckDuplicateNickNameRequest;
 import com.repill.was.member.controller.dto.response.MainResponse;
 import com.repill.was.member.controller.dto.request.MemberLoginRequest;
+import com.repill.was.member.controller.dto.response.MainResponse.CategoryView;
+import com.repill.was.member.controller.dto.view.MemberView;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.facade.MemberFacade;
@@ -15,6 +17,7 @@ import com.repill.was.member.webclient.TestWebClient;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import io.swagger.annotations.Api;
@@ -42,10 +45,13 @@ public class MemberController {
 //
     @ApiOperation("메인 화면 호출")
     @GetMapping("/main")
-    public MainResponse main(@AuthenticationPrincipal AccountId accountId) {
-        List<String> categoryList = Arrays.stream(Category.values()).map(one -> one.name()).collect(Collectors.toList());
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저 정보 입니다."));
-        return MainResponse.from(member.getName(), categoryList);
+    public MainResponse main(@RequestParam Long accountId) {
+        List<CategoryView> categoryList = Arrays.stream(Category.values()).map(one -> new CategoryView(one.getDescription(), one.getSubDescription())).collect(Collectors.toList());
+        Optional<Member> member = memberQueries.findByAccountId(new AccountId(accountId));
+        if(member.isEmpty()) {
+            return MainResponse.from(null, categoryList);
+        }
+        return MainResponse.from(new MemberView(member.get()), categoryList);
     }
 
     @ApiOperation("닉네임 중복 확인")

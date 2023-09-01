@@ -1,8 +1,10 @@
 package com.repill.was.global.shard.enums;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Getter
 public enum Category {
     MY_PAGE("내 정보", null, true),
     MARKET("전국 장날", null,true),
