@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Getter
@@ -30,5 +31,24 @@ public class RecentlyViewedItem {
     private Long itemId;
 
     @Column(columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)", nullable = false)
-    private ZonedDateTime createdAt;
+    private LocalDateTime createdAt;
+
+    public RecentlyViewedItem(RecentlyViewedItemId id, MemberId memberId, ItemType itemType, Long itemId, LocalDateTime createdAt) {
+        this.id = id;
+        this.memberId = memberId;
+        this.itemType = itemType;
+        this.itemId = itemId;
+        this.createdAt = createdAt;
+    }
+
+    public static RecentlyViewedItem newOne(RecentlyViewedItemId id, MemberId memberId, ItemType itemType, Long itemId) {
+        return new RecentlyViewedItem(
+                id,
+                memberId,
+                itemType,
+                itemId,
+                LocalDateTime.now()
+        );
+    }
+
 }

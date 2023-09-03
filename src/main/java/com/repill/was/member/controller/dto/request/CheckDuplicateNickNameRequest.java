@@ -6,5 +6,4 @@ import lombok.Getter;
 public class CheckDuplicateNickNameRequest {
 
     private String insertedNickname;
-    private Boolean isUsedSocialName;
 }

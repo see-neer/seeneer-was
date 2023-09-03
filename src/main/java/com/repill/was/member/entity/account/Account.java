@@ -23,7 +23,7 @@ public class Account implements Serializable {
     private AccountId id;
 
     @Embedded
-    @AttributeOverride(name = "id", column = @Column(name = "memberId", nullable = false))
+    @AttributeOverride(name = "id", column = @Column(name = "memberId"))
     private MemberId memberId;
 
     @Enumerated(EnumType.STRING)

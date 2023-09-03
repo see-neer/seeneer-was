@@ -18,11 +18,8 @@ public class MemberFacade {
         return "22";
     }
 
-    public Boolean checkDuplicateNickname(String insertedNickname, Boolean isUsedSocialName) {
-        if(!isUsedSocialName) {
-            return memberQueries.findByMemberNickName(insertedNickname).isPresent();
-        }
-        return false;
+    public Boolean checkDuplicateNickname(String insertedNickname) {
+        return memberQueries.findByMemberNickName(insertedNickname).isPresent();
     }
 
     public void getRecentlyViewList(MemberId memberId) {

@@ -12,12 +12,11 @@ import java.util.List;
 @AllArgsConstructor
 public class MainResponse {
 
-    MemberView nickName;
     List<CategoryView> categoryList;
 
 
-    public static MainResponse from(MemberView memberView, List<CategoryView> categoryView) {
-        return new MainResponse(memberView, categoryView);
+    public static MainResponse from(List<CategoryView> categoryView) {
+        return new MainResponse(categoryView);
     }
 
     @Getter

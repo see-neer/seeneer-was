@@ -8,13 +8,7 @@ import java.util.Optional;
 
 public interface RecentlyViewedItemRepository {
 
-    MemberId nextId();
+    RecentlyViewedItemId nextId();
 
-    Member save(Member member);
-
-    Optional<Member> findById(MemberId memberId);
-
-    Optional<Member> findByAccountId(AccountId accountId);
-
-    Optional<Member> findByMemberNickName(String nickName);
+    RecentlyViewedItem save(RecentlyViewedItem member);
 }

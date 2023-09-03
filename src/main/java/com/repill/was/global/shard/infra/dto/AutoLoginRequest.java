@@ -8,15 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class AutoLoginRequest {
-    @ApiModelProperty(required = true, notes = "OS 종류 (IOS, ANDROID)")
-    @NotNull
-    private String osType;
 
     @ApiModelProperty(notes = "기기 고유 id")
     private String deviceId;
-
-    public AutoLoginRequest(String osType, String deviceId) {
-        this.osType = osType;
-        this.deviceId = deviceId;
-    }
 }

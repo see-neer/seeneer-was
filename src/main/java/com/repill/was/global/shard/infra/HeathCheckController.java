@@ -14,10 +14,7 @@ import com.repill.was.member.entity.member.MemberRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -30,14 +27,8 @@ public class HeathCheckController {
     private final MemberRepository memberRepository;
     private final AccountRepository accountRepository;
 
-    @ApiOperation("배포 확인용")
-    @GetMapping("/health-check")
-    public String healCheck() {
-        return "ok";
-    }
-
     @ApiOperation("설정 확인 용 Health Check. X-APP-VERSION (예: 0.0.5), X-APP-OS: IOS / ANDROID")
-    @GetMapping("/health")
+    @PostMapping("/health")
     public HealthCheckResponse healthCheck(@RequestHeader(value="X-APP-VERSION", required = false) String appVersion,
                                            @RequestHeader(value="X-APP-OS", required = false) String appOS,
                                            @RequestBody AutoLoginRequest autoLoginRequest) {

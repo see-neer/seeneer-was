@@ -33,7 +33,6 @@ public class MemberController {
 
     private final MemberFacade memberFacade;
     private final MemberQueries memberQueries;
-    private final TestWebClient testWebClient;
 
     // todo 23.08.31 odo 재경님 같이 작업
 //    @ApiOperation("로그인")
@@ -45,30 +44,15 @@ public class MemberController {
 //
     @ApiOperation("메인 화면 호출")
     @GetMapping("/main")
-    public MainResponse main(@RequestParam Long accountId) {
+    public MainResponse main(@AuthenticationPrincipal AccountId accountId) {
         List<CategoryView> categoryList = Arrays.stream(Category.values()).map(one -> new CategoryView(one.getDescription(), one.getSubDescription())).collect(Collectors.toList());
-        Optional<Member> member = memberQueries.findByAccountId(new AccountId(accountId));
-        if(member.isEmpty()) {
-            return MainResponse.from(null, categoryList);
-        }
-        return MainResponse.from(new MemberView(member.get()), categoryList);
-    }
-
-    @ApiOperation("메인 화면 호출22222222")
-    @GetMapping("/main1231232")
-    public MainResponse asmdnsamdsa(@RequestParam Long accountId) {
-        List<CategoryView> categoryList = Arrays.stream(Category.values()).map(one -> new CategoryView(one.getDescription(), one.getSubDescription())).collect(Collectors.toList());
-        Optional<Member> member = memberQueries.findByAccountId(new AccountId(accountId));
-        if(member.isEmpty()) {
-            return MainResponse.from(null, categoryList);
-        }
-        return MainResponse.from(new MemberView(member.get()), categoryList);
+        return MainResponse.from(categoryList);
     }
 
     @ApiOperation("닉네임 중복 확인")
     @GetMapping("/check-duplicated-nickname")
     public Boolean checkDuplicateNickname(CheckDuplicateNickNameRequest checkDuplicateNickNameRequest) {
-        return memberFacade.checkDuplicateNickname(checkDuplicateNickNameRequest.getInsertedNickname(), checkDuplicateNickNameRequest.getIsUsedSocialName());
+        return memberFacade.checkDuplicateNickname(checkDuplicateNickNameRequest.getInsertedNickname());
     }
 
     @ApiOperation("최근 본 목록 호출")
@@ -100,12 +84,4 @@ public class MemberController {
 //        String login = testWebClient.login(code);
 //        return login;
 //    }
-//
-
-    @ApiOperation("로그인")
-    @PostMapping("/login")
-    public CommonResponse<Object> login(@RequestBody MemberLoginRequest memberLoginRequest) {
-        String login = testWebClient.login(memberLoginRequest.getAccessToken());
-        return CommonResponse.success(login);
-    }
 }
