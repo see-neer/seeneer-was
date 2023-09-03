@@ -26,31 +26,36 @@ public class Account implements Serializable {
     @AttributeOverride(name = "id", column = @Column(name = "memberId", nullable = false))
     private MemberId memberId;
 
-    @Column(columnDefinition = "VARCHAR(30)")
     @Enumerated(EnumType.STRING)
-    private AuthType authType;
+    @Column(columnDefinition = "VARCHAR(10)", nullable = false)
+    private OSType osType;
+
+    @Column(columnDefinition = "VARCHAR(50)")
+    private String deviceId;
 
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
-    private LocalDateTime authedAt;
+    private LocalDateTime updatedAt;
 
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
 
-    public Account(AccountId id, MemberId memberId, AuthType authType, LocalDateTime authedAt, LocalDateTime createdAt) {
+    public Account(AccountId id, MemberId memberId, OSType osType, String deviceId, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.memberId = memberId;
-        this.authType = authType;
-        this.authedAt = authedAt;
+        this.osType = osType;
+        this.deviceId = deviceId;
+        this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
 
-    public Account authSocialLogin(Account account, MemberId memberId, AuthType authType) {
+    public static Account newOne(AccountId accountId, OSType osType, String deviceId) {
         return new Account(
-                account.id,
-                memberId,
-                authType,
+                accountId,
+                null,
+                osType,
+                deviceId,
                 LocalDateTime.now(),
-                account.createdAt
+                LocalDateTime.now()
         );
     }
 }
