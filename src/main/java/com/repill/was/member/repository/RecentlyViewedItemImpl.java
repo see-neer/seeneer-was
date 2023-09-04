@@ -4,6 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.repill.was.global.sequencegenerator.SequenceGenerator;
 import com.repill.was.market.entity.MarketRepository;
+import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.member.entity.recentlyviewditem.QRecentlyViewedItem;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.repill.was.member.entity.recentlyviewditem.QRecentlyViewedItem.recentlyViewedItem;
 import static org.springframework.util.ObjectUtils.isEmpty;
@@ -52,6 +54,16 @@ public class RecentlyViewedItemImpl implements RecentlyViewedItemRepository {
                         .and(cursorLt(cursorId)))
                 .offset(size)
                 .fetch();
+    }
+
+    @Override
+    public Optional<RecentlyViewedItem> findByIdAndAccountId(RecentlyViewedItemId id, MemberId memberId) {
+        return recentlyViewedItemJpaRepository.findByIdAndMemberId(id, memberId);
+    }
+
+    @Override
+    public void delete(RecentlyViewedItem recentlyViewedItem) {
+        recentlyViewedItemJpaRepository.delete(recentlyViewedItem);
     }
 
     private BooleanExpression cursorLt(Long cursor) {

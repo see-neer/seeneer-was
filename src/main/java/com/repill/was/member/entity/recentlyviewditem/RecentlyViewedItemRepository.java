@@ -15,4 +15,8 @@ public interface RecentlyViewedItemRepository {
     RecentlyViewedItem save(RecentlyViewedItem member);
 
     List<RecentlyViewedItemInfoVO> findByMemberId(MemberId memberId, int size, Long cursorId);
+
+    Optional<RecentlyViewedItem> findByIdAndAccountId(RecentlyViewedItemId id, MemberId memberId);
+
+    void delete(RecentlyViewedItem recentlyViewedItem);
 }

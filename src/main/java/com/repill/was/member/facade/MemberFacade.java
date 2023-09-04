@@ -10,13 +10,16 @@ import com.repill.was.market.entity.MarketId;
 import com.repill.was.market.entity.MarketRepository;
 import com.repill.was.member.controller.dto.request.MemberLoginRequest;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
+import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItem;
+import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItemId;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItemRepository;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.member.repository.vo.RecentlyViewedItemInfoVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,5 +52,10 @@ public class MemberFacade {
             }
             throw new BadRequestException("유효하지 않은 아이템 정보 입니다.");
         }).collect(Collectors.toList());
+    }
+
+    public void deleteRecentlyView(RecentlyViewedItemId id, MemberId memberId) {
+        RecentlyViewedItem recentlyViewedItem = recentlyViewedItemRepository.findByIdAndAccountId(id, memberId).orElseThrow(() -> new BadRequestException("존재하지 않는 최근 본 목록 값 입니다."));
+        recentlyViewedItemRepository.delete(recentlyViewedItem);
     }
 }

@@ -10,4 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface RecentlyViewedItemJpaRepository extends JpaRepository<RecentlyViewedItem, RecentlyViewedItemId> {
+
+    Optional<RecentlyViewedItem> findByIdAndMemberId(RecentlyViewedItemId id, MemberId memberId);
 }

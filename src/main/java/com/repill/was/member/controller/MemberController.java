@@ -12,6 +12,7 @@ import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.controller.dto.view.MemberView;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.member.Member;
+import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItemId;
 import com.repill.was.member.facade.MemberFacade;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.member.webclient.TestWebClient;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +65,14 @@ public class MemberController {
                                                                 @RequestParam(required = false) Long cursorId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저 정보 입니다."));
         return memberFacade.getRecentlyViewList(member.getId(), size, cursorId);
+    }
+
+    @ApiOperation("최근 본 목록 삭제하기")
+    @DeleteMapping("/recently-view/{id}")
+    public void deleteRecentlyView(@AuthenticationPrincipal AccountId accountId,
+                                      @PathVariable Long id) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저입니다."));
+        memberFacade.deleteRecentlyView(new RecentlyViewedItemId(id), member.getId());
     }
 
 //    @ApiOperation("찜 목록 호출")
