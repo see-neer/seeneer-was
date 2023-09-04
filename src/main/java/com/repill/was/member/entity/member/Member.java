@@ -20,10 +20,6 @@ public class Member {
 
     String address;
 
-    String favoriteHobby;
-
-    String favoriteSite;
-
     String imageSrc;
 
     @Column(columnDefinition = "VARCHAR(50)")
@@ -35,12 +31,10 @@ public class Member {
         this.name = name;
     }
 
-    public  Member(MemberId id, AccountId accountId, String address, String favoriteHobby, String favoriteSite, String name) {
+    public  Member(MemberId id, AccountId accountId, String address, String name) {
         this.id = id;
         this.accountId = accountId;
         this.address = address;
-        this.favoriteHobby = favoriteHobby;
-        this.favoriteSite = favoriteSite;
         this.name = name;
     }
 

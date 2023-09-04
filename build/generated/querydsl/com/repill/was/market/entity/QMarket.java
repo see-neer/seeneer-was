@@ -24,6 +24,8 @@ public class QMarket extends EntityPathBase<Market> {
 
     public final StringPath address = createString("address");
 
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+
     public final StringPath date = createString("date");
 
     public final QMarketId id;
@@ -31,6 +33,8 @@ public class QMarket extends EntityPathBase<Market> {
     public final StringPath imageSrc = createString("imageSrc");
 
     public final StringPath name = createString("name");
+
+    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
     public QMarket(String variable) {
         this(Market.class, forVariable(variable), INITS);

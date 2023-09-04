@@ -12,6 +12,8 @@ import com.repill.was.market.repository.jpa.MarketJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class FestivalRepositoryImpl implements FestivalRepository {
@@ -27,5 +29,10 @@ public class FestivalRepositoryImpl implements FestivalRepository {
     @Override
     public Festival save(Festival festival) {
         return festivalJpaRepository.save(festival);
+    }
+
+    @Override
+    public Optional<Festival> findById(FestivalId festivalId) {
+        return festivalJpaRepository.findById(festivalId);
     }
 }

@@ -8,6 +8,7 @@ import com.repill.was.member.controller.dto.request.CheckDuplicateNickNameReques
 import com.repill.was.member.controller.dto.response.MainResponse;
 import com.repill.was.member.controller.dto.request.MemberLoginRequest;
 import com.repill.was.member.controller.dto.response.MainResponse.CategoryView;
+import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.controller.dto.view.MemberView;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.member.Member;
@@ -57,10 +58,11 @@ public class MemberController {
 
     @ApiOperation("최근 본 목록 호출")
     @GetMapping("/recently-views")
-    public Boolean getRecentlyViewList(@AuthenticationPrincipal AccountId accountId) {
+    public List<RecentlyViewedItemResponse> getRecentlyViewList(@AuthenticationPrincipal AccountId accountId,
+                                                                @RequestParam int size,
+                                                                @RequestParam(required = false) Long cursorId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저 정보 입니다."));
-        memberFacade.getRecentlyViewList(member.getId());
-        return true;
+        return memberFacade.getRecentlyViewList(member.getId(), size, cursorId);
     }
 
 //    @ApiOperation("찜 목록 호출")

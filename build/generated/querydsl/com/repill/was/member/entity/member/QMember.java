@@ -26,11 +26,9 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath address = createString("address");
 
-    public final StringPath favoriteHobby = createString("favoriteHobby");
-
-    public final StringPath favoriteSite = createString("favoriteSite");
-
     public final QMemberId id;
+
+    public final StringPath imageSrc = createString("imageSrc");
 
     public final StringPath name = createString("name");
 

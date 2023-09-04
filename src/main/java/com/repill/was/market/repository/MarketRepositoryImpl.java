@@ -8,6 +8,8 @@ import com.repill.was.market.repository.jpa.MarketJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class MarketRepositoryImpl implements MarketRepository {
@@ -23,5 +25,10 @@ public class MarketRepositoryImpl implements MarketRepository {
     @Override
     public Market save(Market address) {
         return marketJpaRepository.save(address);
+    }
+
+    @Override
+    public Optional<Market> findById(MarketId marketId) {
+        return marketJpaRepository.findById(marketId);
     }
 }

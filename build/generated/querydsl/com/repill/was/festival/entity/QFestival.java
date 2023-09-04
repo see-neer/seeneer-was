@@ -24,6 +24,8 @@ public class QFestival extends EntityPathBase<Festival> {
 
     public final StringPath address = createString("address");
 
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+
     public final StringPath date = createString("date");
 
     public final QFestivalId id;
@@ -31,6 +33,8 @@ public class QFestival extends EntityPathBase<Festival> {
     public final StringPath imageSrc = createString("imageSrc");
 
     public final StringPath name = createString("name");
+
+    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
     public QFestival(String variable) {
         this(Festival.class, forVariable(variable), INITS);

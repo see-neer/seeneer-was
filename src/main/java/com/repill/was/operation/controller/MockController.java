@@ -2,10 +2,14 @@ package com.repill.was.operation.controller;
 
 import com.repill.was.festival.entity.Festival;
 import com.repill.was.festival.entity.FestivalRepository;
+import com.repill.was.global.config.JwtTokenProvider;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.market.entity.Market;
 import com.repill.was.market.entity.MarketRepository;
+import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
+import com.repill.was.member.entity.account.AccountRepository;
+import com.repill.was.member.entity.account.OSType;
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.member.entity.member.MemberRepository;
@@ -13,12 +17,16 @@ import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItem;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItemRepository;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.member.repository.jpa.RecentlyViewedItemJpaRepository;
+import io.jsonwebtoken.Jwt;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @MockV1Controller
 @RequiredArgsConstructor
@@ -27,6 +35,9 @@ public class MockController {
     private final MarketRepository marketRepository;
     private final FestivalRepository festivalRepository;
     private final RecentlyViewedItemRepository recentlyViewedItemRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final AccountRepository accountRepository;
+
     private final MemberRepository memberRepository;
 
     @ApiOperation("market 추가")
@@ -77,5 +88,32 @@ public class MockController {
                 RecentlyViewedItem.ItemType.valueOf(itemType),
                 itemId
         ));
+    }
+
+    @ApiOperation("테스트용 계정 추가")
+    @PostMapping("/mock-make-test-uesr")
+    public String addMockTestUser() {
+        AccountId accountId = accountRepository.nextId();
+        String token = jwtTokenProvider.createToken(accountId.getId().toString(), "ALL");
+        Account account = accountRepository.save(Account.newOne(
+                accountId,
+                OSType.valueOf("IOS"),
+                UUID.randomUUID().toString()
+        ));
+
+        memberRepository.save(new Member(
+                memberRepository.nextId(),
+                account.getId(),
+                "TEST-ADDRESS",
+                "TEST-USER"
+        ));
+        return token;
+    }
+
+    @ApiOperation("테스트용 계정 토큰")
+    @PostMapping("/mock-make-token")
+    public String addMockToken(@RequestParam String userId) {
+        String token = jwtTokenProvider.createToken(userId.toString(), "ALL");
+        return token;
     }
 }

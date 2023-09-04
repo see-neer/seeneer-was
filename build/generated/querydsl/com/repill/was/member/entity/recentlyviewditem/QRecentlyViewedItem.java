@@ -22,7 +22,7 @@ public class QRecentlyViewedItem extends EntityPathBase<RecentlyViewedItem> {
 
     public static final QRecentlyViewedItem recentlyViewedItem = new QRecentlyViewedItem("recentlyViewedItem");
 
-    public final DateTimePath<java.time.ZonedDateTime> createdAt = createDateTime("createdAt", java.time.ZonedDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
     public final QRecentlyViewedItemId id;
 

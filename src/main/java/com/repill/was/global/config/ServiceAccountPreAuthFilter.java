@@ -1,6 +1,7 @@
 package com.repill.was.global.config;
 
 import com.repill.was.global.shard.enums.Headers;
+import com.repill.was.member.entity.account.AccountId;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.core.annotation.Order;
@@ -44,9 +45,9 @@ public class ServiceAccountPreAuthFilter extends AbstractPreAuthenticatedProcess
 			// todo refresh token 으로 로그인 하는 API를 호출하기위한 exception 필요
 			return null;
 		}
-		String userId = jwtTokenProvider.getUserId(token);
+		Long accountId = Long.parseLong(jwtTokenProvider.getUserId(token));
 		String role = jwtTokenProvider.getUserRoles(token);
-		return new ServiceAccountPreAuthenticationPrincipal(userId, role);
+		return new ServiceAccountPreAuthenticationPrincipal(new AccountId(accountId), role);
 	}
 
 	@Override

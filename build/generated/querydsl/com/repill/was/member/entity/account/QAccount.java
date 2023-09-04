@@ -22,15 +22,17 @@ public class QAccount extends EntityPathBase<Account> {
 
     public static final QAccount account = new QAccount("account");
 
-    public final DateTimePath<java.time.LocalDateTime> authedAt = createDateTime("authedAt", java.time.LocalDateTime.class);
-
-    public final EnumPath<com.repill.was.global.shard.enums.AuthType> authType = createEnum("authType", com.repill.was.global.shard.enums.AuthType.class);
-
     public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+
+    public final StringPath deviceId = createString("deviceId");
 
     public final QAccountId id;
 
     public final com.repill.was.member.entity.member.QMemberId memberId;
+
+    public final EnumPath<OSType> osType = createEnum("osType", OSType.class);
+
+    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
     public QAccount(String variable) {
         this(Account.class, forVariable(variable), INITS);
