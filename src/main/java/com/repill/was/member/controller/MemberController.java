@@ -11,6 +11,7 @@ import com.repill.was.member.controller.dto.response.MainResponse.CategoryView;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.controller.dto.view.MemberView;
 import com.repill.was.member.entity.account.AccountId;
+import com.repill.was.member.entity.favoriteitems.FavoriteItemId;
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItemId;
 import com.repill.was.member.facade.MemberFacade;
@@ -75,17 +76,22 @@ public class MemberController {
         memberFacade.deleteRecentlyView(new RecentlyViewedItemId(id), member.getId());
     }
 
-//    @ApiOperation("찜 목록 호출")
-//    @GetMapping("/check-duplicated-nickname")
-//    public Boolean asd(String insertedNickname) {
-//        return memberFacade.checkDuplicateNickname(insertedNickname);
-//    }
-//
-//    @ApiOperation("찜 목록 삭제하기")
-//    @GetMapping("/check-duplicated-nickname")
-//    public Boolean xcv(String insertedNickname) {
-//        return memberFacade.checkDuplicateNickname(insertedNickname);
-//    }
+    @ApiOperation("찜 목록 호출")
+    @GetMapping("/favorite-items")
+    public List<RecentlyViewedItemResponse> getFavoriteItems(@AuthenticationPrincipal AccountId accountId,
+                                    @RequestParam int size,
+                                    @RequestParam(required = false) Long cursorId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저 정보 입니다."));
+        return memberFacade.getFavoriteItems(member.getId(), size, cursorId);
+    }
+
+    @ApiOperation("찜 목록 삭제하기")
+    @DeleteMapping("/favorite-item")
+    public void deleteFavoriteItem(@AuthenticationPrincipal AccountId accountId,
+                                      @PathVariable Long id) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저입니다."));
+        memberFacade.deleteFavoriteItem(new FavoriteItemId(id), member.getId());
+    }
 
 
 //    @ApiOperation("카카오 로그인 실행")

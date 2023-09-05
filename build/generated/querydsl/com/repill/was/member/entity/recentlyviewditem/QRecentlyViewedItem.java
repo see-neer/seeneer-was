@@ -28,7 +28,7 @@ public class QRecentlyViewedItem extends EntityPathBase<RecentlyViewedItem> {
 
     public final NumberPath<Long> itemId = createNumber("itemId", Long.class);
 
-    public final EnumPath<RecentlyViewedItem.ItemType> itemType = createEnum("itemType", RecentlyViewedItem.ItemType.class);
+    public final EnumPath<com.repill.was.global.shard.enums.ItemType> itemType = createEnum("itemType", com.repill.was.global.shard.enums.ItemType.class);
 
     public final com.repill.was.member.entity.member.QMemberId memberId;
 

@@ -3,6 +3,7 @@ package com.repill.was.member.controller.dto.response;
 import com.querydsl.core.annotations.QueryProjection;
 import com.repill.was.festival.entity.Festival;
 import com.repill.was.festival.entity.FestivalId;
+import com.repill.was.global.shard.enums.ItemType;
 import com.repill.was.market.entity.Market;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItem;
 import lombok.Getter;
@@ -36,7 +37,7 @@ public class RecentlyViewedItemResponse {
         return new RecentlyViewedItemResponse(
                 id,
                 market.getId().getId(),
-                RecentlyViewedItem.ItemType.MARKET.name(),
+                ItemType.MARKET.name(),
                 market.getName(),
                 market.getDate(),
                 market.getImageSrc(),
@@ -49,7 +50,7 @@ public class RecentlyViewedItemResponse {
         return new RecentlyViewedItemResponse(
                 id,
                 festival.getId().getId(),
-                RecentlyViewedItem.ItemType.FESTIVAL.name(),
+                ItemType.FESTIVAL.name(),
                 festival.getName(),
                 festival.getDate(),
                 festival.getImageSrc(),

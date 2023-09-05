@@ -1,21 +1,22 @@
-package com.repill.was.member.entity.recentlyviewditem;
+package com.repill.was.member.entity.favoriteitems;
 
 import com.repill.was.global.shard.enums.ItemType;
 import com.repill.was.member.entity.member.MemberId;
+import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItem;
+import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItemId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 @Getter
 @Entity
 @NoArgsConstructor
-public class RecentlyViewedItem {
+public class FavoriteItem {
 
     @EmbeddedId
-    private RecentlyViewedItemId id;
+    private FavoriteItemId id;
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "memberId", nullable = false))
@@ -30,7 +31,7 @@ public class RecentlyViewedItem {
     @Column(columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)", nullable = false)
     private LocalDateTime createdAt;
 
-    public RecentlyViewedItem(RecentlyViewedItemId id, MemberId memberId, ItemType itemType, Long itemId, LocalDateTime createdAt) {
+    public FavoriteItem(FavoriteItemId id, MemberId memberId, ItemType itemType, Long itemId, LocalDateTime createdAt) {
         this.id = id;
         this.memberId = memberId;
         this.itemType = itemType;
@@ -38,8 +39,8 @@ public class RecentlyViewedItem {
         this.createdAt = createdAt;
     }
 
-    public static RecentlyViewedItem newOne(RecentlyViewedItemId id, MemberId memberId, ItemType itemType, Long itemId) {
-        return new RecentlyViewedItem(
+    public static FavoriteItem newOne(FavoriteItemId id, MemberId memberId, ItemType itemType, Long itemId) {
+        return new FavoriteItem(
                 id,
                 memberId,
                 itemType,
@@ -47,5 +48,4 @@ public class RecentlyViewedItem {
                 LocalDateTime.now()
         );
     }
-
 }

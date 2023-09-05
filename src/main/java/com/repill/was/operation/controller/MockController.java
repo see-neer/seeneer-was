@@ -4,12 +4,15 @@ import com.repill.was.festival.entity.Festival;
 import com.repill.was.festival.entity.FestivalRepository;
 import com.repill.was.global.config.JwtTokenProvider;
 import com.repill.was.global.exception.BadRequestException;
+import com.repill.was.global.shard.enums.ItemType;
 import com.repill.was.market.entity.Market;
 import com.repill.was.market.entity.MarketRepository;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountRepository;
 import com.repill.was.member.entity.account.OSType;
+import com.repill.was.member.entity.favoriteitems.FavoriteItem;
+import com.repill.was.member.entity.favoriteitems.FavoriteItemRepository;
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.member.entity.member.MemberRepository;
@@ -38,6 +41,7 @@ public class MockController {
     private final JwtTokenProvider jwtTokenProvider;
     private final AccountRepository accountRepository;
 
+    private final FavoriteItemRepository favoriteItemRepository;
     private final MemberRepository memberRepository;
 
     @ApiOperation("market 추가")
@@ -72,20 +76,20 @@ public class MockController {
         recentlyViewedItemRepository.save(RecentlyViewedItem.newOne(
                 recentlyViewedItemRepository.nextId(),
                 new MemberId(accountId),
-                RecentlyViewedItem.ItemType.valueOf(itemType),
+                ItemType.valueOf(itemType),
                 itemId
         ));
     }
 
     @ApiOperation("찜 목록 추가")
-    @PostMapping("/mock-add-selected")
+    @PostMapping("/mock-add-favorite-item")
     public void addMockSelected(@RequestParam Long accountId,
                                 @RequestParam String itemType,
                                 @RequestParam Long itemId) {
-        recentlyViewedItemRepository.save(RecentlyViewedItem.newOne(
-                recentlyViewedItemRepository.nextId(),
+        favoriteItemRepository.save(FavoriteItem.newOne(
+                favoriteItemRepository.nextId(),
                 new MemberId(accountId),
-                RecentlyViewedItem.ItemType.valueOf(itemType),
+                ItemType.valueOf(itemType),
                 itemId
         ));
     }
