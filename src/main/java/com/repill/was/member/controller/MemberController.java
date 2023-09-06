@@ -5,12 +5,15 @@ import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.shard.enums.Category;
 import com.repill.was.global.shard.response.CommonResponse;
 import com.repill.was.member.controller.dto.request.CheckDuplicateNickNameRequest;
+import com.repill.was.member.controller.dto.request.MemberLogoutRequest;
 import com.repill.was.member.controller.dto.response.MainResponse;
 import com.repill.was.member.controller.dto.request.MemberLoginRequest;
 import com.repill.was.member.controller.dto.response.MainResponse.CategoryView;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.controller.dto.view.MemberView;
+import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
+import com.repill.was.member.entity.account.AccountRepository;
 import com.repill.was.member.entity.favoriteitems.FavoriteItemId;
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItemId;
@@ -37,6 +40,7 @@ public class MemberController {
 
     private final MemberFacade memberFacade;
     private final MemberQueries memberQueries;
+    private final AccountRepository accountRepository;
 
     // todo 23.08.31 odo 재경님 같이 작업
 //    @ApiOperation("로그인")
@@ -93,6 +97,19 @@ public class MemberController {
         memberFacade.deleteFavoriteItem(new FavoriteItemId(id), member.getId());
     }
 
+    @ApiOperation("멤버 로그아웃")
+    @PostMapping("/member-logout")
+    public void logout(@AuthenticationPrincipal AccountId accountId, @RequestBody MemberLogoutRequest logoutRequest) {
+        Optional<Account> account = accountRepository.findById(accountId);
+        if (account.isEmpty()) {
+            throw new BadRequestException("존재하지 않은 기기 정보 입니다.");
+        }
+        Optional<Member> member = memberQueries.findByAccountId(accountId);
+        if (member.isEmpty()) {
+            throw new BadRequestException("존재하지 않은 회원 정보 입니다.");
+        }
+//        memberService.logout(accountId, member.get().getMemberId(), OSType.valueOf(logoutRequest.getOsType()), logoutRequest.getDeviceId());
+    }
 
 //    @ApiOperation("카카오 로그인 실행")
 //    @GetMapping(value = "/kakao/callback", produuces = "application/json")
