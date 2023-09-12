@@ -1,6 +1,5 @@
 package com.repill.was.member.controller.dto.response;
 
-import com.repill.was.member.controller.dto.view.MemberView;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

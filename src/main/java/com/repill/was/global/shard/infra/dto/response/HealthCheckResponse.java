@@ -1,6 +1,6 @@
-package com.repill.was.global.shard.infra.dto;
+package com.repill.was.global.shard.infra.dto.response;
 
-import com.repill.was.member.controller.dto.view.MemberView;
+import com.repill.was.member.controller.dto.response.view.MemberView;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

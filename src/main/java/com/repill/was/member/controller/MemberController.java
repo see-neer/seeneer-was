@@ -3,33 +3,36 @@ package com.repill.was.member.controller;
 import com.repill.was.global.config.SwaggerConfig;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.shard.enums.Category;
-import com.repill.was.global.shard.response.CommonResponse;
 import com.repill.was.member.controller.dto.request.CheckDuplicateNickNameRequest;
+import com.repill.was.member.controller.dto.request.CloseAccountRequest;
 import com.repill.was.member.controller.dto.request.MemberLogoutRequest;
+import com.repill.was.member.controller.dto.request.MemberProfileUpdateRequest;
 import com.repill.was.member.controller.dto.response.MainResponse;
-import com.repill.was.member.controller.dto.request.MemberLoginRequest;
 import com.repill.was.member.controller.dto.response.MainResponse.CategoryView;
+import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
-import com.repill.was.member.controller.dto.view.MemberView;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountRepository;
+import com.repill.was.member.entity.account.OSType;
 import com.repill.was.member.entity.favoriteitems.FavoriteItemId;
 import com.repill.was.member.entity.member.Member;
+import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItemId;
 import com.repill.was.member.facade.MemberFacade;
 import com.repill.was.member.query.MemberQueries;
-import com.repill.was.member.webclient.TestWebClient;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.repill.was.member.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import net.logstash.logback.util.StringUtils;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +44,8 @@ public class MemberController {
     private final MemberFacade memberFacade;
     private final MemberQueries memberQueries;
     private final AccountRepository accountRepository;
+
+    private final MemberService memberService;
 
     // todo 23.08.31 odo 재경님 같이 작업
 //    @ApiOperation("로그인")
@@ -108,15 +113,39 @@ public class MemberController {
         if (member.isEmpty()) {
             throw new BadRequestException("존재하지 않은 회원 정보 입니다.");
         }
-//        memberService.logout(accountId, member.get().getMemberId(), OSType.valueOf(logoutRequest.getOsType()), logoutRequest.getDeviceId());
+        memberService.logout(accountId, member.get().getId(), OSType.valueOf(logoutRequest.getOsType()), logoutRequest.getDeviceId());
     }
 
-//    @ApiOperation("카카오 로그인 실행")
-//    @GetMapping(value = "/kakao/callback", produuces = "application/json")
-//    public String loginKakao(@RequestParam("code") String code,
-//                             HttpSession session) {
-//
-//        String login = testWebClient.login(code);
-//        return login;
-//    }
+    @ApiOperation("탈퇴 실행")
+    @PostMapping("/close-account")
+    public void closeAccount(@AuthenticationPrincipal AccountId accountId, @RequestBody CloseAccountRequest request) {
+        if (request.getType().isEmpty() && StringUtils.isEmpty(request.getAdditionalInformation())) {
+            throw new BadRequestException();
+        }
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(BadRequestException::new);
+        memberService.proceedClosingAccount(member, request);
+    }
+
+    @ApiOperation("자기 프로필 수정")
+    @PutMapping("/my-profiles")
+    public void modifyMyProfiles(@AuthenticationPrincipal AccountId accountId,
+                                 @RequestBody MemberProfileUpdateRequest request) {
+
+        memberService.update(accountId,
+                request.getProfileImageSrc(),
+                request.getNickname(),
+                request.isHideRealName()
+        );
+    }
+
+    @ApiOperation("자기 프로필 상세 조회")
+    @GetMapping("/my-profile")
+    public MemberDetailProfileResponse getMyProfile(@AuthenticationPrincipal AccountId accountId) {
+        Optional<Member> member = memberQueries.findByAccountId(accountId);
+        if (member.isEmpty()) {
+            throw new BadRequestException();
+        }
+        MemberId memberIdQuery = member.get().getId();
+        return memberQueries.findMyProfileByMemberId(memberIdQuery);
+    }
 }

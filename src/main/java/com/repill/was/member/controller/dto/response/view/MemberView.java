@@ -1,4 +1,4 @@
-package com.repill.was.member.controller.dto.view;
+package com.repill.was.member.controller.dto.response.view;
 
 import com.repill.was.member.entity.member.Member;
 import lombok.Getter;
@@ -12,7 +12,7 @@ public class MemberView {
     private String imageSrc;
 
     public MemberView(Member member) {
-        this.name = member.getName();
+        this.name = member.getNickname();
         this.imageSrc = member.getImageSrc();
     }
 }

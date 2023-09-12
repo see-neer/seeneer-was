@@ -1,4 +1,4 @@
-package com.repill.was.global.shard.infra.dto;
+package com.repill.was.global.shard.infra.dto.request;
 
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModelProperty;

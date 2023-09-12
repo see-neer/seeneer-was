@@ -40,4 +40,9 @@ public class AccountRepositoryImpl implements AccountRepository {
     public Optional<Account> findByDeviceId(String deviceId) {
         return accountJpaRepository.findByDeviceId(deviceId);
     }
+
+    @Override
+    public void delete(Account account) {
+        accountJpaRepository.delete(account);
+    }
 }

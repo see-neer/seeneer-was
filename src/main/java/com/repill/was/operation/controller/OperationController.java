@@ -1,27 +1,28 @@
 package com.repill.was.operation.controller;
 
-import com.repill.was.member.controller.MemberV1Controller;
-import com.repill.was.operation.entity.Address;
-import com.repill.was.operation.entity.AddressForMassMarketingDto;
-import com.repill.was.operation.entity.AddressRepository;
+
+import com.repill.was.global.shard.utils.SingleDataResponse;
+import com.repill.was.member.entity.member.ClosingAccountReason;
+import com.repill.was.operation.controller.dto.response.ClosingAccountReasonResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @OperationV1Controller
 @RequiredArgsConstructor
 public class OperationController {
 
+    @ApiOperation("탈퇴 사유 목록")
+    @GetMapping("/close-account-reasons")
+    public SingleDataResponse<List<ClosingAccountReasonResponse>> getClosingAccountReasons() {
+        List<ClosingAccountReasonResponse> reasons = ClosingAccountReason.allCases()
+                .stream().map(reason -> ClosingAccountReasonResponse.from(reason, Locale.KOREA))
+                .collect(Collectors.toList());
 
+        return new SingleDataResponse<>(reasons);
+    }
 }
