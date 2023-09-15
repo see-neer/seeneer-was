@@ -22,8 +22,10 @@ public class MainResponse {
     public static class CategoryView {
         private String mainName;
         private String subName;
+        private Boolean isActive;
 
-        public CategoryView(String mainName, String subName) {
+        public CategoryView(String mainName, String subName, Boolean isActive) {
+            this.isActive = isActive;
             this.mainName = mainName;
             this.subName = subName;
         }

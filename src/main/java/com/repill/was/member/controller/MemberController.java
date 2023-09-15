@@ -57,7 +57,7 @@ public class MemberController {
     @ApiOperation("메인 화면 호출")
     @GetMapping("/main")
     public MainResponse main(@AuthenticationPrincipal AccountId accountId) {
-        List<CategoryView> categoryList = Arrays.stream(Category.values()).map(one -> new CategoryView(one.getDescription(), one.getSubDescription())).collect(Collectors.toList());
+        List<CategoryView> categoryList = Arrays.stream(Category.values()).map(one -> new CategoryView(one.getDescription(), one.getSubDescription(), one.getIsOpen())).collect(Collectors.toList());
         return MainResponse.from(categoryList);
     }
 
