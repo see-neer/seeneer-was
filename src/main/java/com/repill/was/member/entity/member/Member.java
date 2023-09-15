@@ -24,6 +24,7 @@ public class Member {
 
     String address;
 
+    @Column(columnDefinition = "VARCHAR(50)")
     String imageSrc;
 
     @Column(columnDefinition = "VARCHAR(50)")
@@ -34,21 +35,43 @@ public class Member {
 
     @Column(columnDefinition = "DATETIME(3)")
     private LocalDateTime lastNickNameChangedAt;
+
+
+    @Column(nullable = false, unique = true)
+    private Long kakaoUserId; // Kakao 사용자의 고유 ID (또는 다른 적절한 유일한 식별자)
+
+    private String ageRange;
+    private String birthday;
+    private String birthdayType;
+    private String gender;
+
+    @Column(nullable = false)
+    private String connectedAt;
     
-    public Member(String imageSrc, String nickname) {
+    public Member(MemberId memberId, String imageSrc, String nickname) {
+        this.id = memberId;
         this.imageSrc = imageSrc;
         this.nickname = nickname;
     }
 
-    public  Member(MemberId id, AccountId accountId, String address, String nickname) {
+    public Member(MemberId id, AccountId accountId, String address, String imageSrc, String nickname, LocalDateTime closedAt, LocalDateTime lastNickNameChangedAt, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt) {
         this.id = id;
         this.accountId = accountId;
         this.address = address;
+        this.imageSrc = imageSrc;
         this.nickname = nickname;
+        this.closedAt = closedAt;
+        this.lastNickNameChangedAt = lastNickNameChangedAt;
+        this.kakaoUserId = kakaoUserId;
+        this.ageRange = ageRange;
+        this.birthday = birthday;
+        this.birthdayType = birthdayType;
+        this.gender = gender;
+        this.connectedAt = connectedAt;
     }
 
     public static Member notExistMember() {
-        return new Member(null, null);
+        return new Member(null, null, null);
     }
 
     public void markAsClosed() {

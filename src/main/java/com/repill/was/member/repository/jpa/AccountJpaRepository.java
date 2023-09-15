@@ -10,4 +10,5 @@ import java.util.Optional;
 
 public interface AccountJpaRepository extends JpaRepository<Account, AccountId> {
     Optional<Account> findByDeviceId(String deviceId);
+    Optional<Account> findById(AccountId accountId);
 }

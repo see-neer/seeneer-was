@@ -37,7 +37,7 @@ public class HeathCheckController {
                                            @RequestBody AutoLoginRequest autoLoginRequest) {
         Optional<Account> accountByDevice = accountRepository.findByDeviceId(autoLoginRequest.getDeviceId());
 
-        MemberView memberView = new MemberView(Member.notExistMember());
+        MemberView memberView = new MemberView(null, null, null);
         boolean exsistMember = false;
 
         if(accountByDevice.isEmpty()) {
@@ -55,7 +55,8 @@ public class HeathCheckController {
         String token = jwtTokenProvider.createToken(accountByDevice.get().getId().toString(), "ALL");
         Optional<Member> memberByAccountId = memberRepository.findByAccountId(accountByDevice.get().getId());
         if(memberByAccountId.isPresent()) {
-            memberView = new MemberView(memberByAccountId.get());
+            Member member = memberByAccountId.get();
+            memberView = new MemberView(member.getId().getId(), member.getNickname(), member.getImageSrc());
             exsistMember = true;
         }
         if(deviceRepository.findAllByAccountId(accountByDevice.get().getId()).isEmpty()) deviceService.insertDeviceToken(accountByDevice.get().getId(), OSType.valueOf(appOS), token);

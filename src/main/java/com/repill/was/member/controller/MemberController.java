@@ -3,10 +3,8 @@ package com.repill.was.member.controller;
 import com.repill.was.global.config.SwaggerConfig;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.shard.enums.Category;
-import com.repill.was.member.controller.dto.request.CheckDuplicateNickNameRequest;
-import com.repill.was.member.controller.dto.request.CloseAccountRequest;
-import com.repill.was.member.controller.dto.request.MemberLogoutRequest;
-import com.repill.was.member.controller.dto.request.MemberProfileUpdateRequest;
+import com.repill.was.global.shard.response.CommonResponse;
+import com.repill.was.member.controller.dto.request.*;
 import com.repill.was.member.controller.dto.response.MainResponse;
 import com.repill.was.member.controller.dto.response.MainResponse.CategoryView;
 import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
@@ -48,13 +46,14 @@ public class MemberController {
     private final MemberService memberService;
 
     // todo 23.08.31 odo 재경님 같이 작업
-//    @ApiOperation("로그인")
-//    @PostMapping("/login")
-//    public CommonResponse<Object> login(@RequestBody MemberLoginRequest memberLoginRequest) {
-//        String token = memberFacade.login(memberLoginRequest);
-//        return CommonResponse.success(token);
-//    }
-//
+    @ApiOperation("카카오 회원가입")
+    @PostMapping("/create")
+    public CommonResponse<Object> login(@AuthenticationPrincipal AccountId accountId,
+                                        @RequestBody MemberLoginRequest memberLoginRequest) {
+        memberFacade.login(memberLoginRequest, accountId);
+        return CommonResponse.success(null);
+    }
+
     @ApiOperation("메인 화면 호출")
     @GetMapping("/main")
     public MainResponse main(@AuthenticationPrincipal AccountId accountId) {

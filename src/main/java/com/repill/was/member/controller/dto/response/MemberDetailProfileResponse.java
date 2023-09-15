@@ -18,7 +18,7 @@ public class MemberDetailProfileResponse {
     @ApiModelProperty(notes = "프로필 사진 주소")
     private String profileImageSrc;
 
-    @ApiModelProperty(notes = "프로필 사진 주소")
+    @ApiModelProperty(notes = "로그인 타입")
     private String loginType;
 
     public MemberDetailProfileResponse(long id, String nickName, String profileImageSrc, String loginType) {

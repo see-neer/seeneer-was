@@ -44,5 +44,8 @@ public class Device {
         return Device.newOne(deviceId, accountId, null, token, osType);
     }
 
+    public void createMember(MemberId memberId) {
+        this.memberId = memberId;
+    }
 }
 

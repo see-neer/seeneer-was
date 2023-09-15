@@ -58,4 +58,8 @@ public class Account implements Serializable {
                 LocalDateTime.now()
         );
     }
+
+    public void createMember(MemberId memberId) {
+        this.memberId = memberId;
+    }
 }

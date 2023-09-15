@@ -94,25 +94,23 @@ public class MockController {
         ));
     }
 
-    @ApiOperation("테스트용 계정 추가")
-    @PostMapping("/mock-make-test-uesr")
-    public String addMockTestUser() {
-        AccountId accountId = accountRepository.nextId();
-        String token = jwtTokenProvider.createToken(accountId.getId().toString(), "ALL");
-        Account account = accountRepository.save(Account.newOne(
-                accountId,
-                OSType.valueOf("IOS"),
-                UUID.randomUUID().toString()
-        ));
-
-        memberRepository.save(new Member(
-                memberRepository.nextId(),
-                account.getId(),
-                "TEST-ADDRESS",
-                "TEST-USER"
-        ));
-        return token;
-    }
+//    @ApiOperation("테스트용 계정 추가")
+//    @PostMapping("/mock-make-test-uesr")
+//    public String addMockTestUser() {
+//        AccountId accountId = accountRepository.nextId();
+//        String token = jwtTokenProvider.createToken(accountId.getId().toString(), "ALL");
+//        Account account = accountRepository.save(Account.newOne(
+//                accountId,
+//                OSType.valueOf("IOS"),
+//                UUID.randomUUID().toString()
+//        ));
+//
+//        memberRepository.save(new Member(
+//                memberRepository.nextId(),
+//                "@2"
+//        ));
+//        return token;
+//    }
 
     @ApiOperation("테스트용 계정 토큰")
     @PostMapping("/mock-make-token")
