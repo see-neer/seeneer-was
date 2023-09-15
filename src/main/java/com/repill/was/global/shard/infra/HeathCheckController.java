@@ -33,8 +33,7 @@ public class HeathCheckController {
 
     @ApiOperation("설정 확인 용 Health Check. X-APP-VERSION (예: 0.0.5), X-APP-OS: IOS / ANDROID")
     @PostMapping("/health")
-    public HealthCheckResponse healthCheck(@RequestHeader(value="X-APP-VERSION", required = false) String appVersion,
-                                           @RequestHeader(value="X-APP-OS", required = false) String appOS,
+    public HealthCheckResponse healthCheck(@RequestHeader(value="X-APP-OS", required = false) String appOS,
                                            @RequestBody AutoLoginRequest autoLoginRequest) {
         Optional<Account> accountByDevice = accountRepository.findByDeviceId(autoLoginRequest.getDeviceId());
 
