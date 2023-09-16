@@ -9,6 +9,7 @@ import com.repill.was.global.shard.enums.ItemType;
 import com.repill.was.market.entity.Market;
 import com.repill.was.market.entity.MarketId;
 import com.repill.was.market.entity.MarketRepository;
+import com.repill.was.member.controller.dto.request.CheckDuplicateNickNameRequest;
 import com.repill.was.member.controller.dto.request.MemberLoginRequest;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.entity.account.Account;
@@ -50,8 +51,11 @@ public class MemberFacade {
 
     private final DeviceRepository deviceRepository;
 
-    public Boolean checkDuplicateNickname(String insertedNickname) {
-        return memberQueries.findByMemberNickName(insertedNickname).isPresent();
+    public Boolean checkDuplicateNickname(String insertedNickname, boolean useKakaoNickname) {
+        if(useKakaoNickname) {
+            return true;
+        }
+        return memberQueries.findByMemberNickName(insertedNickname).isEmpty();
     }
 
     public List<RecentlyViewedItemResponse> getRecentlyViewList(MemberId memberId, int size, Long cursorId) {
@@ -102,7 +106,7 @@ public class MemberFacade {
         Member member = new Member(memberId,
                 accountId,
                 "address",
-                memberLoginRequest.getProperties().getProfileImage(),
+                memberLoginRequest.getKakaoAccount().getProfile().getProfileImage(),
                 memberLoginRequest.getKakaoAccount().getProfile().getNickname(),
                 null,
                 null,

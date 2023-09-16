@@ -56,7 +56,8 @@ public class FavoriteItemImpl implements FavoriteItemRepository {
                 .from(favoriteItem)
                 .where(favoriteItem.memberId.eq(memberId)
                         .and(cursorLt(cursorId)))
-                .offset(size)
+                .limit(size)
+                .orderBy(favoriteItem.createdAt.desc())
                 .fetch();
     }
 

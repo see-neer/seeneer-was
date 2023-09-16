@@ -45,7 +45,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    // todo 23.08.31 odo 재경님 같이 작업
     @ApiOperation("카카오 회원가입")
     @PostMapping("/create")
     public CommonResponse<Object> login(@AuthenticationPrincipal AccountId accountId,
@@ -63,8 +62,8 @@ public class MemberController {
 
     @ApiOperation("닉네임 중복 확인")
     @GetMapping("/check-duplicated-nickname")
-    public Boolean checkDuplicateNickname(CheckDuplicateNickNameRequest checkDuplicateNickNameRequest) {
-        return memberFacade.checkDuplicateNickname(checkDuplicateNickNameRequest.getInsertedNickname());
+    public Boolean checkDuplicateNickname(@RequestParam String insertedNickname, boolean useKakaoNickname) {
+        return memberFacade.checkDuplicateNickname(insertedNickname,useKakaoNickname);
     }
 
     @ApiOperation("최근 본 목록 호출")

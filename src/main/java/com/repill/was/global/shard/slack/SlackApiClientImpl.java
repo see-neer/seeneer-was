@@ -40,15 +40,15 @@ public class SlackApiClientImpl {
     }
 
     public void sendErrorMessage(String payload) {
-        webClientFactory
-                .get(WebClientFactory.ServiceDestination.SLACK)
-                .post()
-                .uri(uriBuilder -> uriBuilder.path("/services/T05299LLQ1L/B053ZR5LDSS/DB0kcZwHuDnIfGLF8m4M0lfV").build())
-                .bodyValue(payload)
-                .retrieve()
-                .onStatus(HttpStatus::is4xxClientError, this::mapToClientError)
-                .onStatus(HttpStatus::is5xxServerError, this::mapToSeverError)
-                .bodyToMono(String.class)
-                .block();
+//        webClientFactory
+//                .get(WebClientFactory.ServiceDestination.SLACK)
+//                .post()
+//                .uri(uriBuilder -> uriBuilder.path("/services/T05299LLQ1L/B053ZR5LDSS/DB0kcZwHuDnIfGLF8m4M0lfV").build())
+//                .bodyValue(payload)
+//                .retrieve()
+//                .onStatus(HttpStatus::is4xxClientError, this::mapToClientError)
+//                .onStatus(HttpStatus::is5xxServerError, this::mapToSeverError)
+//                .bodyToMono(String.class)
+//                .block();
     }
 }

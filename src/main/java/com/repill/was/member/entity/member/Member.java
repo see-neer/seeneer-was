@@ -24,7 +24,7 @@ public class Member {
 
     String address;
 
-    @Column(columnDefinition = "VARCHAR(50)")
+    @Column(columnDefinition = "TEXT")
     String imageSrc;
 
     @Column(columnDefinition = "VARCHAR(50)")

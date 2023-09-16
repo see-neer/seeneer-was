@@ -11,6 +11,7 @@ import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountRepository;
 import com.repill.was.member.entity.account.OSType;
+import com.repill.was.member.entity.device.DeviceRepository;
 import com.repill.was.member.entity.favoriteitems.FavoriteItem;
 import com.repill.was.member.entity.favoriteitems.FavoriteItemRepository;
 import com.repill.was.member.entity.member.Member;
@@ -24,6 +25,7 @@ import io.jsonwebtoken.Jwt;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,9 +42,11 @@ public class MockController {
     private final RecentlyViewedItemRepository recentlyViewedItemRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AccountRepository accountRepository;
+    private final MemberQueries memberQueries;
 
     private final FavoriteItemRepository favoriteItemRepository;
     private final MemberRepository memberRepository;
+    private final DeviceRepository deviceRepository;
 
     @ApiOperation("market 추가")
     @PostMapping("/mock-add-market")
@@ -92,6 +96,16 @@ public class MockController {
                 ItemType.valueOf(itemType),
                 itemId
         ));
+    }
+
+    @ApiOperation("카카오 로그인 초기화")
+    @DeleteMapping("/mock-delete-user")
+    public void addMockSelected(@AuthenticationPrincipal AccountId accountId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(BadRequestException::new);
+        memberRepository.delete(member);
+        Account account = accountRepository.findById(member.getAccountId()).orElseThrow(BadRequestException::new);
+        accountRepository.delete(account);
+        deviceRepository.clearTokenByAccountId(accountId);
     }
 
 //    @ApiOperation("테스트용 계정 추가")

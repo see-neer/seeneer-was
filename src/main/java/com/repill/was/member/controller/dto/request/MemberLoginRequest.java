@@ -53,23 +53,12 @@ public class MemberLoginRequest {
     public static class Properties {
         private String nickname;
 
-        @JsonProperty("profile_image")
-        private String profileImage;
-
         public String getNickname() {
             return nickname;
         }
 
         public void setNickname(String nickname) {
             this.nickname = nickname;
-        }
-
-        public String getProfileImage() {
-            return profileImage;
-        }
-
-        public void setProfileImage(String profile_image) {
-            this.profileImage = profile_image;
         }
     }
 
@@ -174,12 +163,23 @@ public class MemberLoginRequest {
     public static class Profile {
         private String nickname;
 
+        @JsonProperty("profile_image")
+        private String profileImage;
+
         public String getNickname() {
             return nickname;
         }
 
         public void setNickname(String nickname) {
             this.nickname = nickname;
+        }
+
+        public String getProfileImage() {
+            return profileImage;
+        }
+
+        public void setProfileImage(String profileImage) {
+            this.profileImage = profileImage;
         }
     }
 

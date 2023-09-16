@@ -10,6 +10,8 @@ public interface MemberRepository {
 
     Member save(Member member);
 
+    void delete(Member member);
+
     Optional<Member> findById(MemberId memberId);
 
     Optional<Member> findByAccountId(AccountId accountId);

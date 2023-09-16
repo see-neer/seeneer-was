@@ -52,7 +52,8 @@ public class RecentlyViewedItemImpl implements RecentlyViewedItemRepository {
                 .from(recentlyViewedItem)
                 .where(recentlyViewedItem.memberId.eq(memberId)
                         .and(cursorLt(cursorId)))
-                .offset(size)
+                .limit(size)
+                .orderBy(recentlyViewedItem.createdAt.desc())
                 .fetch();
     }
 
