@@ -47,6 +47,12 @@ public class Member {
 
     @Column(nullable = false)
     private String connectedAt;
+
+    @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
+    private LocalDateTime updatedAt;
+
+    @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
+    private LocalDateTime createdAt;
     
     public Member(MemberId memberId, String imageSrc, String nickname) {
         this.id = memberId;

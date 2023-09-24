@@ -26,11 +26,31 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath address = createString("address");
 
+    public final StringPath ageRange = createString("ageRange");
+
+    public final StringPath birthday = createString("birthday");
+
+    public final StringPath birthdayType = createString("birthdayType");
+
+    public final DateTimePath<java.time.LocalDateTime> closedAt = createDateTime("closedAt", java.time.LocalDateTime.class);
+
+    public final StringPath connectedAt = createString("connectedAt");
+
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+
+    public final StringPath gender = createString("gender");
+
     public final QMemberId id;
 
     public final StringPath imageSrc = createString("imageSrc");
 
-    public final StringPath name = createString("name");
+    public final NumberPath<Long> kakaoUserId = createNumber("kakaoUserId", Long.class);
+
+    public final DateTimePath<java.time.LocalDateTime> lastNickNameChangedAt = createDateTime("lastNickNameChangedAt", java.time.LocalDateTime.class);
+
+    public final StringPath nickname = createString("nickname");
+
+    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
     public QMember(String variable) {
         this(Member.class, forVariable(variable), INITS);

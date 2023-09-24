@@ -77,7 +77,8 @@ public class SwaggerConfig {
                 .securitySchemes(Arrays.asList(apiKey()))
                 .globalOperationParameters(getHeaderParameters())
                 .tags(new Tag(SwaggerTags.MEMBER, "회원 관리", 0),
-                        new Tag(SwaggerTags.ETC, "기타", 1));
+                        new Tag(SwaggerTags.ETC, "기타", 1),
+                        new Tag(SwaggerTags.REVIEW, "리뷰 관리", 2));
     }
 
     private ApiInfo apiInfo() {
@@ -120,5 +121,6 @@ public class SwaggerConfig {
     public static class SwaggerTags {
         public static final String MEMBER = "member";
         public static final String ETC = "etc";
+        public static final String REVIEW = "review";
     }
 }

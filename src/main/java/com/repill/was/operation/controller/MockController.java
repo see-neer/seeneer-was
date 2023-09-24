@@ -21,6 +21,8 @@ import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItem;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItemRepository;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.member.repository.jpa.RecentlyViewedItemJpaRepository;
+import com.repill.was.review.entity.Review;
+import com.repill.was.review.entity.ReviewRepository;
 import io.jsonwebtoken.Jwt;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +49,8 @@ public class MockController {
     private final FavoriteItemRepository favoriteItemRepository;
     private final MemberRepository memberRepository;
     private final DeviceRepository deviceRepository;
+
+    private final ReviewRepository reviewRepository;
 
     @ApiOperation("market 추가")
     @PostMapping("/mock-add-market")
@@ -96,6 +100,20 @@ public class MockController {
                 ItemType.valueOf(itemType),
                 itemId
         ));
+    }
+
+    @ApiOperation("리뷰 목록 추가")
+    @PostMapping("/mock-add-review")
+    public void addMockReview(@RequestParam Long memberId,
+                                @RequestParam String itemType,
+                                @RequestParam Long itemId) {
+        Review mock_content = Review.from(
+                reviewRepository.nextId(),
+                new MemberId(memberId),
+                ItemType.valueOf(itemType),
+                itemId,
+                "MOCK CONTENT");
+        reviewRepository.save(mock_content);
     }
 
     @ApiOperation("카카오 로그인 초기화")
