@@ -26,6 +26,7 @@ import com.repill.was.member.entity.member.MemberRepository;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItem;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItemId;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItemRepository;
+import com.repill.was.member.entity.recentlyviewditem.ValidateIsActiveItemService;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.member.repository.vo.RecentlyViewedItemInfoVO;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,7 @@ public class MemberFacade {
     private final AccountRepository accountRepository;
 
     private final DeviceRepository deviceRepository;
+    private final ValidateIsActiveItemService validateIsActiveItemService;
 
     public Boolean checkDuplicateNickname(String insertedNickname, boolean useKakaoNickname) {
         if(useKakaoNickname) {
@@ -95,8 +97,9 @@ public class MemberFacade {
         }).collect(Collectors.toList());
     }
 
-    public void deleteRecentlyView(RecentlyViewedItemId id, MemberId memberId) {
-        RecentlyViewedItem recentlyViewedItem = recentlyViewedItemRepository.findByIdAndAccountId(id, memberId).orElseThrow(() -> new BadRequestException("존재하지 않는 최근 본 목록 값 입니다."));
+    public void deleteRecentlyView(RecentlyViewedItemId id, Member member) {
+        RecentlyViewedItem recentlyViewedItem = recentlyViewedItemRepository.findByIdAndAccountId(id, member.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 최근 본 목록 값 입니다."));
+        recentlyViewedItem.canDeleteItem(validateIsActiveItemService, member);
         recentlyViewedItemRepository.delete(recentlyViewedItem);
     }
 

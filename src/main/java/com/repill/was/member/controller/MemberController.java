@@ -80,7 +80,7 @@ public class MemberController {
     public void deleteRecentlyView(@AuthenticationPrincipal AccountId accountId,
                                       @PathVariable Long id) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저입니다."));
-        memberFacade.deleteRecentlyView(new RecentlyViewedItemId(id), member.getId());
+        memberFacade.deleteRecentlyView(new RecentlyViewedItemId(id), member);
     }
 
     @ApiOperation("찜 목록 호출")

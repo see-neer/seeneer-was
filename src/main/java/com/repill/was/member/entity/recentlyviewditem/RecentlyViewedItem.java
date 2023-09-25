@@ -1,6 +1,9 @@
 package com.repill.was.member.entity.recentlyviewditem;
 
+import com.repill.was.festival.entity.Festival;
+import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.shard.enums.ItemType;
+import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,4 +51,7 @@ public class RecentlyViewedItem {
         );
     }
 
+    public boolean canDeleteItem(ValidateIsActiveItemService validateIsActiveItemService, Member member) {
+        return validateIsActiveItemService.canDeleteItem(member);
+    }
 }
