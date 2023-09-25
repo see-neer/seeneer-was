@@ -7,6 +7,7 @@ import com.repill.was.global.shard.response.CommonResponse;
 import com.repill.was.member.controller.dto.response.MainResponse;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.member.Member;
+import com.repill.was.member.entity.member.MemberNotFoundException;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.review.controller.dto.response.ReviewDetailResponse;
 import com.repill.was.review.controller.dto.response.ReviewListResponse;
@@ -28,6 +29,7 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewFacade reviewFacade;
+    //todo redis cache로 변경
     private final MemberQueries memberQueries;
 
     @ApiOperation("리뷰 관리 호출")
@@ -36,8 +38,8 @@ public class ReviewController {
                                                        @RequestParam String type,
                                                        @RequestParam(required = false) Long cursorId,
                                                        @RequestParam int size) {
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저 입니다."));
-        List<ReviewListResponse> lists = reviewFacade.getLists(member.getId(), ItemType.valueOf(type), cursorId, size);
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        List<ReviewListResponse> lists = reviewFacade.getReviewLists(member.getId(), ItemType.valueOf(type), cursorId, size);
         return CommonResponse.success(lists);
     }
 

@@ -2,6 +2,7 @@ package com.repill.was.review.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.repill.was.festival.entity.Festival;
 import com.repill.was.festival.entity.FestivalId;
 import com.repill.was.festival.entity.QFestival;
 import com.repill.was.global.sequencegenerator.SequenceGenerator;
@@ -61,7 +62,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     }
 
     @Override
-    public List<ReviewVO> getMarketList(MemberId memberId, Long cursorId, int size) {
+    public List<ReviewVO> getMarketReviewLists(MemberId memberId, MarketId cursorId, int size) {
         return jpaQueryFactory
                 .select(new QReviewVO(
                         review.id.id,
@@ -73,12 +74,12 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                 .leftJoin(market).on(review.itemId.eq(market.id.id))
                 .where(review.memberId.eq(memberId)
                         .and(review.itemType.eq(ItemType.MARKET)
-                                .and(cursorLt(cursorId))))
+                                .and(cursorLt(cursorId.getId()))))
                 .fetch();
     }
 
     @Override
-    public List<ReviewVO> getFestivalList(MemberId memberId, Long cursorId, int size) {
+    public List<ReviewVO> getFestivalReviewLists(MemberId memberId, FestivalId cursorId, int size) {
         return jpaQueryFactory
                 .select(new QReviewVO(
                         review.id.id,
@@ -90,7 +91,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                 .leftJoin(festival).on(review.itemId.eq(festival.id.id))
                 .where(review.memberId.eq(memberId)
                         .and(review.itemType.eq(ItemType.FESTIVAL)
-                                .and(cursorLt(cursorId))))
+                                .and(cursorLt(cursorId.getId()))))
                 .fetch();
     }
 

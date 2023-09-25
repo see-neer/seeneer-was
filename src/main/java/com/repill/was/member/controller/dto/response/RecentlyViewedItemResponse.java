@@ -4,6 +4,7 @@ import com.querydsl.core.annotations.QueryProjection;
 import com.repill.was.festival.entity.Festival;
 import com.repill.was.festival.entity.FestivalId;
 import com.repill.was.global.shard.enums.ItemType;
+import com.repill.was.global.shard.utils.TimeUtils;
 import com.repill.was.market.entity.Market;
 import com.repill.was.member.entity.recentlyviewditem.RecentlyViewedItem;
 import lombok.Getter;
@@ -52,7 +53,7 @@ public class RecentlyViewedItemResponse {
                 festival.getId().getId(),
                 ItemType.FESTIVAL.name(),
                 festival.getName(),
-                festival.getDate(),
+                TimeUtils.convertToISO_8061(festival.getDate()),
                 festival.getImageSrc(),
                 5,
                 100

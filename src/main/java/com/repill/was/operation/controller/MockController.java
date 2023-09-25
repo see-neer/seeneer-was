@@ -5,6 +5,7 @@ import com.repill.was.festival.entity.FestivalRepository;
 import com.repill.was.global.config.JwtTokenProvider;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.shard.enums.ItemType;
+import com.repill.was.global.shard.model.ImageListData;
 import com.repill.was.market.entity.Market;
 import com.repill.was.market.entity.MarketRepository;
 import com.repill.was.member.entity.account.Account;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -113,7 +115,8 @@ public class MockController {
                 new MemberId(memberId),
                 ItemType.valueOf(itemType),
                 itemId,
-                "MOCK CONTENT");
+                "MOCK CONTENT",
+                ImageListData.from(List.of()));
         reviewRepository.save(mock_content);
     }
 

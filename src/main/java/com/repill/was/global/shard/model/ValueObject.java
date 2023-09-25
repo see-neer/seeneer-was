@@ -1,4 +1,4 @@
-package com.repill.was.global.shard;
+package com.repill.was.global.shard.model;
 
 import java.io.Serializable;
 

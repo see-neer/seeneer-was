@@ -19,18 +19,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ReviewQueries {
-
     private final ReviewRepository reviewRepository;
 
-    public List<ReviewVO> getList(MemberId memberId, ItemType itemType, Long cursorId, int size) {
-        if(ItemType.MARKET.equals(itemType)) return reviewRepository.getMarketList(memberId, cursorId, size);
-        if(ItemType.FESTIVAL.equals(itemType)) return reviewRepository.getFestivalList(memberId, cursorId, size);
-        throw new BadRequestException("존재하지 않는 아이템 타입");
+    public List<ReviewVO> getMarketReviewLists(MemberId memberId, Long cursorId, int size) {
+        return reviewRepository.getMarketReviewLists(memberId, new MarketId(cursorId), size);
     }
 
-    public ReviewDetailVO getReviewDetail(Long id, Long itemId, ItemType itemType) {
-        if(ItemType.MARKET.equals(itemType)) return reviewRepository.getMarketReviewDetail(new ReviewId(id), new MarketId(itemId));
-        if(ItemType.FESTIVAL.equals(itemType)) return reviewRepository.getFestivalReviewDetail(new ReviewId(id), new FestivalId(itemId));
-        throw new BadRequestException("존재하지 않는 아이템 타입");
+    public List<ReviewVO> getFestivalReviewLists(MemberId memberId, Long cursorId, int size) {
+        return reviewRepository.getFestivalReviewLists(memberId, new FestivalId(cursorId), size);
+    }
+
+    public ReviewDetailVO getMarketReviewDetail(Long id, Long itemId) {
+        return reviewRepository.getMarketReviewDetail(new ReviewId(id), new MarketId(itemId));
+    }
+
+    public ReviewDetailVO getFestivalReviewDetail(Long id, Long itemId) {
+        return reviewRepository.getFestivalReviewDetail(new ReviewId(id), new FestivalId(itemId));
     }
 }

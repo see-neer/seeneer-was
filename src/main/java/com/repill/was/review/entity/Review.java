@@ -1,6 +1,8 @@
 package com.repill.was.review.entity;
 
 import com.repill.was.global.shard.enums.ItemType;
+import com.repill.was.global.shard.model.ImageListData;
+import com.repill.was.global.shard.model.ImageListDataConverter;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.member.MemberId;
 import lombok.Getter;
@@ -31,29 +33,35 @@ public class Review {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @Convert(converter = ImageListDataConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private ImageListData images;
+
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime updatedAt;
 
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
 
-    public Review(ReviewId id, MemberId memberId, ItemType itemType, Long itemId, String content, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Review(ReviewId id, MemberId memberId, ItemType itemType, Long itemId, String content, ImageListData images, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.memberId = memberId;
         this.itemType = itemType;
         this.itemId = itemId;
         this.content = content;
+        this.images = images;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
 
-    public static Review from(ReviewId id, MemberId memberId, ItemType itemType, Long itemId, String content) {
+    public static Review from(ReviewId id, MemberId memberId, ItemType itemType, Long itemId, String content, ImageListData images) {
         return new Review(
                 id,
                 memberId,
                 itemType,
                 itemId,
                 content,
+                images,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
