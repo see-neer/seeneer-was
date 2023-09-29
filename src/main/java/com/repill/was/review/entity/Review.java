@@ -1,13 +1,11 @@
 package com.repill.was.review.entity;
 
-import com.repill.was.global.shard.enums.ItemType;
-import com.repill.was.global.shard.model.ImageListData;
-import com.repill.was.global.shard.model.ImageListDataConverter;
-import com.repill.was.member.entity.account.AccountId;
+import com.repill.was.global.enums.ItemType;
+import com.repill.was.global.model.ImageListData;
+import com.repill.was.global.model.ImageListDataConverter;
 import com.repill.was.member.entity.member.MemberId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.commons.collections4.BidiMap;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

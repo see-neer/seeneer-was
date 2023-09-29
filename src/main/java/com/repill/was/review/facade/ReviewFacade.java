@@ -1,14 +1,14 @@
 package com.repill.was.review.facade;
 
-import com.repill.was.global.shard.enums.ItemType;
+import com.repill.was.global.enums.ItemType;
 import com.repill.was.member.controller.dto.response.view.MemberView;
 import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.review.controller.dto.response.ReviewDetailResponse;
 import com.repill.was.review.controller.dto.response.ReviewListResponse;
 import com.repill.was.review.query.vo.ReviewDetailVO;
 import com.repill.was.review.query.vo.ReviewVO;
-import com.repill.was.global.shard.factory.ItemValidateFactory;
-import com.repill.was.global.shard.factory.ItemValidator;
+import com.repill.was.global.factory.ItemValidateFactory;
+import com.repill.was.global.factory.ItemValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

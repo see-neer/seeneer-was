@@ -1,8 +1,8 @@
 package com.repill.was.operation.controller;
 
 
-import com.repill.was.global.shard.utils.SingleDataResponse;
-import com.repill.was.member.entity.member.ClosingAccountReason;
+import com.repill.was.global.utils.SingleDataResponse;
+import com.repill.was.global.enums.ClosingAccountReason;
 import com.repill.was.operation.controller.dto.response.ClosingAccountReasonResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

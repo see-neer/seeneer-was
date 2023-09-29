@@ -1,8 +1,5 @@
 package com.repill.was.member.entity.account;
 
-import com.repill.was.member.entity.member.Member;
-import com.repill.was.member.entity.member.MemberId;
-
 import java.util.Optional;
 
 public interface AccountRepository {
@@ -13,7 +10,7 @@ public interface AccountRepository {
 
     Optional<Account> findById(AccountId accountId);
 
-    Optional<Account> findByDeviceId(String deviceId);
+    Optional<Account> findByDevice(Device device);
 
     void delete(Account account);
 }

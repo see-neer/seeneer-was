@@ -1,6 +1,6 @@
 package com.repill.was.review.entity;
 
-import com.repill.was.global.shard.model.ResourceNotFoundException;
+import com.repill.was.global.exception.ResourceNotFoundException;
 
 public class ReviewItemTypeNotFoundException extends ResourceNotFoundException {
 }

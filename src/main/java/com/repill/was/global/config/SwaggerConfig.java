@@ -77,7 +77,7 @@ public class SwaggerConfig {
                 .securitySchemes(Arrays.asList(apiKey()))
                 .globalOperationParameters(getHeaderParameters())
                 .tags(new Tag(SwaggerTags.MEMBER, "회원 관리", 0),
-                        new Tag(SwaggerTags.ETC, "기타", 1),
+                        new Tag(SwaggerTags.MAIN, "메인", 1),
                         new Tag(SwaggerTags.REVIEW, "리뷰 관리", 2));
     }
 
@@ -120,7 +120,7 @@ public class SwaggerConfig {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class SwaggerTags {
         public static final String MEMBER = "member";
-        public static final String ETC = "etc";
+        public static final String MAIN = "main";
         public static final String REVIEW = "review";
     }
 }

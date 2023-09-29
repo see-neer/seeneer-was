@@ -1,6 +1,6 @@
 package com.repill.was.operation.controller.dto.response;
 
-import com.repill.was.member.entity.member.ClosingAccountReason;
+import com.repill.was.global.enums.ClosingAccountReason;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

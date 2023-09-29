@@ -1,9 +1,9 @@
 package com.repill.was.global.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.repill.was.global.shard.response.CommonResponse;
-import com.repill.was.global.shard.response.ErrorCode;
-import com.repill.was.global.shard.slack.SlackApiClientImpl;
+import com.repill.was.global.response.CommonResponse;
+import com.repill.was.global.response.ErrorCode;
+import com.repill.was.global.slack.SlackApiClientImpl;
 import io.opentelemetry.api.trace.Span;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +25,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
 
-import static com.repill.was.global.shard.response.CommonResponse.*;
-import static com.repill.was.global.shard.response.CommonResponse.Error;
-
 @Slf4j
 @ControllerAdvice
 @RequiredArgsConstructor
@@ -48,7 +45,7 @@ public class GlobalExceptionHandler {
     public CommonResponse<Object> handleException(Exception exception) {
         log.error(exception.getMessage(), exception);
         sendErrorMessageToSlack(exception, activeProfile, ExceptionErrorType.HARD);
-        return fail(exception.getMessage(), ErrorCode.COMMON_SYSTEM_ERROR.name(), ErrorType.ERROR);
+        return CommonResponse.fail(exception.getMessage(), ErrorCode.COMMON_SYSTEM_ERROR.name(), CommonResponse.ErrorType.ERROR);
     }
 
     private void sendErrorMessageToSlack(Exception e, String activeProfile, ExceptionErrorType type) {
@@ -85,7 +82,7 @@ public class GlobalExceptionHandler {
     public CommonResponse<Object> BusinessException(Exception exception) {
         log.error(exception.getMessage(), exception);
         sendErrorMessageToSlack(exception, activeProfile, ExceptionErrorType.SOFT);
-        return fail(exception.getMessage(), ErrorCode.COMMON_ILLEGAL_STATUS.name(), ErrorType.WARNING);
+        return CommonResponse.fail(exception.getMessage(), ErrorCode.COMMON_ILLEGAL_STATUS.name(), CommonResponse.ErrorType.WARNING);
     }
 
     @ResponseBody
@@ -93,7 +90,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({MethodArgumentNotValidException.class})
     protected CommonResponse<Object> handle(MethodArgumentNotValidException exception)
             throws JsonProcessingException {
-        return fail(Error.of(exception.getBindingResult()));
+        return CommonResponse.fail(CommonResponse.Error.of(exception.getBindingResult()));
     }
 
     // 잘못된 parameter를 보낼 때
@@ -110,7 +107,7 @@ public class GlobalExceptionHandler {
     })
     protected CommonResponse<Object> handle(Exception exception) {
         log.error(exception.getMessage(), exception);
-        return fail(exception.getMessage(), ErrorCode.COMMON_INVALID_PARAMETER.name(), ErrorType.ERROR);
+        return CommonResponse.fail(exception.getMessage(), ErrorCode.COMMON_INVALID_PARAMETER.name(), CommonResponse.ErrorType.ERROR);
     }
 
     // 인증값이 없을 때
@@ -118,7 +115,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     protected CommonResponse<Object> handleAuthenticationException(AuthenticationException exception) {
-        return fail(exception.getMessage(), ErrorCode.COMMON_UNAUTHORIZED.name(), ErrorType.ERROR);
+        return CommonResponse.fail(exception.getMessage(), ErrorCode.COMMON_UNAUTHORIZED.name(), CommonResponse.ErrorType.ERROR);
     }
 
     // 권한에 맞지 않는 호출이 발생 할 때
@@ -126,7 +123,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     protected CommonResponse<Object> handleAccessDeniedException(AccessDeniedException exception) {
-        return fail(ErrorCode.COMMON_FORBIDDEN.getErrorMsg(), ErrorCode.COMMON_FORBIDDEN.name(), ErrorType.ERROR);
+        return CommonResponse.fail(ErrorCode.COMMON_FORBIDDEN.getErrorMsg(), ErrorCode.COMMON_FORBIDDEN.name(), CommonResponse.ErrorType.ERROR);
     }
 }
 

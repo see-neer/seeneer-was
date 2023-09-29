@@ -24,7 +24,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final com.repill.was.member.entity.account.QAccountId accountId;
 
-    public final StringPath address = createString("address");
+    public final QAddress address;
 
     public final StringPath ageRange = createString("ageRange");
 
@@ -38,6 +38,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
+    public final ListPath<FavoriteItem, QFavoriteItem> favoriteItems = this.<FavoriteItem, QFavoriteItem>createList("favoriteItems", FavoriteItem.class, QFavoriteItem.class, PathInits.DIRECT2);
+
     public final StringPath gender = createString("gender");
 
     public final QMemberId id;
@@ -46,9 +48,11 @@ public class QMember extends EntityPathBase<Member> {
 
     public final NumberPath<Long> kakaoUserId = createNumber("kakaoUserId", Long.class);
 
-    public final DateTimePath<java.time.LocalDateTime> lastNickNameChangedAt = createDateTime("lastNickNameChangedAt", java.time.LocalDateTime.class);
+    public final ListPath<MemberFollower, QMemberFollower> memberFollowers = this.<MemberFollower, QMemberFollower>createList("memberFollowers", MemberFollower.class, QMemberFollower.class, PathInits.DIRECT2);
 
     public final StringPath nickname = createString("nickname");
+
+    public final ListPath<RecentlyViewedItem, QRecentlyViewedItem> recentlyViewedItems = this.<RecentlyViewedItem, QRecentlyViewedItem>createList("recentlyViewedItems", RecentlyViewedItem.class, QRecentlyViewedItem.class, PathInits.DIRECT2);
 
     public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
@@ -71,6 +75,7 @@ public class QMember extends EntityPathBase<Member> {
     public QMember(Class<? extends Member> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.accountId = inits.isInitialized("accountId") ? new com.repill.was.member.entity.account.QAccountId(forProperty("accountId")) : null;
+        this.address = inits.isInitialized("address") ? new QAddress(forProperty("address")) : null;
         this.id = inits.isInitialized("id") ? new QMemberId(forProperty("id")) : null;
     }
 

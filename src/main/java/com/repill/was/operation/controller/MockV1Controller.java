@@ -1,11 +1,5 @@
 package com.repill.was.operation.controller;
 
-import com.repill.was.global.exception.BadRequestException;
-import com.repill.was.member.entity.account.AccountId;
-import com.repill.was.member.entity.member.Member;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

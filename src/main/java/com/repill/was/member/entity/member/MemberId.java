@@ -1,6 +1,6 @@
 package com.repill.was.member.entity.member;
 
-import com.repill.was.global.shard.model.ValueObject;
+import com.repill.was.global.model.ValueObject;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

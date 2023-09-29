@@ -1,9 +1,7 @@
 package com.repill.was.review.query;
 
-import com.repill.was.festival.entity.FestivalId;
-import com.repill.was.global.exception.BadRequestException;
-import com.repill.was.global.shard.enums.ItemType;
-import com.repill.was.market.entity.MarketId;
+import com.repill.was.item.entity.FestivalId;
+import com.repill.was.item.entity.MarketId;
 import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.review.entity.ReviewId;
 import com.repill.was.review.entity.ReviewRepository;

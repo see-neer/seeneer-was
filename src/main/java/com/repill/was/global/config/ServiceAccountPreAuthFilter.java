@@ -1,6 +1,6 @@
 package com.repill.was.global.config;
 
-import com.repill.was.global.shard.enums.Headers;
+import com.repill.was.global.enums.Headers;
 import com.repill.was.member.entity.account.AccountId;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;

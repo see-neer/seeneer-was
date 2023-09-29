@@ -2,15 +2,13 @@ package com.repill.was.review.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.repill.was.festival.entity.Festival;
-import com.repill.was.festival.entity.FestivalId;
-import com.repill.was.festival.entity.QFestival;
 import com.repill.was.global.sequencegenerator.SequenceGenerator;
-import com.repill.was.global.shard.enums.ItemType;
-import com.repill.was.market.entity.MarketId;
-import com.repill.was.market.entity.QMarket;
+import com.repill.was.global.enums.ItemType;
+import com.repill.was.item.entity.FestivalId;
+import com.repill.was.item.entity.MarketId;
+import com.repill.was.item.entity.QFestival;
+import com.repill.was.item.entity.QMarket;
 import com.repill.was.member.entity.member.MemberId;
-import com.repill.was.review.entity.QReview;
 import com.repill.was.review.entity.Review;
 import com.repill.was.review.entity.ReviewId;
 import com.repill.was.review.entity.ReviewRepository;
@@ -22,13 +20,11 @@ import com.repill.was.review.repository.jpa.ReviewJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static com.repill.was.festival.entity.QFestival.festival;
-import static com.repill.was.market.entity.QMarket.market;
-import static com.repill.was.member.entity.favoriteitems.QFavoriteItem.favoriteItem;
+import static com.repill.was.item.entity.QFestival.festival;
+import static com.repill.was.item.entity.QMarket.market;
 import static com.repill.was.review.entity.QReview.review;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -67,7 +63,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                 .select(new QReviewVO(
                         review.id.id,
                         market.id.id,
-                        market.imageSrc,
+                        market.images,
                         review.createdAt,
                         review.content))
                 .from(review)
@@ -84,7 +80,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                 .select(new QReviewVO(
                         review.id.id,
                         festival.id.id,
-                        festival.imageSrc,
+                        festival.images,
                         review.createdAt,
                         review.content))
                 .from(review)
@@ -100,7 +96,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         return jpaQueryFactory
                 .select(new QReviewDetailVO(
                         market.id.id,
-                        market.imageSrc,
+                        market.images,
                         review.createdAt,
                         review.content,
                         market.name
@@ -116,7 +112,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
         return jpaQueryFactory
                 .select(new QReviewDetailVO(
                         festival.id.id,
-                        festival.imageSrc,
+                        festival.images,
                         review.createdAt,
                         review.content,
                         festival.name

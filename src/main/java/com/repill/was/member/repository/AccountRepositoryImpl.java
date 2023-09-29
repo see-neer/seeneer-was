@@ -4,6 +4,7 @@ import com.repill.was.global.sequencegenerator.SequenceGenerator;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountRepository;
+import com.repill.was.member.entity.account.Device;
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.member.entity.member.MemberRepository;
@@ -37,8 +38,8 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public Optional<Account> findByDeviceId(String deviceId) {
-        return accountJpaRepository.findByDeviceId(deviceId);
+    public Optional<Account> findByDevice(Device device) {
+        return accountJpaRepository.findByDevice(device);
     }
 
     @Override

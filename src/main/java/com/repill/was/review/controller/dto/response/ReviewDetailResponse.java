@@ -1,12 +1,13 @@
 package com.repill.was.review.controller.dto.response;
 
-import com.repill.was.global.shard.utils.TimeUtils;
+import com.repill.was.global.utils.TimeUtils;
 import com.repill.was.member.controller.dto.response.view.MemberView;
 import com.repill.was.review.query.vo.ReviewDetailVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -14,7 +15,7 @@ public class ReviewDetailResponse {
 
     private Long id;
     private String title;
-    private String imageSrc;
+    private List<String> images;
     private String content;
     private double score;
     private int likeCount;
@@ -40,10 +41,10 @@ public class ReviewDetailResponse {
     }
 
 
-    public ReviewDetailResponse(Long id, String title, String imageSrc, String content, double score, int likeCount, String createdAt, Comment comment) {
+    public ReviewDetailResponse(Long id, String title, List<String> imageSrc, String content, double score, int likeCount, String createdAt, Comment comment) {
         this.id = id;
         this.title = title;
-        this.imageSrc = imageSrc;
+        this.images = imageSrc;
         this.content = content;
         this.score = score;
         this.likeCount = likeCount;
@@ -55,13 +56,12 @@ public class ReviewDetailResponse {
         return new ReviewDetailResponse(
                 reviewDetailVO.getId(),
                 reviewDetailVO.getTitle(),
-                reviewDetailVO.getImageSrc(),
+                reviewDetailVO.getImageSrc().getImages(),
                 reviewDetailVO.getContent(),
                 score,
                 likeCount,
                 TimeUtils.convertToISO_8061(reviewDetailVO.getDate()),
                 comment
         );
-
     }
 }

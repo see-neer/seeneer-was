@@ -2,9 +2,8 @@ package com.repill.was.review.controller;
 
 import com.repill.was.global.config.SwaggerConfig;
 import com.repill.was.global.exception.BadRequestException;
-import com.repill.was.global.shard.enums.ItemType;
-import com.repill.was.global.shard.response.CommonResponse;
-import com.repill.was.member.controller.dto.response.MainResponse;
+import com.repill.was.global.enums.ItemType;
+import com.repill.was.global.response.CommonResponse;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberNotFoundException;

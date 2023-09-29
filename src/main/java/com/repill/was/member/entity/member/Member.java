@@ -3,12 +3,9 @@ package com.repill.was.member.entity.member;
 import com.repill.was.member.entity.account.AccountId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.Locale;
+import java.util.List;
 
 @Getter
 @Entity
@@ -16,13 +13,32 @@ import java.util.Locale;
 public class Member {
 
     @EmbeddedId
-    MemberId id;
+    private MemberId id;
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "accountId", nullable = false))
-    AccountId accountId;
+    private AccountId accountId;
 
-    String address;
+    @ElementCollection
+    @CollectionTable(name = "member_favorite_items",
+    joinColumns = @JoinColumn(name = "member_id"))
+    @OrderColumn(name = "member_favorite_items_idx")
+    private List<FavoriteItem> favoriteItems;
+
+    @ElementCollection
+    @CollectionTable(name = "member_follower",
+            joinColumns = @JoinColumn(name = "member_id"))
+    @OrderColumn(name = "member_follower_idx")
+    private List<MemberFollower> memberFollowers;
+
+    @ElementCollection
+    @CollectionTable(name = "member_recently_viewed_item",
+            joinColumns = @JoinColumn(name = "member_id"))
+    @OrderColumn(name = "member_recently_viewed_item_idx")
+    private List<RecentlyViewedItem> recentlyViewedItems;
+
+    @Embedded
+    private Address address;
 
     @Column(columnDefinition = "TEXT")
     String imageSrc;
@@ -33,19 +49,18 @@ public class Member {
     @Column(columnDefinition = "DATETIME(3)")
     private LocalDateTime closedAt; // 탈퇴 사용자인지 flag
 
-    @Column(columnDefinition = "DATETIME(3)")
-    private LocalDateTime lastNickNameChangedAt;
-
-
     @Column(nullable = false, unique = true)
     private Long kakaoUserId; // Kakao 사용자의 고유 ID (또는 다른 적절한 유일한 식별자)
 
+    @Column(columnDefinition = "VARCHAR(50)")
     private String ageRange;
+    @Column(columnDefinition = "VARCHAR(50)")
     private String birthday;
+    @Column(columnDefinition = "VARCHAR(50)")
     private String birthdayType;
+    @Column(columnDefinition = "VARCHAR(50)")
     private String gender;
-
-    @Column(nullable = false)
+    @Column(columnDefinition = "VARCHAR(50)", nullable = false)
     private String connectedAt;
 
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
@@ -59,34 +74,4 @@ public class Member {
         this.imageSrc = imageSrc;
         this.nickname = nickname;
     }
-
-    public Member(MemberId id, AccountId accountId, String address, String imageSrc, String nickname, LocalDateTime closedAt, LocalDateTime lastNickNameChangedAt, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt) {
-        this.id = id;
-        this.accountId = accountId;
-        this.address = address;
-        this.imageSrc = imageSrc;
-        this.nickname = nickname;
-        this.closedAt = closedAt;
-        this.lastNickNameChangedAt = lastNickNameChangedAt;
-        this.kakaoUserId = kakaoUserId;
-        this.ageRange = ageRange;
-        this.birthday = birthday;
-        this.birthdayType = birthdayType;
-        this.gender = gender;
-        this.connectedAt = connectedAt;
-    }
-
-    public static Member notExistMember() {
-        return new Member(null, null, null);
-    }
-
-    public void markAsClosed() {
-        this.closedAt = LocalDateTime.now();
-    }
-
-    public void tryChangeNickname(String nickname) {
-        this.nickname = nickname;
-        this.lastNickNameChangedAt = LocalDateTime.now();
-    }
-
 }

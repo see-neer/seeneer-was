@@ -1,10 +1,10 @@
 package com.repill.was.global.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.repill.was.global.shard.enums.Headers;
-import com.repill.was.global.shard.response.CommonResponse;
-import com.repill.was.global.shard.response.CommonResponse.ErrorType;
-import com.repill.was.global.shard.response.ErrorCode;
+import com.repill.was.global.enums.Headers;
+import com.repill.was.global.response.CommonResponse;
+import com.repill.was.global.response.CommonResponse.ErrorType;
+import com.repill.was.global.response.ErrorCode;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
