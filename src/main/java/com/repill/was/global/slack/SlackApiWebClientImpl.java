@@ -3,6 +3,7 @@ package com.repill.was.global.slack;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.repill.was.global.config.WebClientFactory;
+import com.repill.was.global.config.WebClientProperty;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.response.CommonResponse;
 import org.springframework.stereotype.Component;
@@ -10,12 +11,12 @@ import org.springframework.web.reactive.function.client.ClientResponse;
 import reactor.core.publisher.Mono;
 
 @Component
-public class SlackApiClientImpl {
+public class SlackApiWebClientImpl implements SlackApiClient{
 
     private final WebClientFactory webClientFactory;
 
-    public SlackApiClientImpl(WebClientFactory webClientFactory) {
-        this.webClientFactory = webClientFactory;
+    public SlackApiWebClientImpl() {
+        this.webClientFactory = new WebClientFactory(new WebClientProperty());
     }
 
     private Mono<Error> mapToClientError(ClientResponse response) {

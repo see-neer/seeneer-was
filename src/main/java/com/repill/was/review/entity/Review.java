@@ -1,6 +1,7 @@
 package com.repill.was.review.entity;
 
 import com.repill.was.global.enums.ItemType;
+import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.model.ImageListData;
 import com.repill.was.global.model.ImageListDataConverter;
 import com.repill.was.member.entity.member.MemberId;
@@ -63,5 +64,11 @@ public class Review {
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
+    }
+
+    public void updateImage(ImageListData changeImageList, String changeContent) {
+        this.images = changeImageList;
+        this.content = changeContent;
+        this.updatedAt = LocalDateTime.now();
     }
 }

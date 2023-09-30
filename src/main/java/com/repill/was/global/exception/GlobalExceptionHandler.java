@@ -3,7 +3,9 @@ package com.repill.was.global.exception;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.repill.was.global.response.CommonResponse;
 import com.repill.was.global.response.ErrorCode;
-import com.repill.was.global.slack.SlackApiClientImpl;
+import com.repill.was.global.slack.SlackApRestTemplateImpl;
+import com.repill.was.global.slack.SlackApiWebClientImpl;
+import com.repill.was.global.slack.SlackService;
 import io.opentelemetry.api.trace.Span;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +32,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
-    private final SlackApiClientImpl slackApiClient;
+    private final SlackService slackService;
     @Value("${spring.profiles.active}")
     private String activeProfile;
 
@@ -60,8 +62,12 @@ public class GlobalExceptionHandler {
         message += "*Time : " + time + "* \n";
         message += "*Message : " + e.getMessage() + "* \n";
         message += getStackTrace(e);
-        slackApiClient.sendErrorMessage("{\"text\": \"" + message + "\"}");
+        //Webclient
+        slackService.sendSlackMessage("{\"text\": \"" + message + "\"}", new SlackApiWebClientImpl());
+        //RestTemplate
+        slackService.sendSlackMessage("{\"text\": \"" + message + "\"}", new SlackApRestTemplateImpl());
     }
+
     private static String getStackTrace(Exception e) {
         String trace = "";
         String trace2 = "";

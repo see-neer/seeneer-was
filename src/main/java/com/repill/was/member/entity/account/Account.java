@@ -43,17 +43,23 @@ public class Account implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public static Account newOne(AccountId accountId, Device device) {
+    public Account newOne(AccountId id, Device device, MemberId member) {
         return new Account(
-                accountId,
+                id,
                 device,
-                null,
+                member,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
     }
 
-    public void createMember(MemberId memberId) {
-        this.memberId = memberId;
+    public void changeDeviceInfo(Device device) {
+        this.device = device;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void logout() {
+        this.device = this.device.logout();
+        this.updatedAt = LocalDateTime.now();
     }
 }

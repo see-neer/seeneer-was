@@ -3,6 +3,8 @@ package com.repill.was.member.entity.member;
 import com.repill.was.member.entity.account.AccountId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
