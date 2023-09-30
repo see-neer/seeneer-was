@@ -19,6 +19,9 @@ public class Device {
     @Column(columnDefinition = "VARCHAR(256)", nullable = false)
     private String token;
 
+    @Column(columnDefinition = "VARCHAR(256)", nullable = false)
+    private String deviceId;
+
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(10)", nullable = false)
     private OSType osType;
@@ -26,9 +29,10 @@ public class Device {
     @Column(columnDefinition = "DATETIME(3)")
     private LocalDateTime logoutAt;
 
-    public Device(AccountId accountId, String token, OSType osType, LocalDateTime logoutAt) {
+    public Device(AccountId accountId, String token, String deviceId, OSType osType, LocalDateTime logoutAt) {
         this.accountId = accountId;
         this.token = token;
+        this.deviceId = deviceId;
         this.osType = osType;
         this.logoutAt = logoutAt;
     }
@@ -37,6 +41,7 @@ public class Device {
         return new Device(
                 this.accountId,
                 this.token,
+                this.deviceId,
                 this.osType,
                 LocalDateTime.now()
         );

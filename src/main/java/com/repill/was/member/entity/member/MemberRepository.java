@@ -16,5 +16,7 @@ public interface MemberRepository {
 
     Optional<Member> findByAccountId(AccountId accountId);
 
+    Optional<Member> findBannedExistByDeviceId(AccountId accountId, String deviceId);
+
     Optional<Member> findByMemberNickName(String nickName);
 }

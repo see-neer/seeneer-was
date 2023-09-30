@@ -8,13 +8,16 @@ import com.repill.was.global.enums.ItemType;
 
 
 import com.repill.was.item.entity.*;
+import com.repill.was.member.controller.command.LoginCommand;
 import com.repill.was.member.controller.dto.request.MemberLoginRequest;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
+import com.repill.was.member.entity.account.AccountNotFoundException;
 import com.repill.was.member.entity.account.AccountRepository;
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberId;
+import com.repill.was.member.entity.member.MemberNotFoundException;
 import com.repill.was.member.entity.member.MemberRepository;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.member.query.vo.RecentlyViewedItemInfoVO;
@@ -23,17 +26,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class MemberFacade {
-
-    private final MarketRepository marketRepository;
     private final MemberQueries memberQueries;
-
     private final MemberRepository memberRepository;
-    private final FestivalRepository festivalRepository;
     private final AccountRepository accountRepository;
 
     public Boolean checkDuplicateNickname(String insertedNickname, boolean useKakaoNickname) {
@@ -88,27 +88,21 @@ public class MemberFacade {
 //        recentlyViewedItemRepository.delete(recentlyViewedItem);
     }
 
-    @Transactional
-    public void login(MemberLoginRequest memberLoginRequest, AccountId accountId) {
-//        MemberId memberId = memberRepository.nextId();
-//        Member member = new Member(memberId,
-//                accountId,
-//                "address",
-//                memberLoginRequest.getKakaoAccount().getProfile().getProfileImage(),
-//                memberLoginRequest.getKakaoAccount().getProfile().getNickname(),
-//                null,
-//                null,
-//                memberLoginRequest.getId(),
-//                memberLoginRequest.getKakaoAccount().getAgeRange(),
-//                memberLoginRequest.getKakaoAccount().getBirthday(),
-//                memberLoginRequest.getKakaoAccount().getBirthdayType(),
-//                memberLoginRequest.getKakaoAccount().getGender(),
-//                memberLoginRequest.getConnectedAt());
-//        memberRepository.save(member);
-//        Account account = accountRepository.findById(accountId).orElseThrow(() ->new BadRequestException());
-//        account.createMember(member.getId());
-
-//        Device allByAccountId = deviceRepository.findAllByAccountId(accountId).get(0);
-//        allByAccountId.createMember(member.getId());
+    public void login(LoginCommand loginCommand) {
+        Account account = accountRepository.findById(loginCommand.getAccountId()).orElseThrow(AccountNotFoundException::new);
+        Member member = memberRepository.findBannedExistByDeviceId(loginCommand.getAccountId(), loginCommand.getDeviceId()).orElse(Member.createNotBannedMember());
+        MemberId memberId = memberRepository.nextId();
+        account.createMemberFromKakao(
+                member,
+                memberId,
+                account.getId(),
+                loginCommand.getProfileImage(),
+                loginCommand.getNickname(),
+                loginCommand.getId(),
+                loginCommand.getAgeRange(),
+                loginCommand.getBirthday(),
+                loginCommand.getBirthdayType(),
+                loginCommand.getGender(),
+                loginCommand.getConnectedAt());
     }
 }

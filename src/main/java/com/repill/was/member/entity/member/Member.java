@@ -1,9 +1,9 @@
 package com.repill.was.member.entity.member;
 
+import com.repill.was.global.enums.AuthType;
 import com.repill.was.member.entity.account.AccountId;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Entity
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class Member {
 
     @EmbeddedId
@@ -48,6 +48,8 @@ public class Member {
     @Column(columnDefinition = "VARCHAR(50)")
     private String nickname;
 
+    @Column(columnDefinition = "VARCHAR(50)")
+    private AuthType authType;
     @Column(columnDefinition = "DATETIME(3)")
     private LocalDateTime closedAt; // 탈퇴 사용자인지 flag
 
@@ -66,14 +68,96 @@ public class Member {
     private String connectedAt;
 
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
+    private LocalDateTime bannedAt;
+    @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime updatedAt;
 
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
-    
-    public Member(MemberId memberId, String imageSrc, String nickname) {
-        this.id = memberId;
+
+
+    public Member(MemberId id, AccountId accountId, List<FavoriteItem> favoriteItems, List<MemberFollower> memberFollowers, List<RecentlyViewedItem> recentlyViewedItems, Address address, String imageSrc, String nickname, AuthType authType, LocalDateTime closedAt, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt, LocalDateTime updatedAt, LocalDateTime createdAt) {
+        this.id = id;
+        this.accountId = accountId;
+        this.favoriteItems = favoriteItems;
+        this.memberFollowers = memberFollowers;
+        this.recentlyViewedItems = recentlyViewedItems;
+        this.address = address;
         this.imageSrc = imageSrc;
         this.nickname = nickname;
+        this.authType = authType;
+        this.closedAt = closedAt;
+        this.kakaoUserId = kakaoUserId;
+        this.ageRange = ageRange;
+        this.birthday = birthday;
+        this.birthdayType = birthdayType;
+        this.gender = gender;
+        this.connectedAt = connectedAt;
+        this.updatedAt = updatedAt;
+        this.createdAt = createdAt;
     }
+
+    public Member(LocalDateTime bannedAt) {
+        this.bannedAt = bannedAt;
+    }
+
+    public void addMemberFollowers(MemberFollower memberFollower) {
+        List<MemberFollower> originalMemberFollower = this.memberFollowers;
+        originalMemberFollower.add(memberFollower);
+        this.memberFollowers = originalMemberFollower;
+    }
+
+    public void addRecentlyViewedItems(RecentlyViewedItem recentlyViewedItem) {
+        List<RecentlyViewedItem> originalRecentlyViewedItem = this.recentlyViewedItems;
+        originalRecentlyViewedItem.add(recentlyViewedItem);
+        this.recentlyViewedItems = originalRecentlyViewedItem;
+    }
+    public void addFavoriteItem(FavoriteItem favoriteItem) {
+        List<FavoriteItem> originalFavoriteItem = this.favoriteItems;
+        originalFavoriteItem.add(favoriteItem);
+        this.favoriteItems = originalFavoriteItem;
+    }
+
+    public Boolean checkBannedMember() {
+        if(this.bannedAt != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public static Member createNotBannedMember() {
+        return new Member(null);
+    }
+    public static Member createKaKaoMember(MemberId memberId,
+                                    AccountId accountId,
+                                    String imageSrc,
+                                    String nickname,
+                                    Long kakaoUserId,
+                                    String ageRange,
+                                    String birthday,
+                                    String birthdayType,
+                                    String gender,
+                                    String connectedAt) {
+        return new Member(
+                memberId,
+                accountId,
+                null,
+                null,
+                null,
+                null,
+                imageSrc,
+                nickname,
+                AuthType.KAKAO,
+                null,
+                kakaoUserId,
+                ageRange,
+                birthday,
+                birthdayType,
+                gender,
+                connectedAt,
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+    }
+
 }

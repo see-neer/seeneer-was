@@ -28,6 +28,10 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath ageRange = createString("ageRange");
 
+    public final EnumPath<com.repill.was.global.enums.AuthType> authType = createEnum("authType", com.repill.was.global.enums.AuthType.class);
+
+    public final DateTimePath<java.time.LocalDateTime> bannedAt = createDateTime("bannedAt", java.time.LocalDateTime.class);
+
     public final StringPath birthday = createString("birthday");
 
     public final StringPath birthdayType = createString("birthdayType");

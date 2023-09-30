@@ -4,6 +4,7 @@ import com.repill.was.global.config.SwaggerConfig;
 import com.repill.was.global.enums.OSType;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.response.CommonResponse;
+import com.repill.was.member.controller.command.LoginCommand;
 import com.repill.was.member.controller.dto.request.*;
 import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
@@ -44,7 +45,7 @@ public class MemberController {
     @PostMapping("/create")
     public CommonResponse<Object> login(@AuthenticationPrincipal AccountId accountId,
                                         @RequestBody MemberLoginRequest memberLoginRequest) {
-        memberFacade.login(memberLoginRequest, accountId);
+        memberFacade.login(LoginCommand.request(memberLoginRequest, accountId));
         return CommonResponse.success(null);
     }
 

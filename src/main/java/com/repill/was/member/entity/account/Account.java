@@ -1,6 +1,10 @@
 package com.repill.was.member.entity.account;
 
 import com.repill.was.global.enums.OSType;
+import com.repill.was.global.exception.BadRequestException;
+import com.repill.was.member.controller.dto.request.MemberLoginRequest;
+import com.repill.was.member.entity.member.Member;
+import com.repill.was.member.entity.member.MemberBannedException;
 import com.repill.was.member.entity.member.MemberId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +12,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Getter
 @Entity
@@ -50,6 +55,35 @@ public class Account implements Serializable {
                 member,
                 LocalDateTime.now(),
                 LocalDateTime.now()
+        );
+    }
+
+    public Member createMemberFromKakao(
+            Member originalMemberInfo,
+            MemberId memberId,
+            AccountId accountId,
+            String profileImage,
+            String nickName,
+            Long kakaoUserId,
+            String ageRange,
+            String birthday,
+            String birthdayType,
+            String gender,
+            String connectedAt) {
+        if(originalMemberInfo.getBannedAt() != null) {
+            throw new MemberBannedException();
+        }
+        return Member.createKaKaoMember(
+                memberId,
+                accountId,
+                profileImage,
+                nickName,
+                kakaoUserId,
+                ageRange,
+                birthday,
+                birthdayType,
+                gender,
+                connectedAt
         );
     }
 
