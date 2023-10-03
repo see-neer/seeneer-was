@@ -4,6 +4,7 @@ import com.repill.was.global.enums.AuthType;
 import com.repill.was.member.entity.account.AccountId;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,19 +22,20 @@ public class Member {
     @AttributeOverride(name = "id", column = @Column(name = "accountId", nullable = false))
     private AccountId accountId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "member_favorite_items",
     joinColumns = @JoinColumn(name = "member_id"))
     @OrderColumn(name = "member_favorite_items_idx")
     private List<FavoriteItem> favoriteItems;
 
-    @ElementCollection
+
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "member_follower",
             joinColumns = @JoinColumn(name = "member_id"))
     @OrderColumn(name = "member_follower_idx")
     private List<MemberFollower> memberFollowers;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "member_recently_viewed_item",
             joinColumns = @JoinColumn(name = "member_id"))
     @OrderColumn(name = "member_recently_viewed_item_idx")
