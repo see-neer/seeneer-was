@@ -92,17 +92,17 @@ public class MemberFacade {
         Account account = accountRepository.findById(loginCommand.getAccountId()).orElseThrow(AccountNotFoundException::new);
         Member member = memberRepository.findBannedExistByDeviceId(loginCommand.getAccountId(), loginCommand.getDeviceId()).orElse(Member.createNotBannedMember());
         MemberId memberId = memberRepository.nextId();
-        account.createMemberFromKakao(
-                member,
-                memberId,
-                account.getId(),
-                loginCommand.getProfileImage(),
-                loginCommand.getNickname(),
-                loginCommand.getId(),
-                loginCommand.getAgeRange(),
-                loginCommand.getBirthday(),
-                loginCommand.getBirthdayType(),
-                loginCommand.getGender(),
-                loginCommand.getConnectedAt());
+//        account.createMemberFromKakao(
+//                member,
+//                memberId,
+//                account.getId(),
+//                loginCommand.getProfileImage(),
+//                loginCommand.getNickname(),
+//                loginCommand.getId(),
+//                loginCommand.getAgeRange(),
+//                loginCommand.getBirthday(),
+//                loginCommand.getBirthdayType(),
+//                loginCommand.getGender(),
+//                loginCommand.getConnectedAt());
     }
 }

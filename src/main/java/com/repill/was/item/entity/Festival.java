@@ -1,7 +1,9 @@
 package com.repill.was.item.entity;
 
+import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.model.ImageListData;
 import com.repill.was.global.model.ImageListDataConverter;
+import com.repill.was.member.entity.memberLike.MemberLike;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,6 +36,9 @@ public class Festival {
 
     @Column(columnDefinition = "BIT(1) default 0", nullable = false)
     private boolean isClosed;
+
+    @Column(columnDefinition = "BIGINT(20)", nullable = false)
+    private Long likeCount;
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime updatedAt;
 
@@ -62,6 +67,11 @@ public class Festival {
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
+    }
+
+    public void addLike(MemberLike memberLike) {
+        if(!memberLike.getItemId().equals(this.id.getId())) throw new BadRequestException("좋아요 실패");
+        this.likeCount += 1;
     }
 
     private boolean isActive(LocalDateTime dateTime) {

@@ -1,4 +1,4 @@
-package com.repill.was.global.factory;
+package com.repill.was.global.factory.itemvalidate;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

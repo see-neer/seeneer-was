@@ -7,8 +7,8 @@ import com.repill.was.review.controller.dto.response.ReviewDetailResponse;
 import com.repill.was.review.controller.dto.response.ReviewListResponse;
 import com.repill.was.review.query.vo.ReviewDetailVO;
 import com.repill.was.review.query.vo.ReviewVO;
-import com.repill.was.global.factory.ItemValidateFactory;
-import com.repill.was.global.factory.ItemValidator;
+import com.repill.was.global.factory.itemvalidate.ItemValidateFactory;
+import com.repill.was.global.factory.itemvalidate.ItemValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

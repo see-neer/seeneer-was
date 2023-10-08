@@ -10,12 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Device {
 
-    @Embedded
-    @AttributeOverrides(
-            @AttributeOverride(name = "id", column = @Column(name = "account_id"))
-    )
-    private AccountId accountId;
-
     @Column(columnDefinition = "VARCHAR(256)", nullable = false)
     private String token;
 
@@ -29,17 +23,24 @@ public class Device {
     @Column(columnDefinition = "DATETIME(3)")
     private LocalDateTime logoutAt;
 
-    public Device(AccountId accountId, String token, String deviceId, OSType osType, LocalDateTime logoutAt) {
-        this.accountId = accountId;
+    public Device(String token, String deviceId, OSType osType, LocalDateTime logoutAt) {
         this.token = token;
         this.deviceId = deviceId;
         this.osType = osType;
         this.logoutAt = logoutAt;
     }
 
+    public static Device newOne(String token, String deviceId, OSType osType) {
+        return new Device(
+                token,
+                deviceId,
+                osType,
+                LocalDateTime.now()
+        );
+    }
+
     public Device logout() {
         return new Device(
-                this.accountId,
                 this.token,
                 this.deviceId,
                 this.osType,

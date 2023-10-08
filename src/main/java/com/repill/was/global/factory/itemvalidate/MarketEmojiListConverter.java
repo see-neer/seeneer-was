@@ -1,4 +1,4 @@
-package com.repill.was.global.factory;
+package com.repill.was.global.factory.itemvalidate;
 
 import com.repill.was.global.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;

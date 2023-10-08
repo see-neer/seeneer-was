@@ -1,7 +1,7 @@
-package com.repill.was.global.factory;
+package com.repill.was.global.factory.itemvalidate;
 
 import com.repill.was.global.enums.ItemType;
-import com.repill.was.review.entity.ReviewItemTypeNotFoundException;
+import com.repill.was.item.entity.ItemTypeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +16,6 @@ public class ItemValidateFactory {
     public ItemValidator getValidatorBy(ItemType type) {
         return itemValidators.stream()
                 .filter(itemValidator -> itemValidator.getSupportType().equals(type))
-                .findFirst().orElseThrow(ReviewItemTypeNotFoundException::new);
+                .findFirst().orElseThrow(ItemTypeNotFoundException::new);
     }
 }

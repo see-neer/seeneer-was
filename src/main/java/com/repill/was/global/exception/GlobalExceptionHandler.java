@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.repill.was.global.response.CommonResponse;
 import com.repill.was.global.response.ErrorCode;
 import com.repill.was.global.slack.SlackApRestTemplateImpl;
-import com.repill.was.global.slack.SlackApiWebClientImpl;
+
 import com.repill.was.global.slack.SlackService;
 import io.opentelemetry.api.trace.Span;
 import lombok.RequiredArgsConstructor;
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
         message += "*Message : " + e.getMessage() + "* \n";
         message += getStackTrace(e);
         //Webclient
-        slackService.sendSlackMessage("{\"text\": \"" + message + "\"}", new SlackApiWebClientImpl());
+//        slackService.sendSlackMessage("{\"text\": \"" + message + "\"}", new SlackApiWebClientImpl());
         //RestTemplate
         slackService.sendSlackMessage("{\"text\": \"" + message + "\"}", new SlackApRestTemplateImpl());
     }

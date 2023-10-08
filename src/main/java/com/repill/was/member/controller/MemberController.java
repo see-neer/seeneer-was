@@ -5,16 +5,20 @@ import com.repill.was.global.enums.OSType;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.response.CommonResponse;
 import com.repill.was.member.controller.command.LoginCommand;
+import com.repill.was.member.controller.command.MemberLikeCommand;
 import com.repill.was.member.controller.dto.request.*;
 import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
+import com.repill.was.member.entity.account.AccountNotFoundException;
 import com.repill.was.member.entity.account.AccountRepository;
 
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberId;
+import com.repill.was.member.entity.member.MemberNotFoundException;
 import com.repill.was.member.facade.MemberFacade;
+import com.repill.was.member.query.MemberLikeQueries;
 import com.repill.was.member.query.MemberQueries;
 
 import java.util.Arrays;
@@ -22,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.repill.was.member.service.MemberLikeService;
 import com.repill.was.member.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,8 +43,9 @@ public class MemberController {
     private final MemberFacade memberFacade;
     private final MemberQueries memberQueries;
     private final AccountRepository accountRepository;
-
+    private final MemberLikeService memberLikeService;
     private final MemberService memberService;
+    private final MemberLikeQueries memberLikeQueries;
 
     @ApiOperation("카카오 회원가입")
     @PostMapping("/create")
@@ -92,14 +98,8 @@ public class MemberController {
     @ApiOperation("멤버 로그아웃")
     @PostMapping("/member-logout")
     public void logout(@AuthenticationPrincipal AccountId accountId, @RequestBody MemberLogoutRequest logoutRequest) {
-        Optional<Account> account = accountRepository.findById(accountId);
-        if (account.isEmpty()) {
-            throw new BadRequestException("존재하지 않은 기기 정보 입니다.");
-        }
-        Optional<Member> member = memberQueries.findByAccountId(accountId);
-        if (member.isEmpty()) {
-            throw new BadRequestException("존재하지 않은 회원 정보 입니다.");
-        }
+        Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
 //        memberService.logout(accountId, member.get().getId(), OSType.valueOf(logoutRequest.getOsType()), logoutRequest.getDeviceId());
     }
 
@@ -128,11 +128,27 @@ public class MemberController {
     @ApiOperation("자기 프로필 상세 조회")
     @GetMapping("/my-profile")
     public MemberDetailProfileResponse getMyProfile(@AuthenticationPrincipal AccountId accountId) {
-        Optional<Member> member = memberQueries.findByAccountId(accountId);
-        if (member.isEmpty()) {
-            throw new BadRequestException();
-        }
-        MemberId memberIdQuery = member.get().getId();
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        MemberId memberIdQuery = member.getId();
         return memberQueries.findMyProfileByMemberId(memberIdQuery);
+    }
+
+    @ApiOperation("좋아요 실행")
+    @PostMapping("/like")
+    public CommonResponse<Object> addLike(@AuthenticationPrincipal AccountId accountId,
+                        @RequestParam String likeType,
+                        @RequestParam Long itemId){
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        memberLikeService.addLike(MemberLikeCommand.request(
+                member.getId(),
+                likeType,
+                itemId
+        ));
+        int likeCount = memberLikeQueries.findByMemberNickName(MemberLikeCommand.request(
+                member.getId(),
+                likeType,
+                itemId));
+
+        return CommonResponse.success(likeCount);
     }
 }

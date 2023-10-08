@@ -1,6 +1,7 @@
 package com.repill.was.operation.controller;
 
 import com.repill.was.global.config.JwtTokenProvider;
+import com.repill.was.global.enums.OSType;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.enums.ItemType;
 import com.repill.was.global.model.ImageListData;
@@ -8,15 +9,18 @@ import com.repill.was.item.entity.Festival;
 import com.repill.was.item.entity.FestivalRepository;
 import com.repill.was.item.entity.Market;
 import com.repill.was.item.entity.MarketRepository;
+import com.repill.was.member.controller.command.MemberLikeCommand;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountRepository;
 
+import com.repill.was.member.entity.account.Device;
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.member.entity.member.MemberRepository;
 
 import com.repill.was.member.query.MemberQueries;
+import com.repill.was.member.service.MemberLikeService;
 import com.repill.was.review.entity.Review;
 import com.repill.was.review.entity.ReviewRepository;
 import io.swagger.annotations.ApiOperation;
@@ -25,9 +29,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @MockV1Controller
 @RequiredArgsConstructor
@@ -41,6 +47,7 @@ public class MockController {
 
     private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
+    private final MemberLikeService memberLikeService;
 
     @ApiOperation("market 추가")
     @PostMapping("/mock-add-market")
@@ -53,6 +60,20 @@ public class MockController {
                 "Mock Market Date"
         ));
     }
+
+    @ApiOperation("Mock 좋아요 실헹")
+    @PostMapping("/mock-add-like-item")
+    public void addMockLikeItem(
+    ) {
+        memberLikeService.addLike(
+                MemberLikeCommand.request(
+                        new MemberId(616267619704864L),
+                        "FESTIVAL",
+                        616268181700640L
+                )
+        );
+    }
+
 
     @ApiOperation("festival 추가")
     @PostMapping("/mock-add-festival")
@@ -79,18 +100,21 @@ public class MockController {
 //        ));
 //    }
 
-//    @ApiOperation("찜 목록 추가")
-//    @PostMapping("/mock-add-favorite-item")
-//    public void addMockSelected(@RequestParam Long accountId,
-//                                @RequestParam String itemType,
-//                                @RequestParam Long itemId) {
+    @ApiOperation("찜 목록 추가")
+    @PostMapping("/mock-add-favorite-item")
+    public void addMockSelected(@RequestParam Long accountId,
+                                @RequestParam String itemType,
+                                @RequestParam Long itemId) {
+//        Member byAccountId = memberQueries.findByAccountId(new AccountId(accountId)).get();
+//
+//
 //        favoriteItemRepository.save(FavoriteItem.newOne(
 //                favoriteItemRepository.nextId(),
 //                new MemberId(accountId),
 //                ItemType.valueOf(itemType),
 //                itemId
 //        ));
-//    }
+    }
 
     @ApiOperation("리뷰 목록 추가")
     @PostMapping("/mock-add-review")
@@ -117,10 +141,33 @@ public class MockController {
 //        deviceRepository.clearTokenByAccountId(accountId);
     }
 
-    @ApiOperation("테스트용 계정 토큰")
-    @PostMapping("/mock-make-token")
-    public String addMockToken(@RequestParam String userId) {
-        String token = jwtTokenProvider.createToken(userId.toString(), "ALL");
-        return token;
+    @ApiOperation("테스트용 계정 생성")
+    @PostMapping("/mock-uesr")
+    public void addMockUser() {
+        AccountId accountId = accountRepository.nextId();
+        String token = jwtTokenProvider.createToken(accountId.toString(), "TEST");
+        Device device = Device.newOne(
+                token,
+                "TEST-DEVICE",
+                OSType.IOS
+        );
+        Account mockAccount = Account.newOne(accountId, device);
+        accountRepository.save(mockAccount);
+
+        Member memberFromKakao = mockAccount.createMemberFromKakao(
+                Member.createNotBannedMember(),
+                memberRepository.nextId(),
+                accountId,
+                "https://k.kakaocdn.net/dn/QQw3c/btstwmOWBJV/oxWtafMCdDOE9vmMPcHqok/img_640x640.jpg",
+                "TEST계정",
+                12345L,
+                "TEST",
+                "TEST",
+                "TEST",
+                "TEST",
+                "TEST"
+        );
+
+        memberRepository.save(memberFromKakao);
     }
 }

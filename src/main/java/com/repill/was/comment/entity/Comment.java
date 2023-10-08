@@ -1,6 +1,8 @@
 package com.repill.was.comment.entity;
 
+import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.member.entity.member.MemberId;
+import com.repill.was.member.entity.memberLike.MemberLike;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -15,7 +17,7 @@ import java.util.List;
 public class Comment {
 
     @Id @GeneratedValue
-    private Long id;
+    private CommentId id;
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "postMemberId", nullable = false))
@@ -39,9 +41,17 @@ public class Comment {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String contents;
 
+    @Column(columnDefinition = "BIGINT(20)", nullable = false)
+    private Long likeCount;
+
     @Column(columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)", nullable = false)
     private ZonedDateTime createdAt;
 
     @Column(columnDefinition = "DATETIME(3)")
     private ZonedDateTime updatedAt;
+
+    public void addLike(MemberLike memberLike) {
+        if(!memberLike.getItemId().equals(this.id.getId())) throw new BadRequestException("좋아요 실패");
+        this.likeCount += 1;
+    }
 }

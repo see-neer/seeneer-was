@@ -50,6 +50,7 @@ public class Member {
     @Column(columnDefinition = "VARCHAR(50)")
     private String nickname;
 
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(50)")
     private AuthType authType;
     @Column(columnDefinition = "DATETIME(3)")
@@ -69,7 +70,7 @@ public class Member {
     @Column(columnDefinition = "VARCHAR(50)", nullable = false)
     private String connectedAt;
 
-    @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
+    @Column(columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime bannedAt;
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime updatedAt;
