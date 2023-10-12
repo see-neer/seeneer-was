@@ -22,7 +22,6 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class FestivalLikeValidator implements LikeValidator {
-    private final ReviewQueries reviewQueries;
     private final FestivalRepository festivalRepository;
     @Override
     public LikeType getSupportType() {

@@ -64,7 +64,7 @@ public class MockController {
     @ApiOperation("Mock 좋아요 실헹")
     @PostMapping("/mock-add-like-item")
     public void addMockLikeItem(
-    ) {
+    ) throws InterruptedException {
         memberLikeService.addLike(
                 MemberLikeCommand.request(
                         new MemberId(616267619704864L),

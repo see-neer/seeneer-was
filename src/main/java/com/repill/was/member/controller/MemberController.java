@@ -137,7 +137,7 @@ public class MemberController {
     @PostMapping("/like")
     public CommonResponse<Object> addLike(@AuthenticationPrincipal AccountId accountId,
                         @RequestParam String likeType,
-                        @RequestParam Long itemId){
+                        @RequestParam Long itemId) throws InterruptedException {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         memberLikeService.addLike(MemberLikeCommand.request(
                 member.getId(),
