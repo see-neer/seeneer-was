@@ -8,9 +8,6 @@ import java.time.ZonedDateTime;
 public class Address {
 
     @Column(columnDefinition = "VARCHAR(50)")
-    private String addressCodeA;
-
-    @Column(columnDefinition = "VARCHAR(50)")
     private String addressDetailA;
 
     @Column(columnDefinition = "VARCHAR(50)")
@@ -24,11 +21,14 @@ public class Address {
 
     protected Address() {}
 
-    public Address(String addressCodeA, String addressDetailA, String addressDetailB, String addressDetailC, String addressDetailD) {
-        this.addressCodeA = addressCodeA;
+    public Address(String addressDetailA, String addressDetailB, String addressDetailC, String addressDetailD) {
         this.addressDetailA = addressDetailA;
         this.addressDetailB = addressDetailB;
         this.addressDetailC = addressDetailC;
         this.addressDetailD = addressDetailD;
+    }
+
+    public static Address newOne(String addressDetailA, String addressDetailB, String addressDetailC, String addressDetailD) {
+        return new Address(addressDetailA, addressDetailB, addressDetailC, addressDetailD);
     }
 }

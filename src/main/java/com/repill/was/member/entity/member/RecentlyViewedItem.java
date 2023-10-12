@@ -25,7 +25,7 @@ public class RecentlyViewedItem {
         this.createdAt = createdAt;
     }
 
-    public static RecentlyViewedItem newOne(MemberId memberId, ItemType itemType, Long itemId) {
+    public static RecentlyViewedItem newOne(ItemType itemType, Long itemId) {
         return new RecentlyViewedItem(
                 itemType,
                 itemId,

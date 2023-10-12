@@ -1,11 +1,13 @@
 package com.repill.was.member.controller;
 
 import com.repill.was.global.config.SwaggerConfig;
-import com.repill.was.global.enums.OSType;
+import com.repill.was.global.enums.ItemType;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.response.CommonResponse;
 import com.repill.was.member.controller.command.LoginCommand;
+import com.repill.was.member.controller.command.MemberAddInformationCommand;
 import com.repill.was.member.controller.command.MemberLikeCommand;
+import com.repill.was.member.controller.command.MemberNickNameDuplicatedCheckCommand;
 import com.repill.was.member.controller.dto.request.*;
 import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
@@ -21,10 +23,7 @@ import com.repill.was.member.facade.MemberFacade;
 import com.repill.was.member.query.MemberLikeQueries;
 import com.repill.was.member.query.MemberQueries;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.repill.was.member.service.MemberLikeService;
 import com.repill.was.member.service.MemberService;
@@ -47,7 +46,7 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberLikeQueries memberLikeQueries;
 
-    @ApiOperation("카카오 회원가입")
+    @ApiOperation("회원가입")
     @PostMapping("/create")
     public CommonResponse<Object> login(@AuthenticationPrincipal AccountId accountId,
                                         @RequestBody MemberLoginRequest memberLoginRequest) {
@@ -55,19 +54,43 @@ public class MemberController {
         return CommonResponse.success(null);
     }
 
+    @ApiOperation("회원 추가정보 업데이트")
+    @PostMapping("/information")
+    public CommonResponse<Object> addInformation(@AuthenticationPrincipal AccountId accountId,
+                                        @RequestBody MemberAddInformationRequest addMemberInformationRequest) {
+        memberFacade.addInformation(MemberAddInformationCommand.request(addMemberInformationRequest, accountId));
+        return CommonResponse.success(null);
+    }
+
     @ApiOperation("닉네임 중복 확인")
     @GetMapping("/check-duplicated-nickname")
     public Boolean checkDuplicateNickname(@RequestParam String insertedNickname, boolean useKakaoNickname) {
-        return memberFacade.checkDuplicateNickname(insertedNickname,useKakaoNickname);
+        return memberFacade.checkDuplicateNickname(MemberNickNameDuplicatedCheckCommand.request(insertedNickname, useKakaoNickname));
     }
 
-    @ApiOperation("최근 본 목록 호출")
-    @GetMapping("/recently-views")
-    public List<RecentlyViewedItemResponse> getRecentlyViewList(@AuthenticationPrincipal AccountId accountId,
-                                                                @RequestParam int size,
-                                                                @RequestParam(required = false) Long cursorId) {
+    @ApiOperation("최근 본 목록 추가")
+    @PostMapping("/recently-views")
+    public void addRecentlyView(@AuthenticationPrincipal AccountId accountId,
+                                                                @RequestParam String itemType,
+                                                                @RequestParam(required = false) Long itemId) {
+        memberFacade.addRecentlyView(ItemType.valueOf(itemType), accountId, itemId);
+    }
+
+    @ApiOperation("찜 목록 호출")
+    @GetMapping("/favorite-items")
+    public List<RecentlyViewedItemResponse> getFavoriteItems(@AuthenticationPrincipal AccountId accountId,
+                                                             @RequestParam int size,
+                                                             @RequestParam(required = false) Long cursorId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저 정보 입니다."));
-        return memberFacade.getRecentlyViewList(member.getId(), size, cursorId);
+        return memberFacade.getFavoriteItems(member.getId(), size, cursorId);
+    }
+
+    @ApiOperation("찜 목록 추가")
+    @PostMapping("/favorite-item")
+    public void addFavoriteItem(@AuthenticationPrincipal AccountId accountId,
+                                     @RequestParam String itemType,
+                                     @RequestParam(required = false) Long itemId) {
+        memberFacade.addFavoriteItem(ItemType.valueOf(itemType), accountId, itemId);
     }
 
     @ApiOperation("최근 본 목록 삭제하기")
@@ -76,15 +99,6 @@ public class MemberController {
                                       @PathVariable Long id) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저입니다."));
         memberFacade.deleteRecentlyView(member);
-    }
-
-    @ApiOperation("찜 목록 호출")
-    @GetMapping("/favorite-items")
-    public List<RecentlyViewedItemResponse> getFavoriteItems(@AuthenticationPrincipal AccountId accountId,
-                                    @RequestParam int size,
-                                    @RequestParam(required = false) Long cursorId) {
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저 정보 입니다."));
-        return memberFacade.getFavoriteItems(member.getId(), size, cursorId);
     }
 
     @ApiOperation("찜 목록 삭제하기")

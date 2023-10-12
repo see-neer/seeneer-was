@@ -18,4 +18,12 @@ public class MemberView {
         this.name = nickName;
         this.imageSrc = imageSrc;
     }
+
+    public static MemberView newOne(Long memberId, String name, String imageSrc) {
+        return new MemberView(null, null, null);
+    }
+
+    public static MemberView makeEmptyMemberView() {
+        return new MemberView(null, null, null);
+    }
 }

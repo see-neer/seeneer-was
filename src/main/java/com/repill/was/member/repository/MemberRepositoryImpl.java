@@ -65,4 +65,13 @@ public class MemberRepositoryImpl implements MemberRepository {
     public Optional<Member> findByMemberNickName(String nickName) {
         return memberJpaRepository.findByNickname(nickName);
     }
+
+    @Override
+    public Optional<Member> getFavoriteItems(MemberId memberId, int size, int cursorId) {
+        return jpaQueryFactory
+                .select(member.favoriteItems)
+                .from(member)
+                .where(member.favoriteItems.)
+
+    }
 }

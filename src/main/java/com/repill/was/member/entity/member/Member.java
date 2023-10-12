@@ -1,10 +1,12 @@
 package com.repill.was.member.entity.member;
 
 import com.repill.was.global.enums.AuthType;
+import com.repill.was.global.model.ImageListData;
+import com.repill.was.global.model.ImageListDataConverter;
+import com.repill.was.member.controller.dto.request.MemberAddInformationRequest;
 import com.repill.was.member.entity.account.AccountId;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -43,6 +45,13 @@ public class Member {
 
     @Embedded
     private Address address;
+
+    @Embedded
+    private Address interestingAddress;
+
+    @Convert(converter = ImageListDataConverter.class)
+    @Column(columnDefinition = "TEXT")
+    private ImageListData interestingCategory;
 
     @Column(columnDefinition = "TEXT")
     String imageSrc;
@@ -163,4 +172,11 @@ public class Member {
         );
     }
 
+    public void updateInformation(MemberAddInformationRequest.MemberAddress myAddressInfo,
+                                  ImageListData interestingCategoryList,
+                                  MemberAddInformationRequest.MemberAddress interestingAddress) {
+        this.address = Address.newOne(myAddressInfo.getAddressDetailA(), myAddressInfo.getAddressDetailB(), myAddressInfo.getAddressDetailC(), myAddressInfo.getAddressDetailD());
+        this.interestingCategory = interestingCategoryList;
+        this.interestingAddress = Address.newOne(interestingAddress.getAddressDetailA(), interestingAddress.getAddressDetailB(), interestingAddress.getAddressDetailC(), interestingAddress.getAddressDetailD());
+    }
 }

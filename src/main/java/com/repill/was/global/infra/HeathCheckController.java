@@ -28,7 +28,6 @@ public class HeathCheckController {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final AccountRepository accountRepository;
-    private final DeviceService deviceService;
 
     @ApiOperation("설정 확인 용 Health Check. X-APP-VERSION (예: 0.0.5), X-APP-OS: IOS / ANDROID")
     @PostMapping("/health")
@@ -36,20 +35,20 @@ public class HeathCheckController {
                                            @RequestBody AutoLoginRequest autoLoginRequest) {
         Optional<Account> accountByDevice = accountRepository.findByDevice(new Device());
 
-        MemberView memberView = new MemberView(null, null, null);
-        boolean exsistMember = false;
-
         if(accountByDevice.isEmpty()) {
             AccountId accountId = accountRepository.nextId();
             String token = jwtTokenProvider.createToken(accountId.getId().toString(), "ALL");
-//            accountRepository.save(Account.newOne(
-//                    accountId,
-//                    OSType.valueOf(appOS),
-//                    autoLoginRequest.getDeviceId()
-//            ));
-//            deviceService.insertDeviceToken(accountId, OSType.valueOf(appOS), token);
-            return new HealthCheckResponse(exsistMember, memberView, token);
+            accountRepository.save(Account.newOne(
+                    accountId,
+                    OSType.valueOf(appOS),
+                    autoLoginRequest.getDeviceId(),
+                    token
+            ));
+            return new HealthCheckResponse(false, MemberView.makeEmptyMemberView(), token);
         }
+
+        MemberView memberView = null;
+        boolean exsistMember = false;
 
         String token = jwtTokenProvider.createToken(accountByDevice.get().getId().toString(), "ALL");
         Optional<Member> memberByAccountId = memberRepository.findByAccountId(accountByDevice.get().getId());
@@ -58,7 +57,11 @@ public class HeathCheckController {
             memberView = new MemberView(member.getId().getId(), member.getNickname(), member.getImageSrc());
             exsistMember = true;
         }
-//        if(deviceRepository.findAllByAccountId(accountByDevice.get().getId()).isEmpty()) deviceService.insertDeviceToken(accountByDevice.get().getId(), OSType.valueOf(appOS), token);
+        accountByDevice.get().changeDeviceInfo(OSType.valueOf(appOS),
+                autoLoginRequest.getDeviceId(),
+                token);
+        accountRepository.save(accountByDevice.get());
+
         return new HealthCheckResponse(exsistMember, memberView, token);
     }
 }

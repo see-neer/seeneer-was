@@ -19,4 +19,6 @@ public interface MemberRepository {
     Optional<Member> findBannedExistByDeviceId(AccountId accountId, String deviceId);
 
     Optional<Member> findByMemberNickName(String nickName);
+
+    Optional<Member> getFavoriteItems(MemberId memberId, int size, int cursorId);
 }

@@ -5,7 +5,10 @@ import com.repill.was.item.entity.Market;
 import com.repill.was.item.entity.MarketId;
 import com.repill.was.item.entity.MarketNotFoundException;
 import com.repill.was.item.entity.MarketRepository;
+import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberId;
+import com.repill.was.member.entity.member.MemberRepository;
+import com.repill.was.member.entity.member.RecentlyViewedItem;
 import com.repill.was.review.query.ReviewQueries;
 import com.repill.was.review.query.vo.ReviewDetailVO;
 import com.repill.was.review.query.vo.ReviewVO;
@@ -21,6 +24,7 @@ import java.util.List;
 public class MarketItemValidator implements ItemValidator {
 
     private final ReviewQueries reviewQueries;
+    private final MemberRepository memberRepository;
 
     @Override
     public ItemType getSupportType() {
@@ -35,5 +39,17 @@ public class MarketItemValidator implements ItemValidator {
     @Override
     public ReviewDetailVO getReviewDetailList(Long id, Long itemId) {
         return reviewQueries.getMarketReviewDetail(id, itemId);
+    }
+
+    @Override
+    public void addRecentlyViewedItem(Member member, Long itemId) {
+        member.addRecentlyViewedItems(RecentlyViewedItem.newOne(ItemType.MARKET, itemId));
+        memberRepository.save(member);
+    }
+
+    @Override
+    public void addFavoriteItem(Member member, Long itemId) {
+        member.addRecentlyViewedItems(RecentlyViewedItem.newOne(ItemType.MARKET, itemId));
+        memberRepository.save(member);
     }
 }

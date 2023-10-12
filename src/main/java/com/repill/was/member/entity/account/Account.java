@@ -38,7 +38,8 @@ public class Account implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public static Account newOne(AccountId id, Device device) {
+    public static Account newOne(AccountId id, OSType osType, String deviceId, String token) {
+        Device device = Device.newOne(token, deviceId, osType);
         return new Account(
                 id,
                 device,
@@ -48,7 +49,6 @@ public class Account implements Serializable {
     }
 
     public Member createMemberFromKakao(
-            Member originalMemberInfo,
             MemberId memberId,
             AccountId accountId,
             String profileImage,
@@ -59,9 +59,6 @@ public class Account implements Serializable {
             String birthdayType,
             String gender,
             String connectedAt) {
-        if(originalMemberInfo.getBannedAt() != null) {
-            throw new MemberBannedException();
-        }
         return Member.createKaKaoMember(
                 memberId,
                 accountId,
@@ -76,8 +73,8 @@ public class Account implements Serializable {
         );
     }
 
-    public void changeDeviceInfo(Device device) {
-        this.device = device;
+    public void changeDeviceInfo(OSType osType, String deviceId, String token) {
+        this.device = Device.newOne(token, deviceId, osType);;
         this.updatedAt = LocalDateTime.now();
     }
 

@@ -2,6 +2,7 @@ package com.repill.was.global.factory.itemvalidate;
 
 import com.repill.was.global.enums.ItemType;
 import com.repill.was.item.entity.Market;
+import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.review.query.vo.ReviewDetailVO;
 import com.repill.was.review.query.vo.ReviewVO;
@@ -14,4 +15,9 @@ public interface ItemValidator {
     List<ReviewVO> getReviewList(MemberId memberId, Long cursorId, int size);
 
     ReviewDetailVO getReviewDetailList(Long id, Long itemId);
+
+    void addRecentlyViewedItem(Member member, Long itemId);
+
+    void addFavoriteItem(Member member, Long itemId);
+
 }

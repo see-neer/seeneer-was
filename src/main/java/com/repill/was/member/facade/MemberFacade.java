@@ -3,31 +3,26 @@ package com.repill.was.member.facade;
 
 
 
-import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.enums.ItemType;
-
-
-import com.repill.was.item.entity.*;
+import com.repill.was.global.exception.BadRequestException;
+import com.repill.was.global.factory.itemvalidate.ItemValidateFactory;
+import com.repill.was.global.factory.itemvalidate.ItemValidator;
+import com.repill.was.global.model.ImageListData;
 import com.repill.was.member.controller.command.LoginCommand;
-import com.repill.was.member.controller.dto.request.MemberLoginRequest;
+import com.repill.was.member.controller.command.MemberAddInformationCommand;
+import com.repill.was.member.controller.command.MemberNickNameDuplicatedCheckCommand;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountNotFoundException;
 import com.repill.was.member.entity.account.AccountRepository;
-import com.repill.was.member.entity.member.Member;
-import com.repill.was.member.entity.member.MemberId;
-import com.repill.was.member.entity.member.MemberNotFoundException;
-import com.repill.was.member.entity.member.MemberRepository;
+import com.repill.was.member.entity.member.*;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.member.query.vo.RecentlyViewedItemInfoVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,29 +30,25 @@ public class MemberFacade {
     private final MemberQueries memberQueries;
     private final MemberRepository memberRepository;
     private final AccountRepository accountRepository;
+    private final ItemValidateFactory itemValidateFactory;
 
-    public Boolean checkDuplicateNickname(String insertedNickname, boolean useKakaoNickname) {
-        if(useKakaoNickname) {
+    public Boolean checkDuplicateNickname(MemberNickNameDuplicatedCheckCommand memberNickNameDuplicatedCheckCommand) {
+        if(memberNickNameDuplicatedCheckCommand.isUseKakaoNickname()) {
             return true;
         }
-        return memberQueries.findByMemberNickName(insertedNickname).isEmpty();
+        return memberQueries.findByMemberNickName(memberNickNameDuplicatedCheckCommand.getCheckNickName()).isEmpty();
     }
 
-    public List<RecentlyViewedItemResponse> getRecentlyViewList(MemberId memberId, int size, Long cursorId) {
-//        List<RecentlyViewedItemInfoVO> byMemberId = recentlyViewedItemRepository.findByMemberId(memberId, size, cursorId);
-//        return byMemberId.stream().map(one -> {
-//            if (one.getItemType().equals(ItemType.MARKET.name())) {
-//                Market market = marketRepository.findById(new MarketId(one.getItemId())).orElseThrow(() -> new BadRequestException("존재 하지 않는 마켓 정보 입니다."));
-//                return RecentlyViewedItemResponse.fromMarket(market, one.getId());
-//            }
-//
-//            if (one.getItemType().equals(ItemType.FESTIVAL.name())) {
-//                Festival festival = festivalRepository.findById(new FestivalId(one.getItemId())).orElseThrow(() -> new BadRequestException("존재 하지 않는 페스티벌 정보 입니다."));
-//                return RecentlyViewedItemResponse.fromFestival(festival, one.getId());
-//            }
-//            throw new BadRequestException("유효하지 않은 아이템 정보 입니다.");
-//        }).collect(Collectors.toList());
-        return null;
+    public void addRecentlyView(ItemType itemType, AccountId accountId, Long itemId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        ItemValidator validatorBy = itemValidateFactory.getValidatorBy(itemType);
+        validatorBy.addRecentlyViewedItem(member, itemId);
+    }
+
+    public void addFavoriteItem(ItemType itemType, AccountId accountId, Long itemId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        ItemValidator validatorBy = itemValidateFactory.getValidatorBy(itemType);
+        validatorBy.addFavoriteItem(member, itemId);
     }
 
     public void deleteFavoriteItem(MemberId memberId) {
@@ -65,20 +56,9 @@ public class MemberFacade {
 //        favoriteItemRepository.delete(favoriteItem);
     }
 
-    public List<RecentlyViewedItemResponse> getFavoriteItems(MemberId memberId, int size, Long cursorId) {
-//        List<RecentlyViewedItemInfoVO> byMemberId = favoriteItemRepository.findByMemberId(memberId, size, cursorId);
-//        return byMemberId.stream().map(one -> {
-//            if (one.getItemType().equals(ItemType.MARKET.name())) {
-//                Market market = marketRepository.findById(new MarketId(one.getItemId())).orElseThrow(() -> new BadRequestException("존재 하지 않는 마켓 정보 입니다."));
-//                return RecentlyViewedItemResponse.fromMarket(market, one.getId());
-//            }
-//
-//            if (one.getItemType().equals(ItemType.FESTIVAL.name())) {
-//                Festival festival = festivalRepository.findById(new FestivalId(one.getItemId())).orElseThrow(() -> new BadRequestException("존재 하지 않는 페스티벌 정보 입니다."));
-//                return RecentlyViewedItemResponse.fromFestival(festival, one.getId());
-//            }
-//            throw new BadRequestException("유효하지 않은 아이템 정보 입니다.");
-//        }).collect(Collectors.toList());
+    public List<RecentlyViewedItemResponse> getFavoriteItems(AccountId accountId, int size, Long cursorId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+
         return null;
     }
 
@@ -90,19 +70,28 @@ public class MemberFacade {
 
     public void login(LoginCommand loginCommand) {
         Account account = accountRepository.findById(loginCommand.getAccountId()).orElseThrow(AccountNotFoundException::new);
-        Member member = memberRepository.findBannedExistByDeviceId(loginCommand.getAccountId(), loginCommand.getDeviceId()).orElse(Member.createNotBannedMember());
         MemberId memberId = memberRepository.nextId();
-//        account.createMemberFromKakao(
-//                member,
-//                memberId,
-//                account.getId(),
-//                loginCommand.getProfileImage(),
-//                loginCommand.getNickname(),
-//                loginCommand.getId(),
-//                loginCommand.getAgeRange(),
-//                loginCommand.getBirthday(),
-//                loginCommand.getBirthdayType(),
-//                loginCommand.getGender(),
-//                loginCommand.getConnectedAt());
+        Member newMember = account.createMemberFromKakao(
+                memberId,
+                account.getId(),
+                loginCommand.getProfileImage(),
+                loginCommand.getNickname(),
+                loginCommand.getId(),
+                loginCommand.getAgeRange(),
+                loginCommand.getBirthday(),
+                loginCommand.getBirthdayType(),
+                loginCommand.getGender(),
+                loginCommand.getConnectedAt());
+        memberRepository.save(newMember);
+    }
+
+    public void addInformation(MemberAddInformationCommand memberAddInformationCommand) {
+        Member updateMember = memberQueries.findByAccountId(memberAddInformationCommand.getAccountId()).orElseThrow(MemberNotFoundException::new);
+        updateMember.updateInformation(
+                memberAddInformationCommand.getMyAddressInfo(),
+                ImageListData.from(memberAddInformationCommand.getInterestingCategoryList()),
+                memberAddInformationCommand.getInterestingAddress()
+        );
+        memberRepository.save(updateMember);
     }
 }

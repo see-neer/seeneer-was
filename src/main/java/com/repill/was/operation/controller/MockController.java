@@ -151,11 +151,10 @@ public class MockController {
                 "TEST-DEVICE",
                 OSType.IOS
         );
-        Account mockAccount = Account.newOne(accountId, device);
+        Account mockAccount = Account.newOne(accountId, OSType.IOS, "TEST-DEVICE", token);
         accountRepository.save(mockAccount);
 
         Member memberFromKakao = mockAccount.createMemberFromKakao(
-                Member.createNotBannedMember(),
                 memberRepository.nextId(),
                 accountId,
                 "https://k.kakaocdn.net/dn/QQw3c/btstwmOWBJV/oxWtafMCdDOE9vmMPcHqok/img_640x640.jpg",
