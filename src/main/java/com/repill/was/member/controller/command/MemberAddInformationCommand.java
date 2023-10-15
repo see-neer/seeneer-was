@@ -1,5 +1,6 @@
 package com.repill.was.member.controller.command;
 
+import com.repill.was.global.enums.FavoriteCategory;
 import com.repill.was.member.controller.dto.request.MemberAddInformationRequest;
 import com.repill.was.member.entity.account.AccountId;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class MemberAddInformationCommand {
     }
 
     private static void validateCategory(List<String> interestingCategoryList){
-        //todo 구현필요
+        interestingCategoryList.forEach(FavoriteCategory::validateCategory);
     }
 }
 

@@ -1,9 +1,11 @@
 package com.repill.was.operation.controller;
 
 
+import com.repill.was.global.enums.FavoriteCategory;
 import com.repill.was.global.utils.SingleDataResponse;
 import com.repill.was.global.enums.ClosingAccountReason;
 import com.repill.was.operation.controller.dto.response.ClosingAccountReasonResponse;
+import com.repill.was.operation.controller.dto.response.FavoriteCategoryResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,16 @@ public class OperationController {
     public SingleDataResponse<List<ClosingAccountReasonResponse>> getClosingAccountReasons() {
         List<ClosingAccountReasonResponse> reasons = ClosingAccountReason.allCases()
                 .stream().map(reason -> ClosingAccountReasonResponse.from(reason, Locale.KOREA))
+                .collect(Collectors.toList());
+
+        return new SingleDataResponse<>(reasons);
+    }
+
+    @ApiOperation("카테고리 목록")
+    @GetMapping("/categories")
+    public SingleDataResponse<List<FavoriteCategoryResponse>> getCategories() {
+        List<FavoriteCategoryResponse> reasons = FavoriteCategory.allCases()
+                .stream().map(categories -> FavoriteCategoryResponse.from(categories, Locale.KOREA))
                 .collect(Collectors.toList());
 
         return new SingleDataResponse<>(reasons);

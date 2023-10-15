@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum Category {
+public enum MainMenu {
     MY_PAGE("내 정보", null, true),
     MARKET("전국 장날", null,true),
     COMMUNITY("이야기 방", null, true),

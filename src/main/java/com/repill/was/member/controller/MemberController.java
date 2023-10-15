@@ -81,8 +81,7 @@ public class MemberController {
     public List<RecentlyViewedItemResponse> getFavoriteItems(@AuthenticationPrincipal AccountId accountId,
                                                              @RequestParam int size,
                                                              @RequestParam(required = false) Long cursorId) {
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저 정보 입니다."));
-        return memberFacade.getFavoriteItems(member.getId(), size, cursorId);
+        return memberFacade.getFavoriteItems(accountId, size, cursorId);
     }
 
     @ApiOperation("찜 목록 추가")

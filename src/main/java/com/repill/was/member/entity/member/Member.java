@@ -47,6 +47,16 @@ public class Member {
     private Address address;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "addressDetailA",
+            column = @Column(name = "interesting_addressDetailA")),
+            @AttributeOverride(name = "addressDetailB",
+                    column = @Column(name = "interesting_addressDetailB")),
+            @AttributeOverride(name = "addressDetailC",
+                    column = @Column(name = "interesting_addressDetailC")),
+            @AttributeOverride(name = "addressDetailD",
+                    column = @Column(name = "interesting_addressDetailD"))
+    })
     private Address interestingAddress;
 
     @Convert(converter = ImageListDataConverter.class)

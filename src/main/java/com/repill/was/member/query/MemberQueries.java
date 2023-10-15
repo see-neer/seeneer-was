@@ -39,5 +39,6 @@ public class MemberQueries {
 
     public MemberDetailProfileResponse getFavoriteItems(MemberId memberId, int size, Long cursorId) {
         memberRepository.getFavoriteItems(memberId, size, cursorId);
+        return null;
     }
 }

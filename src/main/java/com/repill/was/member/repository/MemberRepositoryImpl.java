@@ -67,11 +67,11 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public Optional<Member> getFavoriteItems(MemberId memberId, int size, int cursorId) {
-        return jpaQueryFactory
-                .select(member.favoriteItems)
-                .from(member)
-                .where(member.favoriteItems.)
-
+    public Optional<Member> getFavoriteItems(MemberId memberId, int size, Long cursorId) {
+//        return jpaQueryFactory
+//                .select(member.favoriteItems)
+//                .from(member)
+//                .where(member.favoriteItems.)
+        return null;
     }
 }
