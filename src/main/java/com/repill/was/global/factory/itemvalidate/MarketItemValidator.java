@@ -5,10 +5,9 @@ import com.repill.was.item.entity.Market;
 import com.repill.was.item.entity.MarketId;
 import com.repill.was.item.entity.MarketNotFoundException;
 import com.repill.was.item.entity.MarketRepository;
-import com.repill.was.member.entity.member.Member;
-import com.repill.was.member.entity.member.MemberId;
-import com.repill.was.member.entity.member.MemberRepository;
-import com.repill.was.member.entity.member.RecentlyViewedItem;
+import com.repill.was.item.query.MarketQueries;
+import com.repill.was.item.query.vo.ItemVO;
+import com.repill.was.member.entity.member.*;
 import com.repill.was.review.query.ReviewQueries;
 import com.repill.was.review.query.vo.ReviewDetailVO;
 import com.repill.was.review.query.vo.ReviewVO;
@@ -25,6 +24,7 @@ public class MarketItemValidator implements ItemValidator {
 
     private final ReviewQueries reviewQueries;
     private final MemberRepository memberRepository;
+    private final MarketQueries marketQueries;
 
     @Override
     public ItemType getSupportType() {
@@ -34,6 +34,12 @@ public class MarketItemValidator implements ItemValidator {
     @Override
     public List<ReviewVO> getReviewList(MemberId memberId, Long cursorId, int size) {
         return reviewQueries.getMarketReviewLists(memberId, cursorId, size);
+    }
+
+    @Override
+    public ItemVO getItemInfo(Long itemId) {
+        Market market = marketQueries.findById(new MarketId(itemId)).orElseThrow(MarketNotFoundException::new);
+        return ItemVO.from(market);
     }
 
     @Override
@@ -49,7 +55,19 @@ public class MarketItemValidator implements ItemValidator {
 
     @Override
     public void addFavoriteItem(Member member, Long itemId) {
-        member.addRecentlyViewedItems(RecentlyViewedItem.newOne(ItemType.MARKET, itemId));
+        member.addFavoriteItem(FavoriteItem.newOne(ItemType.MARKET, itemId));
+        memberRepository.save(member);
+    }
+
+    @Override
+    public void deleteFavoriteItem(Member member, Long itemId) {
+        member.deleteFavoriteItem(FavoriteItem.newOne(ItemType.MARKET, itemId));
+        memberRepository.save(member);
+    }
+
+    @Override
+    public void deleteRecentlyViewedItem(Member member, Long itemId) {
+        member.deleteRecentlyViewedItem(RecentlyViewedItem.newOne(ItemType.MARKET, itemId));
         memberRepository.save(member);
     }
 }

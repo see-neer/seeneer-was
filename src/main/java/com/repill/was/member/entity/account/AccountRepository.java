@@ -10,7 +10,7 @@ public interface AccountRepository {
 
     Optional<Account> findById(AccountId accountId);
 
-    Optional<Account> findByDevice(Device device);
+    Optional<Account> findByDeviceId(String deviceId);
 
     void delete(Account account);
 }

@@ -31,6 +31,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import net.logstash.logback.util.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,6 +70,14 @@ public class MemberController {
         return memberFacade.checkDuplicateNickname(MemberNickNameDuplicatedCheckCommand.request(insertedNickname, useKakaoNickname));
     }
 
+    @ApiOperation("최근 본 목록 호출")
+    @GetMapping("/recently-views")
+    public Page<RecentlyViewedItemResponse> getRecentlyViewItems(@AuthenticationPrincipal AccountId accountId,
+                                                             @RequestParam int size,
+                                                             @RequestParam int page) {
+        return memberFacade.getRecentlyViewItems(accountId, size, page);
+    }
+
     @ApiOperation("최근 본 목록 추가")
     @PostMapping("/recently-views")
     public void addRecentlyView(@AuthenticationPrincipal AccountId accountId,
@@ -76,12 +86,20 @@ public class MemberController {
         memberFacade.addRecentlyView(ItemType.valueOf(itemType), accountId, itemId);
     }
 
+    @ApiOperation("최근 본 목록 삭제하기")
+    @DeleteMapping("/recently-view")
+    public void deleteRecentlyView(@AuthenticationPrincipal AccountId accountId,
+                                   @RequestParam String itemType,
+                                   @RequestParam(required = false) Long itemId) {
+        memberFacade.deleteRecentlyView(ItemType.valueOf(itemType), accountId, itemId);
+    }
+
     @ApiOperation("찜 목록 호출")
     @GetMapping("/favorite-items")
-    public List<RecentlyViewedItemResponse> getFavoriteItems(@AuthenticationPrincipal AccountId accountId,
+    public Page<RecentlyViewedItemResponse> getFavoriteItems(@AuthenticationPrincipal AccountId accountId,
                                                              @RequestParam int size,
-                                                             @RequestParam(required = false) Long cursorId) {
-        return memberFacade.getFavoriteItems(accountId, size, cursorId);
+                                                             @RequestParam int page) {
+        return memberFacade.getFavoriteItems(accountId, size, page);
     }
 
     @ApiOperation("찜 목록 추가")
@@ -92,20 +110,12 @@ public class MemberController {
         memberFacade.addFavoriteItem(ItemType.valueOf(itemType), accountId, itemId);
     }
 
-    @ApiOperation("최근 본 목록 삭제하기")
-    @DeleteMapping("/recently-view/{id}")
-    public void deleteRecentlyView(@AuthenticationPrincipal AccountId accountId,
-                                      @PathVariable Long id) {
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저입니다."));
-        memberFacade.deleteRecentlyView(member);
-    }
-
     @ApiOperation("찜 목록 삭제하기")
     @DeleteMapping("/favorite-item")
     public void deleteFavoriteItem(@AuthenticationPrincipal AccountId accountId,
-                                      @PathVariable Long id) {
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저입니다."));
-        memberFacade.deleteFavoriteItem(member.getId());
+                                   @RequestParam String itemType,
+                                   @RequestParam(required = false) Long itemId) {
+        memberFacade.deleteFavoriteItem(ItemType.valueOf(itemType), accountId, itemId);
     }
 
     @ApiOperation("멤버 로그아웃")

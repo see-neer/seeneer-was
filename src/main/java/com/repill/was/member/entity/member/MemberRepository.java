@@ -2,6 +2,7 @@ package com.repill.was.member.entity.member;
 
 import com.repill.was.member.entity.account.AccountId;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository {
@@ -19,6 +20,4 @@ public interface MemberRepository {
     Optional<Member> findBannedExistByDeviceId(AccountId accountId, String deviceId);
 
     Optional<Member> findByMemberNickName(String nickName);
-
-    Optional<Member> getFavoriteItems(MemberId memberId, int size, Long cursorId);
 }

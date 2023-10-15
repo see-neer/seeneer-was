@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface AccountJpaRepository extends JpaRepository<Account, AccountId> {
-    Optional<Account> findByDevice(Device device);
+    Optional<Account> findByDeviceDeviceId(String deviceId);
     Optional<Account> findById(AccountId accountId);
 }

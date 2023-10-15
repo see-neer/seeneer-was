@@ -33,7 +33,7 @@ public class HeathCheckController {
     @PostMapping("/health")
     public HealthCheckResponse healthCheck(@RequestHeader(value="X-APP-OS", required = false) String appOS,
                                            @RequestBody AutoLoginRequest autoLoginRequest) {
-        Optional<Account> accountByDevice = accountRepository.findByDevice(new Device());
+        Optional<Account> accountByDevice = accountRepository.findByDeviceId(autoLoginRequest.getDeviceId());
 
         if(accountByDevice.isEmpty()) {
             AccountId accountId = accountRepository.nextId();

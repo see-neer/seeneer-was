@@ -30,7 +30,9 @@ public class QComment extends EntityPathBase<Comment> {
 
     public final DateTimePath<java.time.ZonedDateTime> createdAt = createDateTime("createdAt", java.time.ZonedDateTime.class);
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public final QCommentId id;
+
+    public final NumberPath<Long> likeCount = createNumber("likeCount", Long.class);
 
     public final NumberPath<Integer> parentOrderId = createNumber("parentOrderId", Integer.class);
 
@@ -59,6 +61,7 @@ public class QComment extends EntityPathBase<Comment> {
     public QComment(Class<? extends Comment> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.commentMemberId = inits.isInitialized("commentMemberId") ? new com.repill.was.member.entity.member.QMemberId(forProperty("commentMemberId")) : null;
+        this.id = inits.isInitialized("id") ? new QCommentId(forProperty("id")) : null;
         this.parents = inits.isInitialized("parents") ? new QComment(forProperty("parents"), inits.get("parents")) : null;
         this.postMemberId = inits.isInitialized("postMemberId") ? new com.repill.was.member.entity.member.QMemberId(forProperty("postMemberId")) : null;
     }

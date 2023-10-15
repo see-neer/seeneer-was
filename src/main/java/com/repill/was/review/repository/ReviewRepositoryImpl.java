@@ -68,7 +68,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                         review.content))
                 .from(review)
                 .leftJoin(market).on(review.itemId.eq(market.id.id))
-                .where(review.memberId.eq(memberId)
+                .where(review.reviewerId.eq(memberId)
                         .and(review.itemType.eq(ItemType.MARKET)
                                 .and(cursorLt(cursorId.getId()))))
                 .fetch();
@@ -85,7 +85,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                         review.content))
                 .from(review)
                 .leftJoin(festival).on(review.itemId.eq(festival.id.id))
-                .where(review.memberId.eq(memberId)
+                .where(review.reviewerId.eq(memberId)
                         .and(review.itemType.eq(ItemType.FESTIVAL)
                                 .and(cursorLt(cursorId.getId()))))
                 .fetch();

@@ -38,8 +38,8 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public Optional<Account> findByDevice(Device device) {
-        return accountJpaRepository.findByDevice(device);
+    public Optional<Account> findByDeviceId(String deviceId) {
+        return accountJpaRepository.findByDeviceDeviceId(deviceId);
     }
 
     @Override

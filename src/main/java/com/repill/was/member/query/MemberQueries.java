@@ -36,9 +36,4 @@ public class MemberQueries {
         Member member = memberRepository.findById(memberId).orElseThrow(BadRequestException::new);
         return MemberDetailProfileResponse.fromMember(member);
     }
-
-    public MemberDetailProfileResponse getFavoriteItems(MemberId memberId, int size, Long cursorId) {
-        memberRepository.getFavoriteItems(memberId, size, cursorId);
-        return null;
-    }
 }

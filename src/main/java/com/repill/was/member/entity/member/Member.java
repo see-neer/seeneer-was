@@ -3,6 +3,8 @@ package com.repill.was.member.entity.member;
 import com.repill.was.global.enums.AuthType;
 import com.repill.was.global.model.ImageListData;
 import com.repill.was.global.model.ImageListDataConverter;
+import com.repill.was.item.entity.FestivalId;
+import com.repill.was.item.entity.MarketId;
 import com.repill.was.member.controller.dto.request.MemberAddInformationRequest;
 import com.repill.was.member.entity.account.AccountId;
 import lombok.Getter;
@@ -10,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Entity
@@ -28,20 +32,20 @@ public class Member {
     @CollectionTable(name = "member_favorite_items",
     joinColumns = @JoinColumn(name = "member_id"))
     @OrderColumn(name = "member_favorite_items_idx")
-    private List<FavoriteItem> favoriteItems;
+    private List<FavoriteItem> favoriteItems = new ArrayList<>();
 
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "member_follower",
             joinColumns = @JoinColumn(name = "member_id"))
     @OrderColumn(name = "member_follower_idx")
-    private List<MemberFollower> memberFollowers;
+    private List<MemberFollower> memberFollowers = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "member_recently_viewed_item",
             joinColumns = @JoinColumn(name = "member_id"))
     @OrderColumn(name = "member_recently_viewed_item_idx")
-    private List<RecentlyViewedItem> recentlyViewedItems;
+    private List<RecentlyViewedItem> recentlyViewedItems = new ArrayList<>();
 
     @Embedded
     private Address address;
@@ -138,6 +142,23 @@ public class Member {
         List<FavoriteItem> originalFavoriteItem = this.favoriteItems;
         originalFavoriteItem.add(favoriteItem);
         this.favoriteItems = originalFavoriteItem;
+    }
+
+    public void deleteFavoriteItem(FavoriteItem favoriteItem) {
+        List<FavoriteItem> originalFavoriteItem = this.favoriteItems;
+        this.favoriteItems = originalFavoriteItem
+                .stream()
+                .filter(one -> !one.equals(favoriteItem))
+                .collect(Collectors.toList());
+    }
+
+    public void deleteRecentlyViewedItem(RecentlyViewedItem recentlyViewedItem) {
+        List<RecentlyViewedItem> originalRecentlyViewedItem = this.recentlyViewedItems;
+        this.recentlyViewedItems =
+                originalRecentlyViewedItem
+                        .stream()
+                        .filter(one -> !one.equals(recentlyViewedItem))
+                        .collect(Collectors.toList());
     }
 
     public Boolean checkBannedMember() {

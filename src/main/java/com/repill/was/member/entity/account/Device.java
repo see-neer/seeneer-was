@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Embeddable
 @NoArgsConstructor
@@ -46,5 +47,18 @@ public class Device {
                 this.osType,
                 LocalDateTime.now()
         );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Device device = (Device) o;
+        return deviceId.equals(device.deviceId) && osType == device.osType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(deviceId, osType);
     }
 }

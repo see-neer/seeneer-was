@@ -2,20 +2,24 @@ package com.repill.was.member.controller.dto.response;
 
 
 import com.repill.was.global.enums.ItemType;
+import com.repill.was.global.factory.itemvalidate.ItemValidateFactory;
+import com.repill.was.global.factory.itemvalidate.ItemValidator;
 import com.repill.was.global.utils.TimeUtils;
 
 import com.repill.was.item.entity.Festival;
 import com.repill.was.item.entity.Market;
+import com.repill.was.item.query.vo.ItemVO;
+import com.repill.was.member.entity.member.FavoriteItem;
+import com.repill.was.member.entity.member.RecentlyViewedItem;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
 public class RecentlyViewedItemResponse {
-
-    private Long id;
     private Long itemId;
     private String itemType;
     private String name;
@@ -24,8 +28,10 @@ public class RecentlyViewedItemResponse {
     private Integer score;
     private Integer reviewCount;
 
-    public RecentlyViewedItemResponse(Long id, Long itemId, String itemType, String name, String date, List<String> images, Integer score, Integer reviewCount) {
-        this.id = id;
+    private String createdAt;
+    private String updatedAt;
+
+    public RecentlyViewedItemResponse(Long itemId, String itemType, String name, String date, List<String> images, Integer score, Integer reviewCount, String createdAt, String updatedAt) {
         this.itemId = itemId;
         this.itemType = itemType;
         this.name = name;
@@ -33,31 +39,33 @@ public class RecentlyViewedItemResponse {
         this.images = images;
         this.score = score;
         this.reviewCount = reviewCount;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
-    public static RecentlyViewedItemResponse fromMarket(Market market, Long id) {
+    public static RecentlyViewedItemResponse from(FavoriteItem favoriteItem, ItemValidateFactory itemValidateFactory) {
+        ItemValidator validatorBy = itemValidateFactory.getValidatorBy(favoriteItem.getItemType());
+        ItemVO itemInfo = validatorBy.getItemInfo(favoriteItem.getItemId());
+        return RecentlyViewedItemResponse.fromItemVO(itemInfo);
+    }
+
+    public static RecentlyViewedItemResponse from(RecentlyViewedItem recentlyViewedItem, ItemValidateFactory itemValidateFactory) {
+        ItemValidator validatorBy = itemValidateFactory.getValidatorBy(recentlyViewedItem.getItemType());
+        ItemVO itemInfo = validatorBy.getItemInfo(recentlyViewedItem.getItemId());
+        return RecentlyViewedItemResponse.fromItemVO(itemInfo);
+    }
+
+    private static RecentlyViewedItemResponse fromItemVO(ItemVO itemVO) {
         return new RecentlyViewedItemResponse(
-                id,
-                market.getId().getId(),
+                itemVO.getId(),
                 ItemType.MARKET.name(),
-                market.getName(),
-                market.getDate(),
-                market.getImages().getImages(),
+                itemVO.getName(),
+                TimeUtils.convertToISO_8061(itemVO.getCreatedAt()),
+                itemVO.getImageSrc(),
                 5,
-                100
-        );
-    }
-
-    public static RecentlyViewedItemResponse fromFestival(Festival festival, Long id) {
-        return new RecentlyViewedItemResponse(
-                id,
-                festival.getId().getId(),
-                ItemType.FESTIVAL.name(),
-                festival.getName(),
-                TimeUtils.convertToISO_8061(festival.getDate()),
-                festival.getImages().getImages(),
-                5,
-                100
+                100,
+                TimeUtils.convertToISO_8061(itemVO.getCreatedAt()),
+                TimeUtils.convertToISO_8061(itemVO.getUpdateAt())
         );
     }
 }

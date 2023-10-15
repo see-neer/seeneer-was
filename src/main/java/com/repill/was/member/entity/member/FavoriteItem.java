@@ -1,12 +1,14 @@
 package com.repill.was.member.entity.member;
 
 import com.repill.was.global.enums.ItemType;
+import lombok.Getter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.time.LocalDateTime;
 
 @Embeddable
+@Getter
 public class FavoriteItem {
 
     @Column(columnDefinition = "VARCHAR(50)")
@@ -30,5 +32,13 @@ public class FavoriteItem {
                 itemId,
                 LocalDateTime.now()
         );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FavoriteItem that = (FavoriteItem) o;
+        return itemType == that.itemType && itemId.equals(that.itemId);
     }
 }

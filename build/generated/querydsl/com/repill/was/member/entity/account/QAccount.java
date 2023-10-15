@@ -28,8 +28,6 @@ public class QAccount extends EntityPathBase<Account> {
 
     public final QAccountId id;
 
-    public final com.repill.was.member.entity.member.QMemberId memberId;
-
     public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
     public QAccount(String variable) {
@@ -50,9 +48,8 @@ public class QAccount extends EntityPathBase<Account> {
 
     public QAccount(Class<? extends Account> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.device = inits.isInitialized("device") ? new QDevice(forProperty("device"), inits.get("device")) : null;
+        this.device = inits.isInitialized("device") ? new QDevice(forProperty("device")) : null;
         this.id = inits.isInitialized("id") ? new QAccountId(forProperty("id")) : null;
-        this.memberId = inits.isInitialized("memberId") ? new com.repill.was.member.entity.member.QMemberId(forProperty("memberId")) : null;
     }
 
 }

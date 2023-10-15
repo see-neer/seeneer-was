@@ -4,14 +4,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.repill.was.global.sequencegenerator.SequenceGenerator;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.QAccount;
-import com.repill.was.member.entity.member.Member;
-import com.repill.was.member.entity.member.MemberId;
-import com.repill.was.member.entity.member.MemberRepository;
-import com.repill.was.member.entity.member.QMember;
+import com.repill.was.member.entity.member.*;
 import com.repill.was.member.repository.jpa.MemberJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.repill.was.member.entity.account.QAccount.account;
@@ -64,14 +62,5 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public Optional<Member> findByMemberNickName(String nickName) {
         return memberJpaRepository.findByNickname(nickName);
-    }
-
-    @Override
-    public Optional<Member> getFavoriteItems(MemberId memberId, int size, Long cursorId) {
-//        return jpaQueryFactory
-//                .select(member.favoriteItems)
-//                .from(member)
-//                .where(member.favoriteItems.)
-        return null;
     }
 }

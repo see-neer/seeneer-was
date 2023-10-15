@@ -1,13 +1,12 @@
 package com.repill.was.member.facade;
 
-
-
-
 import com.repill.was.global.enums.ItemType;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.factory.itemvalidate.ItemValidateFactory;
 import com.repill.was.global.factory.itemvalidate.ItemValidator;
 import com.repill.was.global.model.ImageListData;
+import com.repill.was.global.utils.PageUtils;
+import com.repill.was.item.query.vo.ItemVO;
 import com.repill.was.member.controller.command.LoginCommand;
 import com.repill.was.member.controller.command.MemberAddInformationCommand;
 import com.repill.was.member.controller.command.MemberNickNameDuplicatedCheckCommand;
@@ -19,10 +18,19 @@ import com.repill.was.member.entity.account.AccountRepository;
 import com.repill.was.member.entity.member.*;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.member.query.vo.RecentlyViewedItemInfoVO;
+import io.lettuce.core.GeoArgs;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.repill.was.global.enums.Sort.CREATED_AT;
 
 @Service
 @RequiredArgsConstructor
@@ -51,21 +59,38 @@ public class MemberFacade {
         validatorBy.addFavoriteItem(member, itemId);
     }
 
-    public void deleteFavoriteItem(MemberId memberId) {
-//        FavoriteItem favoriteItem = favoriteItemRepository.findByIdAndAccountId(id, memberId).orElseThrow(() -> new BadRequestException("존재하지 않는 최근 본 목록 값 입니다."));
-//        favoriteItemRepository.delete(favoriteItem);
-    }
-
-    public List<RecentlyViewedItemResponse> getFavoriteItems(AccountId accountId, int size, Long cursorId) {
+    public void deleteFavoriteItem(ItemType itemType, AccountId accountId, Long itemId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-
-        return null;
+        ItemValidator validatorBy = itemValidateFactory.getValidatorBy(itemType);
+        validatorBy.deleteFavoriteItem(member, itemId);
     }
 
-    public void deleteRecentlyView(Member member) {
-//        RecentlyViewedItem recentlyViewedItem = recentlyViewedItemRepository.findByIdAndAccountId(id, member.getId()).orElseThrow(() -> new BadRequestException("존재하지 않는 최근 본 목록 값 입니다."));
-//        recentlyViewedItem.canDeleteItem(validateIsActiveItemService, member);
-//        recentlyViewedItemRepository.delete(recentlyViewedItem);
+    //todo 리펙토링 필요
+    @Transactional(readOnly = true)
+    public Page<RecentlyViewedItemResponse> getRecentlyViewItems(AccountId accountId, int size, int page) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        List<RecentlyViewedItem> recentlyViewedItems = member.getRecentlyViewedItems();
+        List<RecentlyViewedItemResponse> list = recentlyViewedItems.parallelStream().map(one -> {
+            return RecentlyViewedItemResponse.from(one, itemValidateFactory);
+        }).collect(Collectors.toList());
+        return PageUtils.makePage(list, CREATED_AT.name(), size, page);
+    }
+
+    //todo 리펙토링 필요
+    @Transactional(readOnly = true)
+    public Page<RecentlyViewedItemResponse> getFavoriteItems(AccountId accountId, int size, int page) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        List<FavoriteItem> favoriteItems = member.getFavoriteItems();
+        List<RecentlyViewedItemResponse> list = favoriteItems.parallelStream().map(one -> {
+            return RecentlyViewedItemResponse.from(one, itemValidateFactory);
+        }).collect(Collectors.toList());
+        return PageUtils.makePage(list, CREATED_AT.name(), size, page);
+    }
+
+    public void deleteRecentlyView(ItemType itemType, AccountId accountId, Long itemId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        ItemValidator validatorBy = itemValidateFactory.getValidatorBy(itemType);
+        validatorBy.deleteRecentlyViewedItem(member, itemId);
     }
 
     public void login(LoginCommand loginCommand) {
