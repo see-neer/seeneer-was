@@ -21,7 +21,7 @@ public class Review {
 
     @Embedded
     @AttributeOverride(name = "id", column = @Column(name = "memberId", nullable = false))
-    private MemberId memberId;
+    private MemberId reviewerId;
 
     @Column(columnDefinition = "VARCHAR(50)")
     private ItemType itemType;
@@ -42,9 +42,9 @@ public class Review {
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
 
-    public Review(ReviewId id, MemberId memberId, ItemType itemType, Long itemId, String content, ImageListData images, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Review(ReviewId id, MemberId reviewerId, ItemType itemType, Long itemId, String content, ImageListData images, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
-        this.memberId = memberId;
+        this.reviewerId = reviewerId;
         this.itemType = itemType;
         this.itemId = itemId;
         this.content = content;
