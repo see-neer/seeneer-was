@@ -59,7 +59,7 @@ public class Account implements Serializable {
             String birthdayType,
             String gender,
             String connectedAt) {
-        return Member.createKaKaoMember(
+        return new Member(
                 memberId,
                 accountId,
                 profileImage,

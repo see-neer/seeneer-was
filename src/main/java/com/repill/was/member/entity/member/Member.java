@@ -102,25 +102,17 @@ public class Member {
     private LocalDateTime createdAt;
 
 
-    public Member(MemberId id, AccountId accountId, List<FavoriteItem> favoriteItems, List<MemberFollower> memberFollowers, List<RecentlyViewedItem> recentlyViewedItems, Address address, String imageSrc, String nickname, AuthType authType, LocalDateTime closedAt, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt, LocalDateTime updatedAt, LocalDateTime createdAt) {
-        this.id = id;
-        this.accountId = accountId;
-        this.favoriteItems = favoriteItems;
-        this.memberFollowers = memberFollowers;
-        this.recentlyViewedItems = recentlyViewedItems;
-        this.address = address;
-        this.imageSrc = imageSrc;
-        this.nickname = nickname;
-        this.authType = authType;
-        this.closedAt = closedAt;
-        this.kakaoUserId = kakaoUserId;
-        this.ageRange = ageRange;
-        this.birthday = birthday;
-        this.birthdayType = birthdayType;
-        this.gender = gender;
-        this.connectedAt = connectedAt;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
+    public Member(MemberId id, AccountId accountId, String imageSrc, String nickname, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt) {
+        createKaKaoMember(id,
+                accountId,
+                imageSrc,
+                nickname,
+                kakaoUserId,
+                ageRange,
+                birthday,
+                birthdayType,
+                gender,
+                connectedAt);
     }
 
     public Member(LocalDateTime bannedAt) {
@@ -171,7 +163,7 @@ public class Member {
     public static Member createNotBannedMember() {
         return new Member(null);
     }
-    public static Member createKaKaoMember(MemberId memberId,
+    private void createKaKaoMember(MemberId memberId,
                                     AccountId accountId,
                                     String imageSrc,
                                     String nickname,
@@ -181,26 +173,24 @@ public class Member {
                                     String birthdayType,
                                     String gender,
                                     String connectedAt) {
-        return new Member(
-                memberId,
-                accountId,
-                null,
-                null,
-                null,
-                null,
-                imageSrc,
-                nickname,
-                AuthType.KAKAO,
-                null,
-                kakaoUserId,
-                ageRange,
-                birthday,
-                birthdayType,
-                gender,
-                connectedAt,
-                LocalDateTime.now(),
-                LocalDateTime.now()
-        );
+        this.id = memberId;
+        this.accountId = accountId;
+        this.favoriteItems = null;
+        this.memberFollowers = null;
+        this.recentlyViewedItems = null;
+        this.address = null;
+        this.imageSrc = imageSrc;
+        this.nickname = nickname;
+        this.authType = AuthType.KAKAO;
+        this.closedAt = null;
+        this.kakaoUserId = kakaoUserId;
+        this.ageRange = ageRange;
+        this.birthday = birthday;
+        this.birthdayType = birthdayType;
+        this.gender = gender;
+        this.connectedAt = connectedAt;
+        this.updatedAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 
     public void updateInformation(MemberAddInformationRequest.MemberAddress myAddressInfo,
