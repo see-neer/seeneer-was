@@ -103,6 +103,7 @@ public class Member {
 
 
     public Member(MemberId id, AccountId accountId, String imageSrc, String nickname, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt) {
+       // todo 현재는 카카오 로그인 밖에 없음. 다른 방법이 추가되면 고도화 필요
         createKaKaoMember(id,
                 accountId,
                 imageSrc,

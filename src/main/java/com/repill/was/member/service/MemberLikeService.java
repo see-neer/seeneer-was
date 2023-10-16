@@ -1,7 +1,9 @@
 package com.repill.was.member.service;
 
+import com.repill.was.global.event.Events;
 import com.repill.was.member.controller.command.MemberLikeCommand;
 import com.repill.was.member.entity.memberLike.AddLikeItemService;
+import com.repill.was.member.entity.memberLike.MemberAddedLikeEvent;
 import com.repill.was.member.entity.memberLike.MemberLike;
 import com.repill.was.member.entity.memberLike.MemberLikeRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +46,8 @@ public class MemberLikeService {
                             memberLikeCommand.getLikeType()
                     );
                     memberLikeRepository.save(newMemberLike);
-                    MemberLike.addLike(addLikeItemService, memberLikeCommand.getLikeType(), memberLikeCommand.getItemId(), newMemberLike);
+                    Events.raise(new MemberAddedLikeEvent(memberLikeCommand.getLikeType(), memberLikeCommand.getItemId(), newMemberLike));
+//                    MemberLike.addCountLike(addLikeItemService, memberLikeCommand.getLikeType(), memberLikeCommand.getItemId(), newMemberLike);
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

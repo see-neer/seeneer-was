@@ -56,7 +56,7 @@ public class MemberLike {
         );
     }
 
-    public static void addLike(AddLikeItemService addLikeItemService, LikeType likeType, Long itemId, MemberLike newMemberLike) {
+    public static void addCountLike(AddLikeItemService addLikeItemService, LikeType likeType, Long itemId, MemberLike newMemberLike) {
         addLikeItemService.addLike(itemId, likeType, newMemberLike);
     }
 }
