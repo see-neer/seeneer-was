@@ -47,7 +47,6 @@ public class MemberLikeService {
                     );
                     memberLikeRepository.save(newMemberLike);
                     Events.raise(new MemberAddedLikeEvent(memberLikeCommand.getLikeType(), memberLikeCommand.getItemId(), newMemberLike));
-//                    MemberLike.addCountLike(addLikeItemService, memberLikeCommand.getLikeType(), memberLikeCommand.getItemId(), newMemberLike);
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
