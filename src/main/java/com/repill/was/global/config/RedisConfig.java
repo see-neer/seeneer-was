@@ -9,9 +9,9 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
-@RequiredArgsConstructor
-@Configuration
-@Profile({"test", "local", "dev"})
+//@RequiredArgsConstructor
+//@Configuration
+//@Profile({"test", "local", "dev"})
 public class RedisConfig {
 //    private final RedisProperties redisProperties;
 

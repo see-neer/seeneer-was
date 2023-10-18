@@ -1,29 +1,29 @@
----
-spring:
-  config:
-    activate:
-      on-profile: local
-
-  redis:
-    host: 127.0.0.1
-    port: 6379
-
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-
-  redis:
-    host: redis-dev.zxfzjf.ng.0001.apn2.cache.amazonaws.com
-    port: 6379
-
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-
-  redis:
-    host: wewoot-redis-prod.zxfzjf.clustercfg.apn2.cache.amazonaws.com
-    port: 6379
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: local
+#
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: dev
+#
+#  redis:
+#    host: redis-dev.zxfzjf.ng.0001.apn2.cache.amazonaws.com
+#    port: 6379
+#
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: prod
+#
+#  redis:
+#    host: wewoot-redis-prod.zxfzjf.clustercfg.apn2.cache.amazonaws.com
+#    port: 6379

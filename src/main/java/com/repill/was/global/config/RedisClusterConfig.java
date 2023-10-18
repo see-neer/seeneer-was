@@ -10,9 +10,9 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
-@RequiredArgsConstructor
-@Configuration
-@Profile({"prod"})
+//@RequiredArgsConstructor
+//@Configuration
+//@Profile({"prod"})
 public class RedisClusterConfig {
 //    private final RedisProperties redisProperties;
 //
