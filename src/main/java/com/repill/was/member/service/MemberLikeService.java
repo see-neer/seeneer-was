@@ -22,16 +22,15 @@ public class MemberLikeService {
     private final static long waitTime = 2;
     private final static long leaseTime = 3;
     private final MemberLikeRepository memberLikeRepository;
-    private final AddLikeItemService addLikeItemService;
-    private final RedissonClient redissonClient;
+//    private final RedissonClient redissonClient;
 
     @Transactional
     public void addLike(MemberLikeCommand memberLikeCommand) {
-        RLock lock = redissonClient.getLock(makeMemberLikeLockName(memberLikeCommand.getMemberId().getId(), memberLikeCommand.getItemId(), memberLikeCommand.getLikeType().name()));
-        boolean isLocked = lock.isLocked();
-        if (!isLocked) {
-            try {
-                lock.tryLock(waitTime, leaseTime, TimeUnit.SECONDS);
+//        RLock lock = redissonClient.getLock(makeMemberLikeLockName(memberLikeCommand.getMemberId().getId(), memberLikeCommand.getItemId(), memberLikeCommand.getLikeType().name()));
+//        boolean isLocked = lock.isLocked();
+//        if (!isLocked) {
+//            try {
+//                lock.tryLock(waitTime, leaseTime, TimeUnit.SECONDS);
                 Optional<MemberLike> byItemIdAndMemberId = memberLikeRepository.findByItemIdAndMemberId(
                         memberLikeCommand.getLikeType().name(),
                         memberLikeCommand.getMemberId(),
@@ -48,14 +47,14 @@ public class MemberLikeService {
                     memberLikeRepository.save(newMemberLike);
                     Events.raise(new MemberAddedLikeEvent(memberLikeCommand.getLikeType(), memberLikeCommand.getItemId(), newMemberLike));
                 }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            } finally {
-                if (lock.isLocked() && lock.isHeldByCurrentThread()) {
-                    lock.unlock();
-                }
-            }
-        }
+//            } catch (InterruptedException e) {
+//                Thread.currentThread().interrupt();
+//            } finally {
+//                if (lock.isLocked() && lock.isHeldByCurrentThread()) {
+//                    lock.unlock();
+//                }
+//            }
+//        }
     }
 
     private String makeMemberLikeLockName(Long memberId, Long itemId, String itemType) {

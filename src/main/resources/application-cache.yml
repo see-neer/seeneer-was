@@ -2,7 +2,7 @@
 spring:
   config:
     activate:
-      on-profile: local, test
+      on-profile: local
 
   redis:
     host: 127.0.0.1

@@ -14,21 +14,21 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 @Profile({"prod"})
 public class RedisClusterConfig {
-    private final RedisProperties redisProperties;
-
-    // lettuce
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory() {
-        RedisClusterConfiguration clusterConfiguration = new RedisClusterConfiguration();
-        clusterConfiguration.clusterNode(redisProperties.getHost(), redisProperties.getPort());
-        return new LettuceConnectionFactory(clusterConfiguration);
-    }
-
-    @Bean
-    public RedisTemplate<?, ?> redisTemplate() {
-        RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory());
-        return redisTemplate;
-    }
+//    private final RedisProperties redisProperties;
+//
+//    // lettuce
+//    @Bean
+//    public RedisConnectionFactory redisConnectionFactory() {
+//        RedisClusterConfiguration clusterConfiguration = new RedisClusterConfiguration();
+//        clusterConfiguration.clusterNode(redisProperties.getHost(), redisProperties.getPort());
+//        return new LettuceConnectionFactory(clusterConfiguration);
+//    }
+//
+//    @Bean
+//    public RedisTemplate<?, ?> redisTemplate() {
+//        RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
+//        redisTemplate.setConnectionFactory(redisConnectionFactory());
+//        return redisTemplate;
+//    }
 }
 
