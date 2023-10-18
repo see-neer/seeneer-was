@@ -4,10 +4,7 @@ import com.repill.was.global.config.SwaggerConfig;
 import com.repill.was.global.enums.ItemType;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.response.CommonResponse;
-import com.repill.was.member.controller.command.LoginCommand;
-import com.repill.was.member.controller.command.MemberAddInformationCommand;
-import com.repill.was.member.controller.command.MemberLikeCommand;
-import com.repill.was.member.controller.command.MemberNickNameDuplicatedCheckCommand;
+import com.repill.was.member.controller.command.*;
 import com.repill.was.member.controller.dto.request.*;
 import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
@@ -19,12 +16,14 @@ import com.repill.was.member.entity.account.AccountRepository;
 import com.repill.was.member.entity.member.Member;
 import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.member.entity.member.MemberNotFoundException;
+import com.repill.was.member.entity.memberLike.MemberLike;
 import com.repill.was.member.facade.MemberFacade;
 import com.repill.was.member.query.MemberLikeQueries;
 import com.repill.was.member.query.MemberQueries;
 
 import java.util.List;
 
+import com.repill.was.member.service.AccountService;
 import com.repill.was.member.service.MemberLikeService;
 import com.repill.was.member.service.MemberService;
 import com.repill.was.operation.entity.AddressInfoRepository;
@@ -43,12 +42,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberFacade memberFacade;
-    private final MemberQueries memberQueries;
-    private final AccountRepository accountRepository;
-    private final MemberLikeService memberLikeService;
-    private final MemberService memberService;
-    private final MemberLikeQueries memberLikeQueries;
-
+    private final AccountService accountService;
     private final AddressInfoRepository addressInfoRepository;
 
     @ApiOperation("회원가입")
@@ -84,8 +78,8 @@ public class MemberController {
     @ApiOperation("최근 본 목록 추가")
     @PostMapping("/recently-views")
     public void addRecentlyView(@AuthenticationPrincipal AccountId accountId,
-                                                                @RequestParam String itemType,
-                                                                @RequestParam(required = false) Long itemId) {
+                                @RequestParam String itemType,
+                                @RequestParam(required = false) Long itemId) {
         memberFacade.addRecentlyView(ItemType.valueOf(itemType), accountId, itemId);
     }
 
@@ -124,39 +118,26 @@ public class MemberController {
     @ApiOperation("멤버 로그아웃")
     @PostMapping("/member-logout")
     public void logout(@AuthenticationPrincipal AccountId accountId, @RequestBody MemberLogoutRequest logoutRequest) {
-        Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-//        memberService.logout(accountId, member.get().getId(), OSType.valueOf(logoutRequest.getOsType()), logoutRequest.getDeviceId());
+        accountService.logout(accountId, logoutRequest);
     }
 
     @ApiOperation("탈퇴 실행")
     @PostMapping("/close-account")
     public void closeAccount(@AuthenticationPrincipal AccountId accountId, @RequestBody CloseAccountRequest request) {
-        if (request.getType().isEmpty() && StringUtils.isEmpty(request.getAdditionalInformation())) {
-            throw new BadRequestException();
-        }
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(BadRequestException::new);
-        memberService.proceedClosingAccount(member, request);
+        memberFacade.closeAccount(accountId, request);
     }
 
     @ApiOperation("자기 프로필 수정")
     @PutMapping("/my-profiles")
     public void modifyMyProfiles(@AuthenticationPrincipal AccountId accountId,
                                  @RequestBody MemberProfileUpdateRequest request) {
-
-        memberService.update(accountId,
-                request.getProfileImageSrc(),
-                request.getNickname(),
-                request.isHideRealName()
-        );
+        memberFacade.updateMyProfile(accountId, MemberUpdateProfileCommand.request(request));
     }
 
     @ApiOperation("자기 프로필 상세 조회")
     @GetMapping("/my-profile")
     public MemberDetailProfileResponse getMyProfile(@AuthenticationPrincipal AccountId accountId) {
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        MemberId memberIdQuery = member.getId();
-        return memberQueries.findMyProfileByMemberId(memberIdQuery);
+        return memberFacade.getMyProfile(accountId);
     }
 
     @ApiOperation("좋아요 실행")
@@ -164,17 +145,7 @@ public class MemberController {
     public CommonResponse<Object> addLike(@AuthenticationPrincipal AccountId accountId,
                         @RequestParam String likeType,
                         @RequestParam Long itemId) throws InterruptedException {
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        memberLikeService.addLike(MemberLikeCommand.request(
-                member.getId(),
-                likeType,
-                itemId
-        ));
-        int likeCount = memberLikeQueries.findByMemberNickName(MemberLikeCommand.request(
-                member.getId(),
-                likeType,
-                itemId));
-
-        return CommonResponse.success(likeCount);
+        int result = memberFacade.addLike(accountId, likeType, itemId);
+        return CommonResponse.success(result);
     }
 }

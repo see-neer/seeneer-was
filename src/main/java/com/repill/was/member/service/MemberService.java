@@ -1,6 +1,7 @@
 package com.repill.was.member.service;
 
 import com.repill.was.global.exception.BadRequestException;
+import com.repill.was.member.controller.command.MemberDeleteCommand;
 import com.repill.was.member.controller.dto.request.CloseAccountRequest;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
@@ -22,24 +23,15 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final AccountRepository accountRepository;
 
-
-//    public void logout(AccountId accountId, MemberId memberId, OSType osType, String token) {
-//        deviceService.removeDeviceToken(token);
-//    }
-
     @Transactional
-    public void proceedClosingAccount(Member member, CloseAccountRequest request) {
-
-        List<ClosingAccountReason> collect = request.getType().stream().map(one -> {
-            return Optional.of(ClosingAccountReason.valueOf(one)).orElse(null);
-        }).collect(Collectors.toList());
-
-        Member member1 = memberRepository.findById(member.getId()).orElseThrow(BadRequestException::new);
-//        member1.markAsClosed();
-        memberRepository.save(member1);
-        Account account = accountRepository.findById(member1.getAccountId()).orElseThrow(BadRequestException::new);
+    public void proceedClosingAccount(Member member, MemberDeleteCommand memberDeleteCommand) {
+        // todo 탈퇴 이유 넣는 컬럼 추가 (memberDeleteCommand 정보)
+        Member deleteMember = memberRepository.findById(member.getId()).orElseThrow(BadRequestException::new);
+        deleteMember.markAsClosed();
+        memberRepository.save(deleteMember);
+        Account account = accountRepository.findById(deleteMember.getAccountId()).orElseThrow(BadRequestException::new);
         accountRepository.delete(account);
-//        deviceService.removeAllByAccountId(member1.getAccountId());
+        accountRepository.save(account);
     }
 
     @Transactional

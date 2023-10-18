@@ -5,21 +5,29 @@ import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.factory.itemvalidate.ItemValidateFactory;
 import com.repill.was.global.factory.itemvalidate.ItemValidator;
 import com.repill.was.global.model.ImageListData;
+import com.repill.was.global.response.CommonResponse;
 import com.repill.was.global.utils.PageUtils;
 import com.repill.was.item.query.vo.ItemVO;
-import com.repill.was.member.controller.command.LoginCommand;
-import com.repill.was.member.controller.command.MemberAddInformationCommand;
-import com.repill.was.member.controller.command.MemberNickNameDuplicatedCheckCommand;
+import com.repill.was.member.controller.command.*;
+import com.repill.was.member.controller.dto.request.CloseAccountRequest;
+import com.repill.was.member.controller.dto.request.MemberLogoutRequest;
+import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountNotFoundException;
 import com.repill.was.member.entity.account.AccountRepository;
 import com.repill.was.member.entity.member.*;
+import com.repill.was.member.entity.memberLike.MemberLike;
+import com.repill.was.member.query.MemberLikeQueries;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.member.query.vo.RecentlyViewedItemInfoVO;
+import com.repill.was.member.service.AccountService;
+import com.repill.was.member.service.MemberLikeService;
+import com.repill.was.member.service.MemberService;
 import io.lettuce.core.GeoArgs;
 import lombok.RequiredArgsConstructor;
+import net.logstash.logback.util.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +47,43 @@ public class MemberFacade {
     private final MemberRepository memberRepository;
     private final AccountRepository accountRepository;
     private final ItemValidateFactory itemValidateFactory;
+    private final MemberLikeService memberLikeService;
+    private final MemberLikeQueries memberLikeQueries;
+    private final MemberService memberService;
+
+    public void closeAccount(AccountId accountId, CloseAccountRequest request) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(BadRequestException::new);
+        memberService.proceedClosingAccount(member, MemberDeleteCommand.request(request.getType(), request.getAdditionalInformation()));
+    }
+
+    @Transactional
+    public void updateMyProfile(AccountId accountId, MemberUpdateProfileCommand memberUpdateProfileCommand) {
+        Member memberTobeUpdated = memberRepository.findByAccountId(accountId).orElseThrow(BadRequestException::new);
+        memberTobeUpdated.updateMyProfile(
+                memberUpdateProfileCommand.getNickname(),
+                memberUpdateProfileCommand.getProfileImageSrc()
+        );
+        memberRepository.save(memberTobeUpdated);
+    }
+
+    public int addLike(AccountId accountId, String likeType, Long itemId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        memberLikeService.addLike(MemberLikeCommand.request(
+                member.getId(),
+                likeType,
+                itemId
+        ));
+        return memberLikeQueries.findByMemberNickName(MemberLikeCommand.request(
+                member.getId(),
+                likeType,
+                itemId));
+    }
+
+    public MemberDetailProfileResponse getMyProfile(AccountId accountId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        MemberId memberIdQuery = member.getId();
+        return memberQueries.findMyProfileByMemberId(memberIdQuery);
+    }
 
     public Boolean checkDuplicateNickname(MemberNickNameDuplicatedCheckCommand memberNickNameDuplicatedCheckCommand) {
         if(memberNickNameDuplicatedCheckCommand.isUseKakaoNickname()) {
@@ -47,18 +92,21 @@ public class MemberFacade {
         return memberQueries.findByMemberNickName(memberNickNameDuplicatedCheckCommand.getCheckNickName()).isEmpty();
     }
 
+    @Transactional
     public void addRecentlyView(ItemType itemType, AccountId accountId, Long itemId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         ItemValidator validatorBy = itemValidateFactory.getValidatorBy(itemType);
         validatorBy.addRecentlyViewedItem(member, itemId);
     }
 
+    @Transactional
     public void addFavoriteItem(ItemType itemType, AccountId accountId, Long itemId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         ItemValidator validatorBy = itemValidateFactory.getValidatorBy(itemType);
         validatorBy.addFavoriteItem(member, itemId);
     }
 
+    @Transactional
     public void deleteFavoriteItem(ItemType itemType, AccountId accountId, Long itemId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         ItemValidator validatorBy = itemValidateFactory.getValidatorBy(itemType);
@@ -87,6 +135,7 @@ public class MemberFacade {
         return PageUtils.makePage(list, CREATED_AT.name(), size, page);
     }
 
+    @Transactional
     public void deleteRecentlyView(ItemType itemType, AccountId accountId, Long itemId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         ItemValidator validatorBy = itemValidateFactory.getValidatorBy(itemType);

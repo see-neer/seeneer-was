@@ -101,6 +101,8 @@ public class Member {
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
 
+    protected Member(MemberId id, AccountId accountId, List<FavoriteItem> favoriteItems, List<MemberFollower> memberFollowers, List<RecentlyViewedItem> recentlyViewedItems, Address address, Address interestingAddress, ImageListData interestingCategory, String imageSrc, String nickname, AuthType authType, LocalDateTime closedAt, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt, LocalDateTime bannedAt, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    }
 
     public Member(MemberId id, AccountId accountId, String imageSrc, String nickname, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt) {
        // todo 현재는 카카오 로그인 밖에 없음. 다른 방법이 추가되면 고도화 필요
@@ -154,13 +156,6 @@ public class Member {
                         .collect(Collectors.toList());
     }
 
-    public Boolean checkBannedMember() {
-        if(this.bannedAt != null) {
-            return true;
-        }
-        return false;
-    }
-
     public static Member createNotBannedMember() {
         return new Member(null);
     }
@@ -200,5 +195,14 @@ public class Member {
         this.address = Address.newOne(myAddressInfo.getAddressDetailA(), myAddressInfo.getAddressDetailB(), myAddressInfo.getAddressDetailC(), myAddressInfo.getAddressDetailD());
         this.interestingCategory = interestingCategoryList;
         this.interestingAddress = Address.newOne(interestingAddress.getAddressDetailA(), interestingAddress.getAddressDetailB(), interestingAddress.getAddressDetailC(), interestingAddress.getAddressDetailD());
+    }
+
+    public void updateMyProfile(String nickname, String imageSrc) {
+        this.nickname = nickname;
+        this.imageSrc = imageSrc;
+    }
+
+    public void markAsClosed() {
+        this.closedAt = LocalDateTime.now();
     }
 }

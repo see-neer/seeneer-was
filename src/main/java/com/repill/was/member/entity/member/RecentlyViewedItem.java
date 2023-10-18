@@ -2,18 +2,18 @@ package com.repill.was.member.entity.member;
 
 import com.repill.was.global.enums.ItemType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Embeddable
 @Getter
+@NoArgsConstructor
 public class RecentlyViewedItem {
 
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(50)")
     private ItemType itemType;
 

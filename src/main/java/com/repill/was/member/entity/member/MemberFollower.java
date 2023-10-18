@@ -1,5 +1,8 @@
 package com.repill.was.member.entity.member;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -7,6 +10,8 @@ import javax.persistence.Embedded;
 import java.time.ZonedDateTime;
 
 @Embeddable
+@Getter
+@NoArgsConstructor
 public class MemberFollower {
 
     @Column(columnDefinition = "BIGINT(20)", nullable = false)

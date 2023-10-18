@@ -1,5 +1,6 @@
 package com.repill.was.member.controller.dto.response;
 
+import com.repill.was.global.enums.AuthType;
 import com.repill.was.member.entity.member.Member;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class MemberDetailProfileResponse {
                 member.getId().getId(),
                 member.getNickname(),
                 member.getImageSrc(),
-                "KAKAO"
+                AuthType.KAKAO.name()
         );
     }
 }

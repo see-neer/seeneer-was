@@ -2,15 +2,20 @@ package com.repill.was.member.entity.member;
 
 import com.repill.was.global.enums.ItemType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @Embeddable
 @Getter
+@NoArgsConstructor
 public class FavoriteItem {
 
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(50)")
     private ItemType itemType;
 
@@ -19,6 +24,8 @@ public class FavoriteItem {
 
     @Column(columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)", nullable = false)
     private LocalDateTime createdAt;
+
+
 
     public FavoriteItem(ItemType itemType, Long itemId, LocalDateTime createdAt) {
         this.itemType = itemType;
