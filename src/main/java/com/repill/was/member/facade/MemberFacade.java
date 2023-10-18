@@ -13,6 +13,7 @@ import com.repill.was.member.controller.dto.request.CloseAccountRequest;
 import com.repill.was.member.controller.dto.request.MemberLogoutRequest;
 import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
+import com.repill.was.member.controller.dto.response.view.MemberView;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountNotFoundException;
@@ -39,6 +40,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.repill.was.global.enums.Sort.CREATED_AT;
+import static com.repill.was.global.enums.Sort.MEMBER_ID;
 
 @Service
 @RequiredArgsConstructor
@@ -92,11 +94,41 @@ public class MemberFacade {
         return memberQueries.findByMemberNickName(memberNickNameDuplicatedCheckCommand.getCheckNickName()).isEmpty();
     }
 
+    //todo Pagenation 리펙토링 필요
+    @Transactional(readOnly = true)
+    public Page<RecentlyViewedItemResponse> getRecentlyViewItems(AccountId accountId, int size, int page) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        List<RecentlyViewedItem> recentlyViewedItems = member.getRecentlyViewedItems();
+        List<RecentlyViewedItemResponse> list = recentlyViewedItems.parallelStream().map(one -> {
+            return RecentlyViewedItemResponse.from(one, itemValidateFactory);
+        }).collect(Collectors.toList());
+        return PageUtils.makePage(list, CREATED_AT.name(), size, page);
+    }
+
     @Transactional
     public void addRecentlyView(ItemType itemType, AccountId accountId, Long itemId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         ItemValidator validatorBy = itemValidateFactory.getValidatorBy(itemType);
         validatorBy.addRecentlyViewedItem(member, itemId);
+    }
+
+    @Transactional
+    public void deleteRecentlyView(ItemType itemType, AccountId accountId, Long itemId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        ItemValidator validatorBy = itemValidateFactory.getValidatorBy(itemType);
+        validatorBy.deleteRecentlyViewedItem(member, itemId);
+    }
+
+
+    //todo Pagenation 리펙토링 필요
+    @Transactional(readOnly = true)
+    public Page<RecentlyViewedItemResponse> getFavoriteItems(AccountId accountId, int size, int page) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        List<FavoriteItem> favoriteItems = member.getFavoriteItems();
+        List<RecentlyViewedItemResponse> list = favoriteItems.parallelStream().map(one -> {
+            return RecentlyViewedItemResponse.from(one, itemValidateFactory);
+        }).collect(Collectors.toList());
+        return PageUtils.makePage(list, CREATED_AT.name(), size, page);
     }
 
     @Transactional
@@ -113,33 +145,36 @@ public class MemberFacade {
         validatorBy.deleteFavoriteItem(member, itemId);
     }
 
-    //todo 리펙토링 필요
+    //todo Pagenation 리펙토링 필요
     @Transactional(readOnly = true)
-    public Page<RecentlyViewedItemResponse> getRecentlyViewItems(AccountId accountId, int size, int page) {
+    public Page<MemberView> getFollowers(AccountId accountId, int size, int page) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        List<RecentlyViewedItem> recentlyViewedItems = member.getRecentlyViewedItems();
-        List<RecentlyViewedItemResponse> list = recentlyViewedItems.parallelStream().map(one -> {
-            return RecentlyViewedItemResponse.from(one, itemValidateFactory);
+        List<MemberFollower> memberFollowers = member.getMemberFollowers();
+        List<MemberView> list = memberFollowers.parallelStream().map(one -> {
+            Member followeredMember = memberQueries.findById(new MemberId(one.getFollowedId())).orElseThrow(MemberNotFoundException::new);
+            return MemberView.newOne(followeredMember.getId().getId(), followeredMember.getNickname(), followeredMember.getImageSrc());
         }).collect(Collectors.toList());
-        return PageUtils.makePage(list, CREATED_AT.name(), size, page);
-    }
-
-    //todo 리펙토링 필요
-    @Transactional(readOnly = true)
-    public Page<RecentlyViewedItemResponse> getFavoriteItems(AccountId accountId, int size, int page) {
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        List<FavoriteItem> favoriteItems = member.getFavoriteItems();
-        List<RecentlyViewedItemResponse> list = favoriteItems.parallelStream().map(one -> {
-            return RecentlyViewedItemResponse.from(one, itemValidateFactory);
-        }).collect(Collectors.toList());
-        return PageUtils.makePage(list, CREATED_AT.name(), size, page);
+        return PageUtils.makePage(list, MEMBER_ID.name(), size, page);
     }
 
     @Transactional
-    public void deleteRecentlyView(ItemType itemType, AccountId accountId, Long itemId) {
+    public void addFollower(MemberId followeredId, AccountId accountId, Long itemId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        ItemValidator validatorBy = itemValidateFactory.getValidatorBy(itemType);
-        validatorBy.deleteRecentlyViewedItem(member, itemId);
+        member.addMemberFollowers(MemberFollower.newOne(
+                followeredId.getId(),
+                member.getId().getId()
+        ));
+        memberRepository.save(member);
+    }
+
+    @Transactional
+    public void deleteFollower(MemberId followeredId, AccountId accountId, Long itemId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        member.deleteMemberFollowers(MemberFollower.newOne(
+                followeredId.getId(),
+                member.getId().getId()
+        ));
+        memberRepository.save(member);
     }
 
     public void login(LoginCommand loginCommand) {

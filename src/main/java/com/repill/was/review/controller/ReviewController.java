@@ -27,8 +27,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewController {
 
-    private final ReviewFacade reviewFacade;
     //todo redis cache로 변경
+    private final ReviewFacade reviewFacade;
     private final MemberQueries memberQueries;
 
     @ApiOperation("리뷰 관리 호출")
@@ -43,7 +43,7 @@ public class ReviewController {
     }
 
     @ApiOperation("리뷰 상세 보기")
-    @GetMapping("/{id}}")
+    @GetMapping("/{id}")
     public CommonResponse<ReviewDetailResponse> getReviewDetail(@AuthenticationPrincipal AccountId accountId,
                                                                     @PathVariable("id") Long id,
                                                                     @RequestParam Long itemId,

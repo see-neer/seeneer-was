@@ -133,10 +133,19 @@ public class Member {
         originalRecentlyViewedItem.add(recentlyViewedItem);
         this.recentlyViewedItems = originalRecentlyViewedItem;
     }
+
     public void addFavoriteItem(FavoriteItem favoriteItem) {
         List<FavoriteItem> originalFavoriteItem = this.favoriteItems;
         originalFavoriteItem.add(favoriteItem);
         this.favoriteItems = originalFavoriteItem;
+    }
+
+    public void deleteMemberFollowers(MemberFollower memberFollower) {
+        List<MemberFollower> originalMemberFollowers = this.memberFollowers;
+        this.memberFollowers = originalMemberFollowers
+                .stream()
+                .filter(one -> !one.equals(memberFollower))
+                .collect(Collectors.toList());
     }
 
     public void deleteFavoriteItem(FavoriteItem favoriteItem) {
@@ -156,9 +165,6 @@ public class Member {
                         .collect(Collectors.toList());
     }
 
-    public static Member createNotBannedMember() {
-        return new Member(null);
-    }
     private void createKaKaoMember(MemberId memberId,
                                     AccountId accountId,
                                     String imageSrc,

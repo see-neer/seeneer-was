@@ -20,7 +20,7 @@ public class MemberView {
     }
 
     public static MemberView newOne(Long memberId, String name, String imageSrc) {
-        return new MemberView(null, null, null);
+        return new MemberView(memberId, name, imageSrc);
     }
 
     public static MemberView makeEmptyMemberView() {

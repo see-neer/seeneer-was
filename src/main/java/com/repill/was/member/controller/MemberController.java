@@ -8,6 +8,7 @@ import com.repill.was.member.controller.command.*;
 import com.repill.was.member.controller.dto.request.*;
 import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
+import com.repill.was.member.controller.dto.response.view.MemberView;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountNotFoundException;
@@ -89,6 +90,30 @@ public class MemberController {
                                    @RequestParam String itemType,
                                    @RequestParam(required = false) Long itemId) {
         memberFacade.deleteRecentlyView(ItemType.valueOf(itemType), accountId, itemId);
+    }
+
+    @ApiOperation("팔로워 목록 호출")
+    @GetMapping("/followers")
+    public Page<MemberView> getFollowers(@AuthenticationPrincipal AccountId accountId,
+                                         @RequestParam int size,
+                                         @RequestParam int page) {
+        return memberFacade.getFollowers(accountId, size, page);
+    }
+
+    @ApiOperation("팔로워 목록 추가")
+    @PostMapping("/follower")
+    public void addFollower(@AuthenticationPrincipal AccountId accountId,
+                                @RequestParam Long memberId,
+                                @RequestParam(required = false) Long itemId) {
+        memberFacade.addFollower(new MemberId(memberId), accountId, itemId);
+    }
+
+    @ApiOperation("팔로워 목록 삭제")
+    @DeleteMapping("/follower")
+    public void deleteFollower(@AuthenticationPrincipal AccountId accountId,
+                                   @RequestParam Long memberId,
+                                   @RequestParam(required = false) Long itemId) {
+        memberFacade.deleteFollower(new MemberId(memberId), accountId, itemId);
     }
 
     @ApiOperation("찜 목록 호출")
