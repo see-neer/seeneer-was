@@ -27,6 +27,7 @@ import java.util.List;
 
 import com.repill.was.member.service.MemberLikeService;
 import com.repill.was.member.service.MemberService;
+import com.repill.was.operation.entity.AddressInfoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,8 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberLikeQueries memberLikeQueries;
 
+    private final AddressInfoRepository addressInfoRepository;
+
     @ApiOperation("회원가입")
     @PostMapping("/create")
     public CommonResponse<Object> login(@AuthenticationPrincipal AccountId accountId,
@@ -60,7 +63,7 @@ public class MemberController {
     @PostMapping("/information")
     public CommonResponse<Object> addInformation(@AuthenticationPrincipal AccountId accountId,
                                         @RequestBody MemberAddInformationRequest addMemberInformationRequest) {
-        memberFacade.addInformation(MemberAddInformationCommand.request(addMemberInformationRequest, accountId));
+        memberFacade.addInformation(MemberAddInformationCommand.request(addMemberInformationRequest, addressInfoRepository, accountId));
         return CommonResponse.success(null);
     }
 

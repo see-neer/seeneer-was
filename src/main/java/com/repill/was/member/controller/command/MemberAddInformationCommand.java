@@ -1,8 +1,11 @@
 package com.repill.was.member.controller.command;
 
 import com.repill.was.global.enums.FavoriteCategory;
+import com.repill.was.global.factory.addressvaildate.AddressValidateFactory;
 import com.repill.was.member.controller.dto.request.MemberAddInformationRequest;
 import com.repill.was.member.entity.account.AccountId;
+import com.repill.was.operation.entity.AddressInfoRepository;
+import com.repill.was.operation.entity.AddressNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,9 +20,9 @@ public class MemberAddInformationCommand {
     private MemberAddInformationRequest.MemberAddress interestingAddress;
     private AccountId accountId;
 
-    public static MemberAddInformationCommand request(MemberAddInformationRequest addMemberInformationRequest, AccountId accountId){
-        validateAddress(addMemberInformationRequest.getMyAddressInfo());
-        validateAddress(addMemberInformationRequest.getInterestingAddress());
+    public static MemberAddInformationCommand request(MemberAddInformationRequest addMemberInformationRequest, AddressInfoRepository addressInfoRepository, AccountId accountId){
+        validateAddress(addressInfoRepository, addMemberInformationRequest.getMyAddressInfo());
+        validateAddress(addressInfoRepository, addMemberInformationRequest.getInterestingAddress());
         validateCategory(addMemberInformationRequest.getInterestingCategoryList());
         return new MemberAddInformationCommand(addMemberInformationRequest.getMyAddressInfo(),
                 addMemberInformationRequest.getInterestingCategoryList(),
@@ -27,8 +30,9 @@ public class MemberAddInformationCommand {
                 accountId);
     }
 
-    private static void validateAddress(MemberAddInformationRequest.MemberAddress address){
-        //todo 구현필요
+    private static void validateAddress(AddressInfoRepository addressInfoRepository, MemberAddInformationRequest.MemberAddress address){
+        addressInfoRepository.findByAddressDetailAAndAddressDetailB(address.getAddressDetailA(),
+                address.getAddressDetailB()).orElseThrow(AddressNotFoundException::new);
     }
 
     private static void validateCategory(List<String> interestingCategoryList){
