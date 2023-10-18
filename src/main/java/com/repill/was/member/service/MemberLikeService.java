@@ -7,8 +7,6 @@ import com.repill.was.member.entity.memberLike.MemberAddedLikeEvent;
 import com.repill.was.member.entity.memberLike.MemberLike;
 import com.repill.was.member.entity.memberLike.MemberLikeRepository;
 import lombok.RequiredArgsConstructor;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

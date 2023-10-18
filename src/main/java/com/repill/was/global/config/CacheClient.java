@@ -3,7 +3,6 @@ package com.repill.was.global.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.lang3.tuple.Pair;
-import org.redisson.api.RLock;
 
 import java.time.Duration;
 import java.util.List;
