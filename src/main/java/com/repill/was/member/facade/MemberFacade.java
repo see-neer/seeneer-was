@@ -26,7 +26,6 @@ import com.repill.was.member.query.vo.RecentlyViewedItemInfoVO;
 import com.repill.was.member.service.AccountService;
 import com.repill.was.member.service.MemberLikeService;
 import com.repill.was.member.service.MemberService;
-import io.lettuce.core.GeoArgs;
 import lombok.RequiredArgsConstructor;
 import net.logstash.logback.util.StringUtils;
 import org.springframework.data.domain.Page;
