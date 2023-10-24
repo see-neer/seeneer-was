@@ -17,11 +17,11 @@ public class MemberAddInformationCommand {
 
     private MemberAddInformationRequest.MemberAddress myAddressInfo;
     private List<String> interestingCategoryList;
-    private MemberAddInformationRequest.MemberAddress interestingAddress;
+    private List<MemberAddInformationRequest.MemberAddress> interestingAddress;
     private AccountId accountId;
 
     public static MemberAddInformationCommand request(MemberAddInformationRequest addMemberInformationRequest, AddressInfoRepository addressInfoRepository, AccountId accountId){
-        validateAddress(addressInfoRepository, addMemberInformationRequest.getMyAddressInfo());
+        validateAddress(addressInfoRepository, List.of(addMemberInformationRequest.getMyAddressInfo()));
         validateAddress(addressInfoRepository, addMemberInformationRequest.getInterestingAddress());
         validateCategory(addMemberInformationRequest.getInterestingCategoryList());
         return new MemberAddInformationCommand(addMemberInformationRequest.getMyAddressInfo(),
@@ -30,9 +30,11 @@ public class MemberAddInformationCommand {
                 accountId);
     }
 
-    private static void validateAddress(AddressInfoRepository addressInfoRepository, MemberAddInformationRequest.MemberAddress address){
-        addressInfoRepository.findByAddressDetailAAndAddressDetailB(address.getAddressDetailA(),
-                address.getAddressDetailB()).orElseThrow(AddressNotFoundException::new);
+    private static void validateAddress(AddressInfoRepository addressInfoRepository, List<MemberAddInformationRequest.MemberAddress> address){
+        address.forEach(one -> {
+            addressInfoRepository.findByAddressDetailAAndAddressDetailB(one.getAddressDetailA(),
+                    one.getAddressDetailB()).orElseThrow(AddressNotFoundException::new);
+        });
     }
 
     private static void validateCategory(List<String> interestingCategoryList){

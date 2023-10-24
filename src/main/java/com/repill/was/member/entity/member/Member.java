@@ -61,7 +61,7 @@ public class Member {
             @AttributeOverride(name = "addressDetailD",
                     column = @Column(name = "interesting_addressDetailD"))
     })
-    private Address interestingAddress;
+    private List<Address> interestingAddress;
 
     @Convert(converter = ImageListDataConverter.class)
     @Column(columnDefinition = "TEXT")
@@ -197,10 +197,13 @@ public class Member {
 
     public void updateInformation(MemberAddInformationRequest.MemberAddress myAddressInfo,
                                   ImageListData interestingCategoryList,
-                                  MemberAddInformationRequest.MemberAddress interestingAddress) {
+                                  List<MemberAddInformationRequest.MemberAddress> interestingAddress) {
         this.address = Address.newOne(myAddressInfo.getAddressDetailA(), myAddressInfo.getAddressDetailB(), myAddressInfo.getAddressDetailC(), myAddressInfo.getAddressDetailD());
         this.interestingCategory = interestingCategoryList;
-        this.interestingAddress = Address.newOne(interestingAddress.getAddressDetailA(), interestingAddress.getAddressDetailB(), interestingAddress.getAddressDetailC(), interestingAddress.getAddressDetailD());
+        List<Address> collect = interestingAddress.stream().map(one -> {
+            return Address.newOne(one.getAddressDetailA(), one.getAddressDetailB(), one.getAddressDetailC(), one.getAddressDetailD());
+        }).collect(Collectors.toList());
+        this.interestingAddress = collect;
     }
 
     public void updateMyProfile(String nickname, String imageSrc) {

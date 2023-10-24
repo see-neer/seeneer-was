@@ -68,4 +68,9 @@ public class Market {
         if(!memberLike.getItemId().equals(this.id.getId())) throw new BadRequestException("좋아요 실패");
         this.likeCount += 1;
     }
+
+    public void unLike(MemberLike memberLike) {
+        if(!memberLike.getItemId().equals(this.id.getId())) throw new BadRequestException("좋아요 취소 실패");
+        this.likeCount -= 1;
+    }
 }

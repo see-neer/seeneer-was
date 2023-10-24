@@ -2,8 +2,6 @@ package com.repill.was.member.controller;
 
 import com.repill.was.global.config.SwaggerConfig;
 import com.repill.was.global.enums.ItemType;
-import com.repill.was.global.exception.BadRequestException;
-import com.repill.was.global.response.CommonResponse;
 import com.repill.was.member.controller.command.*;
 import com.repill.was.member.controller.dto.request.*;
 import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
@@ -48,18 +46,16 @@ public class MemberController {
 
     @ApiOperation("회원가입")
     @PostMapping("/create")
-    public CommonResponse<Object> login(@AuthenticationPrincipal AccountId accountId,
+    public void login(@AuthenticationPrincipal AccountId accountId,
                                         @RequestBody MemberLoginRequest memberLoginRequest) {
         memberFacade.login(LoginCommand.request(memberLoginRequest, accountId));
-        return CommonResponse.success(null);
     }
 
     @ApiOperation("회원 추가정보 업데이트")
     @PostMapping("/information")
-    public CommonResponse<Object> addInformation(@AuthenticationPrincipal AccountId accountId,
+    public void addInformation(@AuthenticationPrincipal AccountId accountId,
                                         @RequestBody MemberAddInformationRequest addMemberInformationRequest) {
         memberFacade.addInformation(MemberAddInformationCommand.request(addMemberInformationRequest, addressInfoRepository, accountId));
-        return CommonResponse.success(null);
     }
 
     @ApiOperation("닉네임 중복 확인")
@@ -103,17 +99,15 @@ public class MemberController {
     @ApiOperation("팔로워 목록 추가")
     @PostMapping("/follower")
     public void addFollower(@AuthenticationPrincipal AccountId accountId,
-                                @RequestParam Long memberId,
-                                @RequestParam(required = false) Long itemId) {
-        memberFacade.addFollower(new MemberId(memberId), accountId, itemId);
+                                @RequestParam Long memberId) {
+        memberFacade.addFollower(new MemberId(memberId), accountId);
     }
 
     @ApiOperation("팔로워 목록 삭제")
     @DeleteMapping("/follower")
     public void deleteFollower(@AuthenticationPrincipal AccountId accountId,
-                                   @RequestParam Long memberId,
-                                   @RequestParam(required = false) Long itemId) {
-        memberFacade.deleteFollower(new MemberId(memberId), accountId, itemId);
+                                   @RequestParam Long memberId) {
+        memberFacade.deleteFollower(new MemberId(memberId), accountId);
     }
 
     @ApiOperation("찜 목록 호출")
@@ -167,10 +161,17 @@ public class MemberController {
 
     @ApiOperation("좋아요 실행")
     @PostMapping("/like")
-    public CommonResponse<Object> addLike(@AuthenticationPrincipal AccountId accountId,
+    public int addLike(@AuthenticationPrincipal AccountId accountId,
                         @RequestParam String likeType,
                         @RequestParam Long itemId) throws InterruptedException {
-        int result = memberFacade.addLike(accountId, likeType, itemId);
-        return CommonResponse.success(result);
+        return memberFacade.addLike(accountId, likeType, itemId);
+    }
+
+    @ApiOperation("좋아요 취소")
+    @PostMapping("/unlike")
+    public int deleteLike(@AuthenticationPrincipal AccountId accountId,
+                       @RequestParam String likeType,
+                       @RequestParam Long itemId) throws InterruptedException {
+        return memberFacade.deleteLike(accountId, likeType, itemId);
     }
 }

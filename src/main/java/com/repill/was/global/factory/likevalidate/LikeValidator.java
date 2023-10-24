@@ -12,4 +12,6 @@ import java.util.List;
 public interface LikeValidator {
     LikeType getSupportType();
     void addLike(Long itemId, MemberLike newMemberLike);
+
+    void unLike(Long itemId, MemberLike deleteMemberLike);
 }

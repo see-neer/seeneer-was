@@ -74,6 +74,11 @@ public class Festival {
         this.likeCount += 1;
     }
 
+    public void deleteLike(MemberLike memberLike) {
+        if(!memberLike.getItemId().equals(this.id.getId())) throw new BadRequestException("좋아요 취소 실패");
+        this.likeCount -= 1;
+    }
+
     private boolean isActive(LocalDateTime dateTime) {
         if(this.date.isBefore(dateTime) && !this.isClosed) {
             return true;

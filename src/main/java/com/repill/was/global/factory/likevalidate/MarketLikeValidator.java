@@ -35,4 +35,11 @@ public class MarketLikeValidator implements LikeValidator {
         market.addLike(newMemberLike);
         marketRepository.save(market);
     }
+
+    @Override
+    public void unLike(Long itemId, MemberLike deleteMemberLike) {
+        Market market = marketRepository.findById(new MarketId(itemId)).orElseThrow(MarketNotFoundException::new);
+        market.unLike(deleteMemberLike);
+        marketRepository.save(market);
+    }
 }

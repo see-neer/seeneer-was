@@ -5,9 +5,7 @@ import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.factory.itemvalidate.ItemValidateFactory;
 import com.repill.was.global.factory.itemvalidate.ItemValidator;
 import com.repill.was.global.model.ImageListData;
-import com.repill.was.global.response.CommonResponse;
 import com.repill.was.global.utils.PageUtils;
-import com.repill.was.item.query.vo.ItemVO;
 import com.repill.was.member.controller.command.*;
 import com.repill.was.member.controller.dto.request.CloseAccountRequest;
 import com.repill.was.member.controller.dto.request.MemberLogoutRequest;
@@ -70,6 +68,19 @@ public class MemberFacade {
     public int addLike(AccountId accountId, String likeType, Long itemId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         memberLikeService.addLike(MemberLikeCommand.request(
+                member.getId(),
+                likeType,
+                itemId
+        ));
+        return memberLikeQueries.findByMemberNickName(MemberLikeCommand.request(
+                member.getId(),
+                likeType,
+                itemId));
+    }
+
+    public int deleteLike(AccountId accountId, String likeType, Long itemId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        memberLikeService.deleteLike(MemberLikeCommand.request(
                 member.getId(),
                 likeType,
                 itemId
@@ -157,7 +168,7 @@ public class MemberFacade {
     }
 
     @Transactional
-    public void addFollower(MemberId followeredId, AccountId accountId, Long itemId) {
+    public void addFollower(MemberId followeredId, AccountId accountId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         member.addMemberFollowers(MemberFollower.newOne(
                 followeredId.getId(),
@@ -167,7 +178,7 @@ public class MemberFacade {
     }
 
     @Transactional
-    public void deleteFollower(MemberId followeredId, AccountId accountId, Long itemId) {
+    public void deleteFollower(MemberId followeredId, AccountId accountId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         member.deleteMemberFollowers(MemberFollower.newOne(
                 followeredId.getId(),

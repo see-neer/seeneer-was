@@ -11,7 +11,7 @@ public class MemberAddInformationRequest {
 
     private MemberAddress myAddressInfo;
     private List<String> interestingCategoryList;
-    private MemberAddress interestingAddress;
+    private List<MemberAddress> interestingAddress;
 
     @Getter
     @NoArgsConstructor

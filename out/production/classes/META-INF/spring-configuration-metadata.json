@@ -19,11 +19,6 @@
       "sourceMethod": "getMetricRegistry()"
     },
     {
-      "name": "spring.redis",
-      "type": "com.repill.was.global.config.RedisProperties",
-      "sourceType": "com.repill.was.global.config.RedisProperties"
-    },
-    {
       "name": "spring.slave-datasource",
       "type": "com.zaxxer.hikari.HikariConfig",
       "sourceType": "com.repill.was.global.config.DataSourceConfig",
@@ -202,16 +197,6 @@
       "name": "spring.master-datasource.validation-timeout",
       "type": "java.lang.Long",
       "sourceType": "com.zaxxer.hikari.HikariConfig"
-    },
-    {
-      "name": "spring.redis.host",
-      "type": "java.lang.String",
-      "sourceType": "com.repill.was.global.config.RedisProperties"
-    },
-    {
-      "name": "spring.redis.port",
-      "type": "java.lang.Integer",
-      "sourceType": "com.repill.was.global.config.RedisProperties"
     },
     {
       "name": "spring.slave-datasource.allow-pool-suspension",

@@ -34,4 +34,11 @@ public class FestivalLikeValidator implements LikeValidator {
         festival.addLike(newMemberLike);
         festivalRepository.save(festival);
     }
+
+    @Override
+    public void unLike(Long itemId, MemberLike deleteMemberLike) {
+        Festival festival = festivalRepository.findById(new FestivalId(itemId)).orElseThrow(FestivalNotFoundException::new);
+        festival.deleteLike(deleteMemberLike);
+        festivalRepository.save(festival);
+    }
 }

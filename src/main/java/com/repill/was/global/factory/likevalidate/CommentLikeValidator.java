@@ -39,4 +39,11 @@ public class CommentLikeValidator implements LikeValidator {
         comment.addLike(newMemberLike);
         commentRepository.save(comment);
     }
+
+    @Override
+    public void unLike(Long itemId, MemberLike deleteMemberLike) {
+        Comment comment = commentRepository.findById(new CommentId(itemId)).orElseThrow(CommentNotFoundException::new);
+        comment.deleteLike(deleteMemberLike);
+        commentRepository.save(comment);
+    }
 }
