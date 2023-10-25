@@ -19,12 +19,12 @@ import java.util.List;
 public class ReviewQueries {
     private final ReviewRepository reviewRepository;
 
-    public List<ReviewVO> getMarketReviewLists(MemberId memberId, Long cursorId, int size) {
-        return reviewRepository.getMarketReviewLists(memberId, new MarketId(cursorId), size);
+    public List<ReviewVO> getMarketReviewLists(MemberId memberId) {
+        return reviewRepository.getMarketReviewLists(memberId);
     }
 
-    public List<ReviewVO> getFestivalReviewLists(MemberId memberId, Long cursorId, int size) {
-        return reviewRepository.getFestivalReviewLists(memberId, new FestivalId(cursorId), size);
+    public List<ReviewVO> getFestivalReviewLists(MemberId memberId) {
+        return reviewRepository.getFestivalReviewLists(memberId);
     }
 
     public ReviewDetailVO getMarketReviewDetail(Long id, Long itemId) {

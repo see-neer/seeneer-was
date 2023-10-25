@@ -50,7 +50,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath imageSrc = createString("imageSrc");
 
-    public final QAddress interestingAddress;
+    public final ListPath<Address, QAddress> interestingAddress = this.<Address, QAddress>createList("interestingAddress", Address.class, QAddress.class, PathInits.DIRECT2);
 
     public final SimplePath<com.repill.was.global.model.ImageListData> interestingCategory = createSimple("interestingCategory", com.repill.was.global.model.ImageListData.class);
 
@@ -85,7 +85,6 @@ public class QMember extends EntityPathBase<Member> {
         this.accountId = inits.isInitialized("accountId") ? new com.repill.was.member.entity.account.QAccountId(forProperty("accountId")) : null;
         this.address = inits.isInitialized("address") ? new QAddress(forProperty("address")) : null;
         this.id = inits.isInitialized("id") ? new QMemberId(forProperty("id")) : null;
-        this.interestingAddress = inits.isInitialized("interestingAddress") ? new QAddress(forProperty("interestingAddress")) : null;
     }
 
 }

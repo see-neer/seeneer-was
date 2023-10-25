@@ -32,8 +32,8 @@ public class MarketItemValidator implements ItemValidator {
     }
 
     @Override
-    public List<ReviewVO> getReviewList(MemberId memberId, Long cursorId, int size) {
-        return reviewQueries.getMarketReviewLists(memberId, cursorId, size);
+    public List<ReviewVO> getReviewList(MemberId memberId) {
+        return reviewQueries.getMarketReviewLists(memberId);
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.repill.was.review.facade.ReviewFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,12 +33,12 @@ public class ReviewController {
 
     @ApiOperation("리뷰 관리 호출")
     @GetMapping("/lists")
-    public List<ReviewListResponse> getLists(@AuthenticationPrincipal AccountId accountId,
-                                                       @RequestParam String type,
-                                                       @RequestParam(required = false) Long cursorId,
-                                                       @RequestParam int size) {
+    public Page<ReviewListResponse> getLists(@AuthenticationPrincipal AccountId accountId,
+                                             @RequestParam String type,
+                                             @RequestParam int page,
+                                             @RequestParam int size) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        return reviewFacade.getReviewLists(member.getId(), ItemType.valueOf(type), cursorId, size);
+        return reviewFacade.getReviewLists(member.getId(), ItemType.valueOf(type), page, size);
     }
 
     @ApiOperation("리뷰 상세 보기")

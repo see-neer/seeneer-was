@@ -19,9 +19,9 @@ public interface ReviewRepository {
 
     Optional<Review> findById(ReviewId ReviewId);
 
-    List<ReviewVO> getMarketReviewLists(MemberId memberId, MarketId cursorId, int size);
+    List<ReviewVO> getMarketReviewLists(MemberId memberId);
 
-    List<ReviewVO> getFestivalReviewLists(MemberId memberId, FestivalId cursorId, int size);
+    List<ReviewVO> getFestivalReviewLists(MemberId memberId);
 
     ReviewDetailVO getMarketReviewDetail(ReviewId reviewId, MarketId marketId);
     ReviewDetailVO getFestivalReviewDetail(ReviewId reviewId, FestivalId festivalId);

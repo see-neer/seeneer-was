@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface ItemValidator {
     ItemType getSupportType();
-    List<ReviewVO> getReviewList(MemberId memberId, Long cursorId, int size);
+    List<ReviewVO> getReviewList(MemberId memberId);
 
     ItemVO getItemInfo(Long itemId);
 

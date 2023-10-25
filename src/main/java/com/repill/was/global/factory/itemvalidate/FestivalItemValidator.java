@@ -29,8 +29,8 @@ public class FestivalItemValidator implements ItemValidator {
     }
 
     @Override
-    public List<ReviewVO> getReviewList(MemberId memberId, Long cursorId, int size) {
-        return reviewQueries.getFestivalReviewLists(memberId, cursorId, size);
+    public List<ReviewVO> getReviewList(MemberId memberId) {
+        return reviewQueries.getFestivalReviewLists(memberId);
     }
 
     @Override

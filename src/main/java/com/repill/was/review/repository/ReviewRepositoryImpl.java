@@ -58,7 +58,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     }
 
     @Override
-    public List<ReviewVO> getMarketReviewLists(MemberId memberId, MarketId cursorId, int size) {
+    public List<ReviewVO> getMarketReviewLists(MemberId memberId) {
         return jpaQueryFactory
                 .select(new QReviewVO(
                         review.id.id,
@@ -69,13 +69,12 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                 .from(review)
                 .leftJoin(market).on(review.itemId.eq(market.id.id))
                 .where(review.reviewerId.eq(memberId)
-                        .and(review.itemType.eq(ItemType.MARKET)
-                                .and(cursorLt(cursorId.getId()))))
+                        .and(review.itemType.eq(ItemType.MARKET)))
                 .fetch();
     }
 
     @Override
-    public List<ReviewVO> getFestivalReviewLists(MemberId memberId, FestivalId cursorId, int size) {
+    public List<ReviewVO> getFestivalReviewLists(MemberId memberId) {
         return jpaQueryFactory
                 .select(new QReviewVO(
                         review.id.id,
@@ -86,8 +85,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                 .from(review)
                 .leftJoin(festival).on(review.itemId.eq(festival.id.id))
                 .where(review.reviewerId.eq(memberId)
-                        .and(review.itemType.eq(ItemType.FESTIVAL)
-                                .and(cursorLt(cursorId.getId()))))
+                        .and(review.itemType.eq(ItemType.FESTIVAL)))
                 .fetch();
     }
 
