@@ -15,9 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class MemberAddInformationCommand {
 
-    private MemberAddInformationRequest.MemberAddress myAddressInfo;
+    private String myAddressInfo;
     private List<String> interestingCategoryList;
-    private List<MemberAddInformationRequest.MemberAddress> interestingAddress;
+    private List<String> interestingAddress;
     private AccountId accountId;
 
     public static MemberAddInformationCommand request(MemberAddInformationRequest addMemberInformationRequest, AddressInfoRepository addressInfoRepository, AccountId accountId){
@@ -30,10 +30,9 @@ public class MemberAddInformationCommand {
                 accountId);
     }
 
-    private static void validateAddress(AddressInfoRepository addressInfoRepository, List<MemberAddInformationRequest.MemberAddress> address){
+    private static void validateAddress(AddressInfoRepository addressInfoRepository, List<String> address){
         address.forEach(one -> {
-            addressInfoRepository.findByAddressDetailAAndAddressDetailB(one.getAddressDetailA(),
-                    one.getAddressDetailB()).orElseThrow(AddressNotFoundException::new);
+            addressInfoRepository.findByAddressDetailA(one).orElseThrow(AddressNotFoundException::new);
         });
     }
 

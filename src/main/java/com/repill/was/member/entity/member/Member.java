@@ -195,13 +195,13 @@ public class Member {
         this.createdAt = LocalDateTime.now();
     }
 
-    public void updateInformation(MemberAddInformationRequest.MemberAddress myAddressInfo,
+    public void updateInformation(String myAddressInfo,
                                   ImageListData interestingCategoryList,
-                                  List<MemberAddInformationRequest.MemberAddress> interestingAddress) {
-        this.address = Address.newOne(myAddressInfo.getAddressDetailA(), myAddressInfo.getAddressDetailB(), myAddressInfo.getAddressDetailC(), myAddressInfo.getAddressDetailD());
+                                  List<String> interestingAddress) {
+        this.address = Address.newOne(myAddressInfo, null, null, null);
         this.interestingCategory = interestingCategoryList;
         List<Address> collect = interestingAddress.stream().map(one -> {
-            return Address.newOne(one.getAddressDetailA(), one.getAddressDetailB(), one.getAddressDetailC(), one.getAddressDetailD());
+            return Address.newOne(one, null, null, null);
         }).collect(Collectors.toList());
         this.interestingAddress = collect;
     }
