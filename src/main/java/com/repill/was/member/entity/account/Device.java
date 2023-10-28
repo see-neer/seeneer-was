@@ -49,6 +49,15 @@ public class Device {
         );
     }
 
+    public Device reLogin() {
+        return new Device(
+                this.token,
+                this.deviceId,
+                this.osType,
+                null
+        );
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

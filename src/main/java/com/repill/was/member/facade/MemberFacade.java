@@ -188,20 +188,24 @@ public class MemberFacade {
     }
 
     public void login(LoginCommand loginCommand) {
-        Account account = accountRepository.findById(loginCommand.getAccountId()).orElseThrow(AccountNotFoundException::new);
-        MemberId memberId = memberRepository.nextId();
-        Member newMember = account.createMemberFromKakao(
-                memberId,
-                account.getId(),
-                loginCommand.getProfileImage(),
-                loginCommand.getNickname(),
-                loginCommand.getId(),
-                loginCommand.getAgeRange(),
-                loginCommand.getBirthday(),
-                loginCommand.getBirthdayType(),
-                loginCommand.getGender(),
-                loginCommand.getConnectedAt());
-        memberRepository.save(newMember);
+        Account loginAccount = accountRepository.findById(loginCommand.getAccountId()).orElseThrow(AccountNotFoundException::new);
+        if(memberQueries.findByAccountId(loginAccount.getId()).isEmpty()) {
+            MemberId memberId = memberRepository.nextId();
+            Member newMember = loginAccount.createMemberFromKakao(
+                    memberId,
+                    loginAccount.getId(),
+                    loginCommand.getProfileImage(),
+                    loginCommand.getNickname(),
+                    loginCommand.getId(),
+                    loginCommand.getAgeRange(),
+                    loginCommand.getBirthday(),
+                    loginCommand.getBirthdayType(),
+                    loginCommand.getGender(),
+                    loginCommand.getConnectedAt());
+            memberRepository.save(newMember);
+            return;
+        }
+        loginAccount.reLogin();
     }
 
     public void addInformation(MemberAddInformationCommand memberAddInformationCommand) {
