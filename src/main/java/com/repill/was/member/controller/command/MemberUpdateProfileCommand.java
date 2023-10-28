@@ -37,11 +37,11 @@ public class MemberUpdateProfileCommand {
 
     // todo 중복코드이므로 Factory Class 진행 필요
     private static String validateNickname(String nickname) {
-        String message = "별명 최소 2자, 최대 10자까지 가능합니다";
+        String message = "별명 최소 2자, 최대 15자까지 가능합니다";
         if (StringUtils.isEmpty(nickname)) {
             throw new InvalidCreditCardInfoException(message);
         }
-        if (nickname.length() < 2 || nickname.length() > 10) {
+        if (nickname.length() < 2 || nickname.length() > 15) {
             throw new InvalidCreditCardInfoException(message);
         }
         return nickname;

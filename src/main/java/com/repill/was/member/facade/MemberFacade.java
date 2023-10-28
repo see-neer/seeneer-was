@@ -214,7 +214,8 @@ public class MemberFacade {
         updateMember.updateInformation(
                 memberAddInformationCommand.getMyAddressInfo(),
                 ImageListData.from(memberAddInformationCommand.getInterestingCategoryList()),
-                memberAddInformationCommand.getInterestingAddress()
+                memberAddInformationCommand.getInterestingAddress(),
+                memberAddInformationCommand.getNickname()
         );
         memberRepository.save(updateMember);
     }

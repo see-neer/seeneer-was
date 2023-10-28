@@ -12,4 +12,5 @@ public class MemberAddInformationRequest {
     private List<String> interestingCategoryList;
     private List<String> interestingAddress;
     private String myAddressInfo;
+    private String nickName;
 }

@@ -197,13 +197,15 @@ public class Member {
 
     public void updateInformation(String myAddressInfo,
                                   ImageListData interestingCategoryList,
-                                  List<String> interestingAddress) {
+                                  List<String> interestingAddress,
+                                  String nickname) {
         this.address = Address.newOne(myAddressInfo, null, null, null);
         this.interestingCategory = interestingCategoryList;
         List<Address> collect = interestingAddress.stream().map(one -> {
             return Address.newOne(one, null, null, null);
         }).collect(Collectors.toList());
         this.interestingAddress = collect;
+        this.nickname = nickname;
     }
 
     public void updateMyProfile(String nickname, String imageSrc) {
