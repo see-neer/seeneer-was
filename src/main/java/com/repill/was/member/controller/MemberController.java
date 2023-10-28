@@ -5,6 +5,7 @@ import com.repill.was.global.enums.ItemType;
 import com.repill.was.member.controller.command.*;
 import com.repill.was.member.controller.dto.request.*;
 import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
+import com.repill.was.member.controller.dto.response.MemberFollowerResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.controller.dto.response.view.MemberView;
 import com.repill.was.member.entity.account.Account;
@@ -90,9 +91,9 @@ public class MemberController {
 
     @ApiOperation("팔로워 목록 호출")
     @GetMapping("/followers")
-    public Page<MemberView> getFollowers(@AuthenticationPrincipal AccountId accountId,
-                                         @RequestParam int size,
-                                         @RequestParam int page) {
+    public Page<MemberFollowerResponse> getFollowers(@AuthenticationPrincipal AccountId accountId,
+                                                     @RequestParam int size,
+                                                     @RequestParam int page) {
         return memberFacade.getFollowers(accountId, size, page);
     }
 

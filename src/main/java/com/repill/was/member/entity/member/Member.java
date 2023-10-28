@@ -3,9 +3,6 @@ package com.repill.was.member.entity.member;
 import com.repill.was.global.enums.AuthType;
 import com.repill.was.global.model.ImageListData;
 import com.repill.was.global.model.ImageListDataConverter;
-import com.repill.was.item.entity.FestivalId;
-import com.repill.was.item.entity.MarketId;
-import com.repill.was.member.controller.dto.request.MemberAddInformationRequest;
 import com.repill.was.member.entity.account.AccountId;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -215,5 +212,11 @@ public class Member {
 
     public void markAsClosed() {
         this.closedAt = LocalDateTime.now();
+    }
+
+    public boolean isFollowered(Member member) {
+        return member.getMemberFollowers()
+                .stream()
+                .anyMatch(one -> one.getFollowerId().equals(this.id.getId()));
     }
 }

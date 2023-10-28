@@ -17,25 +17,18 @@ import java.util.Objects;
 public class MemberFollower {
 
     @Column(columnDefinition = "BIGINT(20)", nullable = false)
-    @AttributeOverride(name = "id", column = @Column(name = "followerId", nullable = false))
     private Long followerId;
-
-    @Column(columnDefinition = "BIGINT(20)", nullable = false)
-    @AttributeOverride(name = "id", column = @Column(name = "followedId", nullable = false))
-    private Long followedId;
 
     @Column(columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)", nullable = false)
     private LocalDateTime createdAt;
 
-    public MemberFollower(Long followerId, Long followedId, LocalDateTime createdAt) {
+    public MemberFollower(Long followerId, LocalDateTime createdAt) {
         this.followerId = followerId;
-        this.followedId = followedId;
         this.createdAt = createdAt;
     }
 
-    public static MemberFollower newOne(Long followerId, Long followedId) {
+    public static MemberFollower newOne(Long followerId) {
         return new MemberFollower(followerId,
-                followedId,
                 LocalDateTime.now());
     }
 
@@ -44,11 +37,11 @@ public class MemberFollower {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MemberFollower that = (MemberFollower) o;
-        return getFollowerId().equals(that.getFollowerId()) && getFollowedId().equals(that.getFollowedId());
+        return Objects.equals(getFollowerId(), that.getFollowerId()) && Objects.equals(getCreatedAt(), that.getCreatedAt());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(followerId, followedId, createdAt);
+        return Objects.hash(getFollowerId(), getCreatedAt());
     }
 }
