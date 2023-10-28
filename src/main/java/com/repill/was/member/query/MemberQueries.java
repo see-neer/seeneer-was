@@ -27,7 +27,6 @@ public class MemberQueries {
         return memberRepository.findByAccountId(id);
     }
 
-
     public Optional<Member> findByMemberNickName(String nickName) {
         return memberRepository.findByMemberNickName(nickName);
     }

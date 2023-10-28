@@ -56,8 +56,6 @@ public class QMember extends EntityPathBase<Member> {
 
     public final NumberPath<Long> kakaoUserId = createNumber("kakaoUserId", Long.class);
 
-    public final ListPath<MemberFollower, QMemberFollower> memberFollowers = this.<MemberFollower, QMemberFollower>createList("memberFollowers", MemberFollower.class, QMemberFollower.class, PathInits.DIRECT2);
-
     public final StringPath nickname = createString("nickname");
 
     public final ListPath<RecentlyViewedItem, QRecentlyViewedItem> recentlyViewedItems = this.<RecentlyViewedItem, QRecentlyViewedItem>createList("recentlyViewedItems", RecentlyViewedItem.class, QRecentlyViewedItem.class, PathInits.DIRECT2);

@@ -20,6 +20,10 @@ import com.repill.was.member.entity.account.AccountNotFoundException;
 import com.repill.was.member.entity.account.AccountRepository;
 import com.repill.was.member.entity.member.*;
 import com.repill.was.member.entity.memberLike.MemberLike;
+import com.repill.was.member.entity.memberfollwer.MemberFollower;
+import com.repill.was.member.entity.memberfollwer.MemberFollowerFoundException;
+import com.repill.was.member.entity.memberfollwer.MemberFollowerRepository;
+import com.repill.was.member.query.MemberFollowerQueries;
 import com.repill.was.member.query.MemberLikeQueries;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.member.query.vo.RecentlyViewedItemInfoVO;
@@ -37,6 +41,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.repill.was.global.enums.Sort.CREATED_AT;
@@ -52,6 +57,8 @@ public class MemberFacade {
     private final MemberLikeService memberLikeService;
     private final MemberLikeQueries memberLikeQueries;
     private final MemberService memberService;
+    private final MemberFollowerQueries memberFollowerQueries;
+    private final MemberFollowerRepository memberFollowerRepository;
 
     public void closeAccount(AccountId accountId, CloseAccountRequest request) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(BadRequestException::new);
@@ -162,11 +169,29 @@ public class MemberFacade {
     @Transactional(readOnly = true)
     public Page<MemberFollowerResponse> getFollowers(AccountId accountId, int size, int page) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        List<MemberFollower> memberFollowers = member.getMemberFollowers();
+        List<MemberFollower> memberFollowers = memberFollowerQueries.findByMemberId(member.getId());
         List<MemberFollowerResponse> list = memberFollowers.parallelStream().map(one -> {
-            Member followeredMember = memberQueries.findById(new MemberId(one.getFollowerId())).orElseThrow(MemberNotFoundException::new);
+            Member followeredMember = memberQueries.findById(one.getFollowerId()).orElseThrow(MemberNotFoundException::new);
             MemberView memberView = MemberView.newOne(followeredMember.getId().getId(), followeredMember.getNickname(), followeredMember.getImageSrc());
-           return MemberFollowerResponse.newOne(memberView, TimeUtils.convertToISO_8061(one.getCreatedAt()), member.isFollowered(followeredMember));
+           return MemberFollowerResponse.newOne(
+                   memberView,
+                   TimeUtils.convertToISO_8061(one.getCreatedAt()),
+                   memberFollowerQueries.findFolloweredByMemberIdAndFollowerId(one.getFollowerId(), member.getId()).isPresent());
+        }).collect(Collectors.toList());
+        return PageUtils.makePage(list, MEMBER_ID.name(), size, page);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<MemberFollowerResponse> getFollowered(AccountId accountId, int size, int page) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        List<MemberFollower> memberFollowers = memberFollowerQueries.findFolloweredByMemberId(member.getId());
+        List<MemberFollowerResponse> list = memberFollowers.parallelStream().map(one -> {
+            Member followeredMember = memberQueries.findById(one.getFollowerId()).orElseThrow(MemberNotFoundException::new);
+            MemberView memberView = MemberView.newOne(followeredMember.getId().getId(), followeredMember.getNickname(), followeredMember.getImageSrc());
+            return MemberFollowerResponse.newOne(
+                    memberView,
+                    TimeUtils.convertToISO_8061(one.getCreatedAt()),
+                    memberFollowerQueries.findFolloweredByMemberIdAndFollowerId(member.getId(), one.getMemberId()).isPresent());
         }).collect(Collectors.toList());
         return PageUtils.makePage(list, MEMBER_ID.name(), size, page);
     }
@@ -174,19 +199,19 @@ public class MemberFacade {
     @Transactional
     public void addFollower(MemberId followeredId, AccountId accountId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        member.addMemberFollowers(MemberFollower.newOne(
-                followeredId.getId()
-        ));
-        memberRepository.save(member);
+        MemberFollower newMemberFollower = MemberFollower.newOne(
+                memberFollowerRepository.nextId(),
+                member.getId(),
+                followeredId
+        );
+        memberFollowerRepository.save(newMemberFollower);
     }
 
     @Transactional
     public void deleteFollower(MemberId followeredId, AccountId accountId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        member.deleteMemberFollowers(MemberFollower.newOne(
-                followeredId.getId()
-        ));
-        memberRepository.save(member);
+        MemberFollower deleteMemberFollower = memberFollowerRepository.findFolloweredByMemberIdAndFollowerId(member.getId(), followeredId).orElseThrow(MemberFollowerFoundException::new);
+        memberFollowerRepository.delete(deleteMemberFollower);
     }
 
     public boolean login(LoginCommand loginCommand) {

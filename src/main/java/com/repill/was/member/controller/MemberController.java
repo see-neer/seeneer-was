@@ -97,6 +97,15 @@ public class MemberController {
         return memberFacade.getFollowers(accountId, size, page);
     }
 
+    @ApiOperation("나를 팔로워 하는 회원 목록 호출")
+    @GetMapping("/followereds")
+    public Page<MemberFollowerResponse> getFollowered(@AuthenticationPrincipal AccountId accountId,
+                                                     @RequestParam int size,
+                                                     @RequestParam int page) {
+        return memberFacade.getFollowered(accountId, size, page);
+    }
+
+
     @ApiOperation("팔로워 목록 추가")
     @PostMapping("/follower")
     public void addFollower(@AuthenticationPrincipal AccountId accountId,

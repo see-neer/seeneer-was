@@ -4,6 +4,7 @@ import com.repill.was.global.enums.AuthType;
 import com.repill.was.global.model.ImageListData;
 import com.repill.was.global.model.ImageListDataConverter;
 import com.repill.was.member.entity.account.AccountId;
+import com.repill.was.member.entity.memberfollwer.MemberFollower;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -30,13 +31,6 @@ public class Member {
     joinColumns = @JoinColumn(name = "member_id"))
     @OrderColumn(name = "member_favorite_items_idx")
     private List<FavoriteItem> favoriteItems = new ArrayList<>();
-
-
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "member_follower",
-            joinColumns = @JoinColumn(name = "member_id"))
-    @OrderColumn(name = "member_follower_idx")
-    private List<MemberFollower> memberFollowers = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "member_recently_viewed_item",
@@ -119,12 +113,6 @@ public class Member {
         this.bannedAt = bannedAt;
     }
 
-    public void addMemberFollowers(MemberFollower memberFollower) {
-        List<MemberFollower> originalMemberFollower = this.memberFollowers;
-        originalMemberFollower.add(memberFollower);
-        this.memberFollowers = originalMemberFollower;
-    }
-
     public void addRecentlyViewedItems(RecentlyViewedItem recentlyViewedItem) {
         List<RecentlyViewedItem> originalRecentlyViewedItem = this.recentlyViewedItems;
         originalRecentlyViewedItem.add(recentlyViewedItem);
@@ -135,14 +123,6 @@ public class Member {
         List<FavoriteItem> originalFavoriteItem = this.favoriteItems;
         originalFavoriteItem.add(favoriteItem);
         this.favoriteItems = originalFavoriteItem;
-    }
-
-    public void deleteMemberFollowers(MemberFollower memberFollower) {
-        List<MemberFollower> originalMemberFollowers = this.memberFollowers;
-        this.memberFollowers = originalMemberFollowers
-                .stream()
-                .filter(one -> !one.equals(memberFollower))
-                .collect(Collectors.toList());
     }
 
     public void deleteFavoriteItem(FavoriteItem favoriteItem) {
@@ -175,7 +155,6 @@ public class Member {
         this.id = memberId;
         this.accountId = accountId;
         this.favoriteItems = null;
-        this.memberFollowers = null;
         this.recentlyViewedItems = null;
         this.address = null;
         this.imageSrc = imageSrc;
@@ -214,9 +193,7 @@ public class Member {
         this.closedAt = LocalDateTime.now();
     }
 
-    public boolean isFollowered(Member member) {
-        return member.getMemberFollowers()
-                .stream()
-                .anyMatch(one -> one.getFollowerId().equals(this.id.getId()));
+    public boolean isFollowered(MemberFollower memberFollower, MemberId followerId) {
+        return true;
     }
 }
