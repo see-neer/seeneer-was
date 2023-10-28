@@ -187,7 +187,7 @@ public class MemberFacade {
         memberRepository.save(member);
     }
 
-    public void login(LoginCommand loginCommand) {
+    public boolean login(LoginCommand loginCommand) {
         Account loginAccount = accountRepository.findById(loginCommand.getAccountId()).orElseThrow(AccountNotFoundException::new);
         if(memberQueries.findByAccountId(loginAccount.getId()).isEmpty()) {
             MemberId memberId = memberRepository.nextId();
@@ -203,9 +203,10 @@ public class MemberFacade {
                     loginCommand.getGender(),
                     loginCommand.getConnectedAt());
             memberRepository.save(newMember);
-            return;
+            return true;
         }
         loginAccount.reLogin();
+        return false;
     }
 
     public void addInformation(MemberAddInformationCommand memberAddInformationCommand) {

@@ -46,9 +46,9 @@ public class MemberController {
 
     @ApiOperation("회원가입")
     @PostMapping("/create")
-    public void login(@AuthenticationPrincipal AccountId accountId,
+    public boolean login(@AuthenticationPrincipal AccountId accountId,
                                         @RequestBody MemberLoginRequest memberLoginRequest) {
-        memberFacade.login(LoginCommand.request(memberLoginRequest, accountId));
+        return memberFacade.login(LoginCommand.request(memberLoginRequest, accountId));
     }
 
     @ApiOperation("회원 추가정보 업데이트")

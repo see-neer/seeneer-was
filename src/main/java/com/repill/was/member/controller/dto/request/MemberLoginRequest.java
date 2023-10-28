@@ -20,8 +20,12 @@ public class MemberLoginRequest {
     @JsonProperty("connected_at")
     private String connectedAt;
 
+    @Getter
     public static class Properties {
         private String nickname;
+
+        @JsonProperty("profile_image")
+        private String profileImage;
     }
 
     @Getter
@@ -54,9 +58,6 @@ public class MemberLoginRequest {
     @Getter
     public static class Profile {
         private String nickname;
-
-        @JsonProperty("profile_image")
-        private String profileImage;
     }
 
 }

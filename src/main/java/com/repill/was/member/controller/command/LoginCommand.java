@@ -50,7 +50,7 @@ public class LoginCommand {
                 memberLoginRequest.getDeviceId(),
                 accountId,
                 memberLoginRequest.getKakaoAccount().getProfile().getNickname(),
-                memberLoginRequest.getKakaoAccount().getProfile().getProfileImage(),
+                memberLoginRequest.getProperties().getProfileImage(),
                 memberLoginRequest.getKakaoAccount().getAgeRange(),
                 memberLoginRequest.getKakaoAccount().getBirthday(),
                 memberLoginRequest.getKakaoAccount().getBirthdayType(),
