@@ -12,28 +12,18 @@ spring:
     cache: false
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  mvc:
+    throw-exception-if-no-handler-found: true
+    pathmatch:
+      matching-strategy: ant_path_matcher
 server:
   port: 9090
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    groups-order: DESC
-    operationsSorter: method
-    disable-swagger-default-url: true
-    display-request-duration: true
-  api-docs:
-    path: /api-docs
-  show-actuator: true
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
-  paths-to-match:
-    - /v1/**
 
 logging:
   config: classpath:logs/logback-local.xml
   level:
     sql: debug
+
 ---
 spring:
   profiles:
@@ -49,6 +39,10 @@ spring:
     cache: false
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  mvc:
+    throw-exception-if-no-handler-found: true
+    pathmatch:
+      matching-strategy: ant_path_matcher
 server:
   port: 9090
 

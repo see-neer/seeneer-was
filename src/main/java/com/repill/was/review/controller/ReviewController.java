@@ -5,6 +5,7 @@ import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.enums.ItemType;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.member.Member;
+import com.repill.was.member.entity.member.MemberId;
 import com.repill.was.member.entity.member.MemberNotFoundException;
 import com.repill.was.member.query.MemberQueries;
 import com.repill.was.review.controller.dto.response.ReviewDetailResponse;
@@ -34,11 +35,12 @@ public class ReviewController {
     @ApiOperation("리뷰 관리 호출")
     @GetMapping("/lists")
     public Page<ReviewListResponse> getLists(@AuthenticationPrincipal AccountId accountId,
+                                             @RequestParam Long memberId,
                                              @RequestParam String type,
                                              @RequestParam int page,
                                              @RequestParam int size) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        return reviewFacade.getReviewLists(member.getId(), ItemType.valueOf(type), page, size);
+        return reviewFacade.getReviewLists(new MemberId(memberId), ItemType.valueOf(type), page, size);
     }
 
     @ApiOperation("리뷰 상세 보기")

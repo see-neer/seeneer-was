@@ -1,0 +1,816 @@
+[2023-10-28 17:08:59:593 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.StartupInfoLogger.logStarting:[33m55[0;39m][0;39m - Starting WasApplication using Java 11.0.18 on LeeSgui-MacBookPro.local with PID 75037 (/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar started by leesg in /Users/leesg/Desktop/REPILL)
+[2023-10-28 17:08:59:594 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.SpringApplication.logStartupProfileInfo:[33m637[0;39m][0;39m - The following 4 profiles are active: "jwt", "datasource", "webclient", "dev"
+[2023-10-28 17:08:59:997 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:[33m132[0;39m][0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-10-28 17:08:59:1137] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:[33m201[0;39m][0;39m - Finished Spring Data repository scanning in 133 ms. Found 5 JPA repository interfaces.
+[2023-10-28 17:08:59:1330] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+[2023-10-28 17:08:59:1338] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+[2023-10-28 17:09:00:1753] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize:[33m108[0;39m][0;39m - Tomcat initialized with port(s): 9090 (http)
+[2023-10-28 17:09:00:1760] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Initializing ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:09:00:1760] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Starting service [Tomcat]
+[2023-10-28 17:09:00:1760] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Starting Servlet engine: [Apache Tomcat/9.0.73]
+[2023-10-28 17:09:00:1840] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Initializing Spring embedded WebApplicationContext
+[2023-10-28 17:09:00:1840] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.prepareWebApplicationContext:[33m292[0;39m][0;39m - Root WebApplicationContext: initialization completed in 1223 ms
+[2023-10-28 17:09:00:1874] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.<init>:[33m80[0;39m][0;39m - HikariPool-1 - Starting...
+[2023-10-28 17:10:35:97240] [32m[main][0;39m [1;31mERROR[0;39m [1;37m[com.zaxxer.hikari.pool.HikariPool.throwPoolInitializationException:[33m594[0;39m][0;39m - HikariPool-1 - Exception during pool initialization.
+java.sql.SQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:110)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:73)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:894)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:819)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:444)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at com.repill.was.global.config.DataSourceConfig.masterDataSource(DataSourceConfig.java:44)
+	at com.repill.was.global.config.DataSourceConfig$$EnhancerBySpringCGLIB$$df8346f7.CGLIB$masterDataSource$2(<generated>)
+	at com.repill.was.global.config.DataSourceConfig$$EnhancerBySpringCGLIB$$df8346f7$$FastClassBySpringCGLIB$$893b2cc7.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:244)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:331)
+	at com.repill.was.global.config.DataSourceConfig$$EnhancerBySpringCGLIB$$df8346f7.masterDataSource(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:486)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:410)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.resolveMethodArguments(AutowiredAnnotationBeanPostProcessor.java:760)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.inject(AutowiredAnnotationBeanPostProcessor.java:720)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:541)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:213)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:176)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:171)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:156)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:87)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:262)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:236)
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:53)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4929)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:140)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:871)
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:795)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:140)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:871)
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:249)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:428)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:917)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:486)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:123)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:104)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:481)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:211)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:184)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292)
+	at com.repill.was.WasApplication.main(WasApplication.java:10)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:61)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:151)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:167)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:120)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:838)
+	... 178 common frames omitted
+Caused by: java.net.SocketTimeoutException: connect timed out
+	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:615)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:153)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63)
+	... 180 common frames omitted
+[2023-10-28 17:10:35:97249] [32m[main][0;39m [1;31mERROR[0;39m [1;37m[org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup:[33m61[0;39m][0;39m - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'serviceAccountPreAuthFilter' defined in URL [jar:file:/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/com/repill/was/global/config/ServiceAccountPreAuthFilter.class]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jwtTokenProvider' defined in URL [jar:file:/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/com/repill/was/global/config/JwtTokenProvider.class]: Unsatisfied dependency expressed through constructor parameter 2; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'memberRepositoryImpl' defined in URL [jar:file:/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/com/repill/was/member/repository/MemberRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sequenceGenerator' defined in class path resource [com/repill/was/global/sequencegenerator/SequenceGeneratorConfig.class]: Unsatisfied dependency expressed through method 'sequenceGenerator' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'machineSequenceAllocator': Unsatisfied dependency expressed through method 'setTransactionManager' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'masterDataSource' defined in class path resource [com/repill/was/global/config/DataSourceConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'masterDataSource' threw exception; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+[2023-10-28 17:10:35:97295] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Stopping service [Tomcat]
+[2023-10-28 17:10:35:97298] [32m[main][0;39m [31mWARN [0;39m [1;37m[org.springframework.context.support.AbstractApplicationContext.refresh:[33m591[0;39m][0;39m - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+[2023-10-28 17:10:35:97306] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener.logMessage:[33m136[0;39m][0;39m - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[2023-10-28 17:10:35:97323] [32m[main][0;39m [1;31mERROR[0;39m [1;37m[org.springframework.boot.SpringApplication.reportFailure:[33m821[0;39m][0;39m - Application run failed
+org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:165)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292)
+	at com.repill.was.WasApplication.main(WasApplication.java:10)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:142)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:104)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:481)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:211)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:184)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162)
+	... 16 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'serviceAccountPreAuthFilter' defined in URL [jar:file:/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/com/repill/was/global/config/ServiceAccountPreAuthFilter.class]: Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jwtTokenProvider' defined in URL [jar:file:/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/com/repill/was/global/config/JwtTokenProvider.class]: Unsatisfied dependency expressed through constructor parameter 2; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'memberRepositoryImpl' defined in URL [jar:file:/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/com/repill/was/member/repository/MemberRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sequenceGenerator' defined in class path resource [com/repill/was/global/sequencegenerator/SequenceGeneratorConfig.class]: Unsatisfied dependency expressed through method 'sequenceGenerator' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'machineSequenceAllocator': Unsatisfied dependency expressed through method 'setTransactionManager' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'masterDataSource' defined in class path resource [com/repill/was/global/config/DataSourceConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'masterDataSource' threw exception; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:213)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:176)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:171)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:156)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:87)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:262)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:236)
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:53)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4929)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:140)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:871)
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:795)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:140)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:871)
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:249)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:428)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:917)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:486)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:123)
+	... 21 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jwtTokenProvider' defined in URL [jar:file:/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/com/repill/was/global/config/JwtTokenProvider.class]: Unsatisfied dependency expressed through constructor parameter 2; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'memberRepositoryImpl' defined in URL [jar:file:/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/com/repill/was/member/repository/MemberRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sequenceGenerator' defined in class path resource [com/repill/was/global/sequencegenerator/SequenceGeneratorConfig.class]: Unsatisfied dependency expressed through method 'sequenceGenerator' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'machineSequenceAllocator': Unsatisfied dependency expressed through method 'setTransactionManager' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'masterDataSource' defined in class path resource [com/repill/was/global/config/DataSourceConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'masterDataSource' threw exception; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 62 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'memberRepositoryImpl' defined in URL [jar:file:/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar!/BOOT-INF/classes!/com/repill/was/member/repository/MemberRepositoryImpl.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sequenceGenerator' defined in class path resource [com/repill/was/global/sequencegenerator/SequenceGeneratorConfig.class]: Unsatisfied dependency expressed through method 'sequenceGenerator' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'machineSequenceAllocator': Unsatisfied dependency expressed through method 'setTransactionManager' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'masterDataSource' defined in class path resource [com/repill/was/global/config/DataSourceConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'masterDataSource' threw exception; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 76 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sequenceGenerator' defined in class path resource [com/repill/was/global/sequencegenerator/SequenceGeneratorConfig.class]: Unsatisfied dependency expressed through method 'sequenceGenerator' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'machineSequenceAllocator': Unsatisfied dependency expressed through method 'setTransactionManager' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'masterDataSource' defined in class path resource [com/repill/was/global/config/DataSourceConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'masterDataSource' threw exception; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:541)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 90 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'machineSequenceAllocator': Unsatisfied dependency expressed through method 'setTransactionManager' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'masterDataSource' defined in class path resource [com/repill/was/global/config/DataSourceConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'masterDataSource' threw exception; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.resolveMethodArguments(AutowiredAnnotationBeanPostProcessor.java:768)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.inject(AutowiredAnnotationBeanPostProcessor.java:720)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:399)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 104 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'masterDataSource' defined in class path resource [com/repill/was/global/config/DataSourceConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'masterDataSource' threw exception; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:410)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredMethodElement.resolveMethodArguments(AutowiredAnnotationBeanPostProcessor.java:760)
+	... 119 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'masterDataSource' defined in class path resource [com/repill/was/global/config/DataSourceConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'masterDataSource' threw exception; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:658)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:486)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1195)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 141 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'masterDataSource' threw exception; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653)
+	... 155 common frames omitted
+Caused by: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at com.zaxxer.hikari.pool.HikariPool.throwPoolInitializationException(HikariPool.java:596)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:582)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at com.repill.was.global.config.DataSourceConfig.masterDataSource(DataSourceConfig.java:44)
+	at com.repill.was.global.config.DataSourceConfig$$EnhancerBySpringCGLIB$$df8346f7.CGLIB$masterDataSource$2(<generated>)
+	at com.repill.was.global.config.DataSourceConfig$$EnhancerBySpringCGLIB$$df8346f7$$FastClassBySpringCGLIB$$893b2cc7.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:244)
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:331)
+	at com.repill.was.global.config.DataSourceConfig$$EnhancerBySpringCGLIB$$df8346f7.masterDataSource(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	... 156 common frames omitted
+Caused by: java.sql.SQLNonTransientConnectionException: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:110)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:73)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:894)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:819)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:444)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:237)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	... 169 common frames omitted
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:61)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:151)
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:167)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89)
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:120)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectWithRetries(ConnectionImpl.java:838)
+	... 178 common frames omitted
+Caused by: java.net.SocketTimeoutException: connect timed out
+	at java.base/java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412)
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255)
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.base/java.net.Socket.connect(Socket.java:615)
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:153)
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63)
+	... 180 common frames omitted
+[2023-10-28 17:11:34:528 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.StartupInfoLogger.logStarting:[33m55[0;39m][0;39m - Starting WasApplication using Java 11.0.18 on LeeSgui-MacBookPro.local with PID 75215 (/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar started by leesg in /Users/leesg/Desktop/REPILL)
+[2023-10-28 17:11:34:529 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.SpringApplication.logStartupProfileInfo:[33m637[0;39m][0;39m - The following 4 profiles are active: "jwt", "datasource", "webclient", "dev"
+[2023-10-28 17:11:35:923 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:[33m132[0;39m][0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-10-28 17:11:35:1050] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:[33m201[0;39m][0;39m - Finished Spring Data repository scanning in 120 ms. Found 5 JPA repository interfaces.
+[2023-10-28 17:11:35:1224] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+[2023-10-28 17:11:35:1235] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+[2023-10-28 17:11:35:1649] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize:[33m108[0;39m][0;39m - Tomcat initialized with port(s): 9090 (http)
+[2023-10-28 17:11:35:1656] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Initializing ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:11:35:1656] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Starting service [Tomcat]
+[2023-10-28 17:11:35:1657] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Starting Servlet engine: [Apache Tomcat/9.0.73]
+[2023-10-28 17:11:35:1706] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Initializing Spring embedded WebApplicationContext
+[2023-10-28 17:11:35:1707] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.prepareWebApplicationContext:[33m292[0;39m][0;39m - Root WebApplicationContext: initialization completed in 1155 ms
+[2023-10-28 17:11:35:1744] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.<init>:[33m80[0;39m][0;39m - HikariPool-1 - Starting...
+[2023-10-28 17:11:36:2026] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.<init>:[33m82[0;39m][0;39m - HikariPool-1 - Start completed.
+[2023-10-28 17:11:36:2113] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.jpa.internal.util.LogHelper.logPersistenceUnitInformation:[33m31[0;39m][0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-10-28 17:11:36:2148] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.Version.logVersion:[33m44[0;39m][0;39m - HHH000412: Hibernate ORM core version 5.6.15.Final
+[2023-10-28 17:11:36:2279] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.annotations.common.reflection.java.JavaReflectionManager.<clinit>:[33m56[0;39m][0;39m - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[2023-10-28 17:11:36:2353] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.dialect.Dialect.<init>:[33m175[0;39m][0;39m - HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+[2023-10-28 17:11:36:2431] [32m[main][0;39m [31mWARN [0;39m [1;37m[org.hibernate.cfg.AnnotationBinder.processJoinedDiscriminatorProperties:[33m915[0;39m][0;39m - HHH000457: Joined inheritance hierarchy [com.repill.was.comment.entity.Comment] defined explicit @DiscriminatorColumn.  Legacy Hibernate behavior was to ignore the @DiscriminatorColumn.  However, as part of issue HHH-6911 we now apply the explicit @DiscriminatorColumn.  If you would prefer the legacy behavior, enable the `hibernate.discriminator.ignore_explicit_for_joined` setting (hibernate.discriminator.ignore_explicit_for_joined=true)
+[2023-10-28 17:11:36:2717] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.tuple.PojoInstantiator.<init>:[33m47[0;39m][0;39m - HHH000182: No default (no-argument) constructor for class: com.repill.was.comment.entity.MarketReviewComment (class must be instantiated by Interceptor)
+[2023-10-28 17:11:37:2880] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.hibernate.engine.jdbc.spi.SqlStatementLogger.logStatement:[33m144[0;39m][0;39m - 
+    
+    alter table account 
+       add column auth_type VARCHAR(30)
+Hibernate: 
+    
+    alter table account 
+       add column auth_type VARCHAR(30)
+[2023-10-28 17:11:37:2947] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.hibernate.engine.jdbc.spi.SqlStatementLogger.logStatement:[33m144[0;39m][0;39m - 
+    
+    alter table account 
+       add column authed_at DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3) not null
+Hibernate: 
+    
+    alter table account 
+       add column authed_at DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3) not null
+[2023-10-28 17:11:37:2987] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.hibernate.engine.jdbc.spi.SqlStatementLogger.logStatement:[33m144[0;39m][0;39m - 
+    
+    alter table account 
+       add column member_id bigint not null
+Hibernate: 
+    
+    alter table account 
+       add column member_id bigint not null
+[2023-10-28 17:11:37:3032] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.hibernate.engine.jdbc.spi.SqlStatementLogger.logStatement:[33m144[0;39m][0;39m - 
+    
+    alter table festival 
+       add column image_src TEXT not null
+Hibernate: 
+    
+    alter table festival 
+       add column image_src TEXT not null
+[2023-10-28 17:11:37:3081] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.hibernate.engine.jdbc.spi.SqlStatementLogger.logStatement:[33m144[0;39m][0;39m - 
+    
+    alter table market 
+       add column image_src TEXT not null
+Hibernate: 
+    
+    alter table market 
+       add column image_src TEXT not null
+[2023-10-28 17:11:37:3134] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.hibernate.engine.jdbc.spi.SqlStatementLogger.logStatement:[33m144[0;39m][0;39m - 
+    
+    alter table member_follower 
+       add column followed_id bigint not null
+Hibernate: 
+    
+    alter table member_follower 
+       add column followed_id bigint not null
+[2023-10-28 17:11:37:3204] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.hibernate.engine.jdbc.spi.SqlStatementLogger.logStatement:[33m144[0;39m][0;39m - 
+    
+    alter table account 
+       drop index UK_ID_MEMBER_ID
+Hibernate: 
+    
+    alter table account 
+       drop index UK_ID_MEMBER_ID
+[2023-10-28 17:11:37:3237] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.hibernate.engine.jdbc.spi.SqlStatementLogger.logStatement:[33m144[0;39m][0;39m - 
+    
+    alter table account 
+       add constraint UK_ID_MEMBER_ID unique (id, member_id)
+Hibernate: 
+    
+    alter table account 
+       add constraint UK_ID_MEMBER_ID unique (id, member_id)
+[2023-10-28 17:11:37:3447] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.hibernate.engine.jdbc.spi.SqlStatementLogger.logStatement:[33m144[0;39m][0;39m - 
+    
+    alter table member_follower 
+       drop index UK_FOLLOWER_ID_AND_FOLLOWED_ID
+Hibernate: 
+    
+    alter table member_follower 
+       drop index UK_FOLLOWER_ID_AND_FOLLOWED_ID
+[2023-10-28 17:11:37:3468] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.hibernate.engine.jdbc.spi.SqlStatementLogger.logStatement:[33m144[0;39m][0;39m - 
+    
+    alter table member_follower 
+       add constraint UK_FOLLOWER_ID_AND_FOLLOWED_ID unique (follower_id, followed_id)
+Hibernate: 
+    
+    alter table member_follower 
+       add constraint UK_FOLLOWER_ID_AND_FOLLOWED_ID unique (follower_id, followed_id)
+[2023-10-28 17:11:37:3618] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator.initiateService:[33m52[0;39m][0;39m - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-10-28 17:11:37:3628] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory:[33m437[0;39m][0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-10-28 17:11:37:3716] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.springframework.jdbc.core.JdbcTemplate.update:[33m537[0;39m][0;39m - Executing SQL update [UPDATE machine_sequence SET sequence = sequence + 1]
+[2023-10-28 17:11:37:3729] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.springframework.jdbc.core.JdbcTemplate.query:[33m440[0;39m][0;39m - Executing SQL query [SELECT sequence FROM machine_sequence]
+[2023-10-28 17:11:38:4366] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.security.web.DefaultSecurityFilterChain.<init>:[33m55[0;39m][0;39m - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@61b65d54, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@b2c4a8b, org.springframework.security.web.context.SecurityContextPersistenceFilter@6a3fbcb1, org.springframework.security.web.header.HeaderWriterFilter@4b765e92, org.springframework.web.filter.CorsFilter@7f2c57fe, org.springframework.security.web.authentication.logout.LogoutFilter@3375ebd3, com.repill.was.global.exception.GlobalExceptionFilterHandler@43935e9c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@15d3793b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@68a305eb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@101cf747, org.springframework.security.web.session.SessionManagementFilter@4a70d302, org.springframework.security.web.access.ExceptionTranslationFilter@715fa8c5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2d28fb02]
+[2023-10-28 17:11:38:4578] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+[2023-10-28 17:11:38:4578] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Channel 'was.errorChannel' has 1 subscriber(s).
+[2023-10-28 17:11:38:4579] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - started bean '_org.springframework.integration.errorLogger'
+[2023-10-28 17:11:38:4579] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Starting ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:11:38:4585] [32m[main][0;39m [31mWARN [0;39m [1;37m[org.springframework.context.support.AbstractApplicationContext.refresh:[33m591[0;39m][0;39m - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 9090 is already in use
+[2023-10-28 17:11:38:4586] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+[2023-10-28 17:11:38:4586] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Channel 'was.errorChannel' has 0 subscriber(s).
+[2023-10-28 17:11:38:4586] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - stopped bean '_org.springframework.integration.errorLogger'
+[2023-10-28 17:11:38:4597] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy:[33m651[0;39m][0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-10-28 17:11:38:4597] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.close:[33m350[0;39m][0;39m - HikariPool-1 - Shutdown initiated...
+[2023-10-28 17:11:38:4603] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.close:[33m352[0;39m][0;39m - HikariPool-1 - Shutdown completed.
+[2023-10-28 17:11:38:4604] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Pausing ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:11:38:4604] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Stopping service [Tomcat]
+[2023-10-28 17:11:38:4606] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Stopping ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:11:38:4606] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Destroying ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:11:38:4610] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener.logMessage:[33m136[0;39m][0;39m - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[2023-10-28 17:11:38:4620] [32m[main][0;39m [1;31mERROR[0;39m [1;37m[org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter.report:[33m40[0;39m][0;39m - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 9090 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 9090 or configure this application to listen on another port.
+
+[2023-10-28 17:11:48:454 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.StartupInfoLogger.logStarting:[33m55[0;39m][0;39m - Starting WasApplication using Java 11.0.18 on LeeSgui-MacBookPro.local with PID 75241 (/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar started by leesg in /Users/leesg/Desktop/REPILL)
+[2023-10-28 17:11:48:456 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.SpringApplication.logStartupProfileInfo:[33m637[0;39m][0;39m - The following 4 profiles are active: "jwt", "datasource", "webclient", "dev"
+[2023-10-28 17:11:48:860 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:[33m132[0;39m][0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-10-28 17:11:48:981 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:[33m201[0;39m][0;39m - Finished Spring Data repository scanning in 112 ms. Found 5 JPA repository interfaces.
+[2023-10-28 17:11:49:1144] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+[2023-10-28 17:11:49:1154] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+[2023-10-28 17:11:49:1543] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize:[33m108[0;39m][0;39m - Tomcat initialized with port(s): 9090 (http)
+[2023-10-28 17:11:49:1550] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Initializing ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:11:49:1550] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Starting service [Tomcat]
+[2023-10-28 17:11:49:1550] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Starting Servlet engine: [Apache Tomcat/9.0.73]
+[2023-10-28 17:11:49:1594] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Initializing Spring embedded WebApplicationContext
+[2023-10-28 17:11:49:1594] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.prepareWebApplicationContext:[33m292[0;39m][0;39m - Root WebApplicationContext: initialization completed in 1115 ms
+[2023-10-28 17:11:49:1623] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.<init>:[33m80[0;39m][0;39m - HikariPool-1 - Starting...
+[2023-10-28 17:11:49:1863] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.<init>:[33m82[0;39m][0;39m - HikariPool-1 - Start completed.
+[2023-10-28 17:11:49:1945] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.jpa.internal.util.LogHelper.logPersistenceUnitInformation:[33m31[0;39m][0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-10-28 17:11:49:1975] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.Version.logVersion:[33m44[0;39m][0;39m - HHH000412: Hibernate ORM core version 5.6.15.Final
+[2023-10-28 17:11:50:2083] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.annotations.common.reflection.java.JavaReflectionManager.<clinit>:[33m56[0;39m][0;39m - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[2023-10-28 17:11:50:2147] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.dialect.Dialect.<init>:[33m175[0;39m][0;39m - HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+[2023-10-28 17:11:50:2228] [32m[main][0;39m [31mWARN [0;39m [1;37m[org.hibernate.cfg.AnnotationBinder.processJoinedDiscriminatorProperties:[33m915[0;39m][0;39m - HHH000457: Joined inheritance hierarchy [com.repill.was.comment.entity.Comment] defined explicit @DiscriminatorColumn.  Legacy Hibernate behavior was to ignore the @DiscriminatorColumn.  However, as part of issue HHH-6911 we now apply the explicit @DiscriminatorColumn.  If you would prefer the legacy behavior, enable the `hibernate.discriminator.ignore_explicit_for_joined` setting (hibernate.discriminator.ignore_explicit_for_joined=true)
+[2023-10-28 17:11:50:2485] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.tuple.PojoInstantiator.<init>:[33m47[0;39m][0;39m - HHH000182: No default (no-argument) constructor for class: com.repill.was.comment.entity.MarketReviewComment (class must be instantiated by Interceptor)
+[2023-10-28 17:11:50:2831] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator.initiateService:[33m52[0;39m][0;39m - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-10-28 17:11:50:2841] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory:[33m437[0;39m][0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-10-28 17:11:50:2967] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.springframework.jdbc.core.JdbcTemplate.update:[33m537[0;39m][0;39m - Executing SQL update [UPDATE machine_sequence SET sequence = sequence + 1]
+[2023-10-28 17:11:50:2981] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.springframework.jdbc.core.JdbcTemplate.query:[33m440[0;39m][0;39m - Executing SQL query [SELECT sequence FROM machine_sequence]
+[2023-10-28 17:11:51:3695] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.security.web.DefaultSecurityFilterChain.<init>:[33m55[0;39m][0;39m - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2d28fb02, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6db328f8, org.springframework.security.web.context.SecurityContextPersistenceFilter@622d7e4, org.springframework.security.web.header.HeaderWriterFilter@644a3add, org.springframework.web.filter.CorsFilter@402f8592, org.springframework.security.web.authentication.logout.LogoutFilter@2fe2965c, com.repill.was.global.exception.GlobalExceptionFilterHandler@61b65d54, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@261b9a37, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1213ffbc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@b2c4a8b, org.springframework.security.web.session.SessionManagementFilter@4665428b, org.springframework.security.web.access.ExceptionTranslationFilter@241fbec, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4c319d52]
+[2023-10-28 17:11:51:3898] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+[2023-10-28 17:11:51:3898] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Channel 'was.errorChannel' has 1 subscriber(s).
+[2023-10-28 17:11:51:3898] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - started bean '_org.springframework.integration.errorLogger'
+[2023-10-28 17:11:51:3899] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Starting ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:11:51:3917] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start:[33m220[0;39m][0;39m - Tomcat started on port(s): 9090 (http) with context path ''
+[2023-10-28 17:11:51:3918] [32m[main][0;39m [31mWARN [0;39m [1;37m[org.springframework.context.support.AbstractApplicationContext.refresh:[33m591[0;39m][0;39m - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
+[2023-10-28 17:11:51:3919] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+[2023-10-28 17:11:51:3919] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Channel 'was.errorChannel' has 0 subscriber(s).
+[2023-10-28 17:11:51:3919] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - stopped bean '_org.springframework.integration.errorLogger'
+[2023-10-28 17:11:51:3930] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy:[33m651[0;39m][0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-10-28 17:11:51:3931] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.close:[33m350[0;39m][0;39m - HikariPool-1 - Shutdown initiated...
+[2023-10-28 17:11:51:3935] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.close:[33m352[0;39m][0;39m - HikariPool-1 - Shutdown completed.
+[2023-10-28 17:11:51:3941] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Pausing ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:11:51:3941] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Stopping service [Tomcat]
+[2023-10-28 17:11:51:3943] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Stopping ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:11:51:3945] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Destroying ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:11:51:3948] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener.logMessage:[33m136[0;39m][0;39m - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[2023-10-28 17:11:51:3960] [32m[main][0;39m [1;31mERROR[0;39m [1;37m[org.springframework.boot.SpringApplication.reportFailure:[33m821[0;39m][0;39m - Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:937)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292)
+	at com.repill.was.WasApplication.main(WasApplication.java:10)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+Caused by: java.lang.NullPointerException: null
+	at springfox.documentation.spring.web.WebMvcPatternsRequestConditionWrapper.getPatterns(WebMvcPatternsRequestConditionWrapper.java:56)
+	at springfox.documentation.RequestHandler.sortedPaths(RequestHandler.java:113)
+	at springfox.documentation.spi.service.contexts.Orderings.lambda$byPatternsCondition$3(Orderings.java:89)
+	at java.base/java.util.Comparator.lambda$comparing$77a9974f$1(Comparator.java:469)
+	at java.base/java.util.TimSort.countRunAndMakeAscending(TimSort.java:355)
+	at java.base/java.util.TimSort.sort(TimSort.java:220)
+	at java.base/java.util.Arrays.sort(Arrays.java:1515)
+	at java.base/java.util.ArrayList.sort(ArrayList.java:1750)
+	at java.base/java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:392)
+	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
+	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
+	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
+	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
+	at springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider.requestHandlers(WebMvcRequestHandlerProvider.java:81)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1655)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.withDefaults(AbstractDocumentationPluginsBootstrapper.java:107)
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.buildContext(AbstractDocumentationPluginsBootstrapper.java:91)
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.bootstrapDocumentationPlugins(AbstractDocumentationPluginsBootstrapper.java:82)
+	at springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper.start(DocumentationPluginsBootstrapper.java:100)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	... 22 common frames omitted
+[2023-10-28 17:12:19:485 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.StartupInfoLogger.logStarting:[33m55[0;39m][0;39m - Starting WasApplication using Java 11.0.18 on LeeSgui-MacBookPro.local with PID 75283 (/Users/leesg/Desktop/REPILL/build/libs/was-0.0.1-SNAPSHOT.jar started by leesg in /Users/leesg/Desktop/REPILL)
+[2023-10-28 17:12:19:487 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.SpringApplication.logStartupProfileInfo:[33m637[0;39m][0;39m - The following 4 profiles are active: "jwt", "datasource", "webclient", "dev"
+[2023-10-28 17:12:20:854 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:[33m132[0;39m][0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2023-10-28 17:12:20:967 ] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:[33m201[0;39m][0;39m - Finished Spring Data repository scanning in 107 ms. Found 5 JPA repository interfaces.
+[2023-10-28 17:12:20:1126] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+[2023-10-28 17:12:20:1139] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+[2023-10-28 17:12:20:1519] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize:[33m108[0;39m][0;39m - Tomcat initialized with port(s): 9090 (http)
+[2023-10-28 17:12:20:1530] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Initializing ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:12:20:1530] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Starting service [Tomcat]
+[2023-10-28 17:12:20:1530] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Starting Servlet engine: [Apache Tomcat/9.0.73]
+[2023-10-28 17:12:20:1578] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Initializing Spring embedded WebApplicationContext
+[2023-10-28 17:12:20:1578] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.prepareWebApplicationContext:[33m292[0;39m][0;39m - Root WebApplicationContext: initialization completed in 1070 ms
+[2023-10-28 17:12:20:1608] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.<init>:[33m80[0;39m][0;39m - HikariPool-1 - Starting...
+[2023-10-28 17:12:21:1914] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.<init>:[33m82[0;39m][0;39m - HikariPool-1 - Start completed.
+[2023-10-28 17:12:21:1994] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.jpa.internal.util.LogHelper.logPersistenceUnitInformation:[33m31[0;39m][0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
+[2023-10-28 17:12:21:2024] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.Version.logVersion:[33m44[0;39m][0;39m - HHH000412: Hibernate ORM core version 5.6.15.Final
+[2023-10-28 17:12:21:2131] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.annotations.common.reflection.java.JavaReflectionManager.<clinit>:[33m56[0;39m][0;39m - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[2023-10-28 17:12:21:2193] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.dialect.Dialect.<init>:[33m175[0;39m][0;39m - HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+[2023-10-28 17:12:21:2271] [32m[main][0;39m [31mWARN [0;39m [1;37m[org.hibernate.cfg.AnnotationBinder.processJoinedDiscriminatorProperties:[33m915[0;39m][0;39m - HHH000457: Joined inheritance hierarchy [com.repill.was.comment.entity.Comment] defined explicit @DiscriminatorColumn.  Legacy Hibernate behavior was to ignore the @DiscriminatorColumn.  However, as part of issue HHH-6911 we now apply the explicit @DiscriminatorColumn.  If you would prefer the legacy behavior, enable the `hibernate.discriminator.ignore_explicit_for_joined` setting (hibernate.discriminator.ignore_explicit_for_joined=true)
+[2023-10-28 17:12:21:2527] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.tuple.PojoInstantiator.<init>:[33m47[0;39m][0;39m - HHH000182: No default (no-argument) constructor for class: com.repill.was.comment.entity.MarketReviewComment (class must be instantiated by Interceptor)
+[2023-10-28 17:12:22:2898] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator.initiateService:[33m52[0;39m][0;39m - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2023-10-28 17:12:22:2908] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory:[33m437[0;39m][0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2023-10-28 17:12:22:2997] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.springframework.jdbc.core.JdbcTemplate.update:[33m537[0;39m][0;39m - Executing SQL update [UPDATE machine_sequence SET sequence = sequence + 1]
+[2023-10-28 17:12:22:3010] [32m[main][0;39m [39mDEBUG[0;39m [1;37m[org.springframework.jdbc.core.JdbcTemplate.query:[33m440[0;39m][0;39m - Executing SQL query [SELECT sequence FROM machine_sequence]
+[2023-10-28 17:12:22:3672] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.security.web.DefaultSecurityFilterChain.<init>:[33m55[0;39m][0;39m - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4e4162bc, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4c319d52, org.springframework.security.web.context.SecurityContextPersistenceFilter@55e1192, org.springframework.security.web.header.HeaderWriterFilter@7fd99443, org.springframework.web.filter.CorsFilter@72fbf94d, org.springframework.security.web.authentication.logout.LogoutFilter@42679fc2, com.repill.was.global.exception.GlobalExceptionFilterHandler@6839203b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@68a305eb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1ef31f71, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2d28fb02, org.springframework.security.web.session.SessionManagementFilter@6a3fbcb1, org.springframework.security.web.access.ExceptionTranslationFilter@4665428b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1a531422]
+[2023-10-28 17:12:23:3879] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+[2023-10-28 17:12:23:3879] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Channel 'was.errorChannel' has 1 subscriber(s).
+[2023-10-28 17:12:23:3880] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - started bean '_org.springframework.integration.errorLogger'
+[2023-10-28 17:12:23:3880] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Starting ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:12:23:3894] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer.start:[33m220[0;39m][0;39m - Tomcat started on port(s): 9090 (http) with context path ''
+[2023-10-28 17:12:23:3895] [32m[main][0;39m [31mWARN [0;39m [1;37m[org.springframework.context.support.AbstractApplicationContext.refresh:[33m591[0;39m][0;39m - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
+[2023-10-28 17:12:23:3896] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+[2023-10-28 17:12:23:3896] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m174[0;39m][0;39m - Channel 'was.errorChannel' has 0 subscriber(s).
+[2023-10-28 17:12:23:3896] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.core.log.LogAccessor.info:[33m292[0;39m][0;39m - stopped bean '_org.springframework.integration.errorLogger'
+[2023-10-28 17:12:23:3908] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy:[33m651[0;39m][0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
+[2023-10-28 17:12:23:3908] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.close:[33m350[0;39m][0;39m - HikariPool-1 - Shutdown initiated...
+[2023-10-28 17:12:23:3914] [32m[main][0;39m [34mINFO [0;39m [1;37m[com.zaxxer.hikari.HikariDataSource.close:[33m352[0;39m][0;39m - HikariPool-1 - Shutdown completed.
+[2023-10-28 17:12:23:3918] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Pausing ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:12:23:3918] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Stopping service [Tomcat]
+[2023-10-28 17:12:23:3920] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Stopping ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:12:23:3922] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.apache.juli.logging.DirectJDKLog.log:[33m173[0;39m][0;39m - Destroying ProtocolHandler ["http-nio-9090"]
+[2023-10-28 17:12:23:3925] [32m[main][0;39m [34mINFO [0;39m [1;37m[org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener.logMessage:[33m136[0;39m][0;39m - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[2023-10-28 17:12:23:3937] [32m[main][0;39m [1;31mERROR[0;39m [1;37m[org.springframework.boot.SpringApplication.reportFailure:[33m821[0;39m][0;39m - Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:937)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292)
+	at com.repill.was.WasApplication.main(WasApplication.java:10)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+Caused by: java.lang.NullPointerException: null
+	at springfox.documentation.spring.web.WebMvcPatternsRequestConditionWrapper.getPatterns(WebMvcPatternsRequestConditionWrapper.java:56)
+	at springfox.documentation.RequestHandler.sortedPaths(RequestHandler.java:113)
+	at springfox.documentation.spi.service.contexts.Orderings.lambda$byPatternsCondition$3(Orderings.java:89)
+	at java.base/java.util.Comparator.lambda$comparing$77a9974f$1(Comparator.java:469)
+	at java.base/java.util.TimSort.countRunAndMakeAscending(TimSort.java:355)
+	at java.base/java.util.TimSort.sort(TimSort.java:220)
+	at java.base/java.util.Arrays.sort(Arrays.java:1515)
+	at java.base/java.util.ArrayList.sort(ArrayList.java:1750)
+	at java.base/java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:392)
+	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
+	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
+	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
+	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
+	at springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider.requestHandlers(WebMvcRequestHandlerProvider.java:81)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1655)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.withDefaults(AbstractDocumentationPluginsBootstrapper.java:107)
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.buildContext(AbstractDocumentationPluginsBootstrapper.java:91)
+	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.bootstrapDocumentationPlugins(AbstractDocumentationPluginsBootstrapper.java:82)
+	at springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper.start(DocumentationPluginsBootstrapper.java:100)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	... 22 common frames omitted

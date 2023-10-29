@@ -1,8 +1,8 @@
 package com.repill.was.member.entity.member;
 
 import com.repill.was.global.enums.AuthType;
-import com.repill.was.global.model.ImageListData;
-import com.repill.was.global.model.ImageListDataConverter;
+import com.repill.was.global.model.EntityListData;
+import com.repill.was.global.model.EntityListDataConverter;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.memberfollwer.MemberFollower;
 import lombok.Getter;
@@ -54,9 +54,9 @@ public class Member {
     })
     private List<Address> interestingAddress;
 
-    @Convert(converter = ImageListDataConverter.class)
+    @Convert(converter = EntityListDataConverter.class)
     @Column(columnDefinition = "TEXT")
-    private ImageListData interestingCategory;
+    private EntityListData interestingCategory;
 
     @Column(columnDefinition = "TEXT")
     String imageSrc;
@@ -92,7 +92,7 @@ public class Member {
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
 
-    protected Member(MemberId id, AccountId accountId, List<FavoriteItem> favoriteItems, List<MemberFollower> memberFollowers, List<RecentlyViewedItem> recentlyViewedItems, Address address, Address interestingAddress, ImageListData interestingCategory, String imageSrc, String nickname, AuthType authType, LocalDateTime closedAt, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt, LocalDateTime bannedAt, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    protected Member(MemberId id, AccountId accountId, List<FavoriteItem> favoriteItems, List<MemberFollower> memberFollowers, List<RecentlyViewedItem> recentlyViewedItems, Address address, Address interestingAddress, EntityListData interestingCategory, String imageSrc, String nickname, AuthType authType, LocalDateTime closedAt, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt, LocalDateTime bannedAt, LocalDateTime updatedAt, LocalDateTime createdAt) {
     }
 
     public Member(MemberId id, AccountId accountId, String imageSrc, String nickname, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt) {
@@ -172,7 +172,7 @@ public class Member {
     }
 
     public void updateInformation(String myAddressInfo,
-                                  ImageListData interestingCategoryList,
+                                  EntityListData interestingCategoryList,
                                   List<String> interestingAddress,
                                   String nickname) {
         this.address = Address.newOne(myAddressInfo, null, null, null);

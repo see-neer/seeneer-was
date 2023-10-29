@@ -4,7 +4,7 @@ import com.repill.was.global.enums.ItemType;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.factory.itemvalidate.ItemValidateFactory;
 import com.repill.was.global.factory.itemvalidate.ItemValidator;
-import com.repill.was.global.model.ImageListData;
+import com.repill.was.global.model.EntityListData;
 import com.repill.was.global.utils.PageUtils;
 import com.repill.was.global.utils.TimeUtils;
 import com.repill.was.member.controller.command.*;
@@ -14,20 +14,22 @@ import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse
 import com.repill.was.member.controller.dto.response.MemberFollowerResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.controller.dto.response.view.MemberView;
+import com.repill.was.member.controller.dto.view.MemberBlockListView;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountNotFoundException;
 import com.repill.was.member.entity.account.AccountRepository;
 import com.repill.was.member.entity.member.*;
 import com.repill.was.member.entity.memberLike.MemberLike;
+import com.repill.was.member.entity.memberblock.MemberBlock;
+import com.repill.was.member.entity.memberblock.MemberBlockRepository;
 import com.repill.was.member.entity.memberfollwer.MemberFollower;
 import com.repill.was.member.entity.memberfollwer.MemberFollowerFoundException;
 import com.repill.was.member.entity.memberfollwer.MemberFollowerRepository;
-import com.repill.was.member.query.MemberFollowerQueries;
-import com.repill.was.member.query.MemberLikeQueries;
-import com.repill.was.member.query.MemberQueries;
+import com.repill.was.member.query.*;
 import com.repill.was.member.query.vo.RecentlyViewedItemInfoVO;
 import com.repill.was.member.service.AccountService;
+import com.repill.was.member.service.MemberBlockService;
 import com.repill.was.member.service.MemberLikeService;
 import com.repill.was.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -51,28 +53,17 @@ import static com.repill.was.global.enums.Sort.MEMBER_ID;
 @RequiredArgsConstructor
 public class MemberFacade {
     private final MemberQueries memberQueries;
-    private final MemberRepository memberRepository;
-    private final AccountRepository accountRepository;
     private final ItemValidateFactory itemValidateFactory;
     private final MemberLikeService memberLikeService;
     private final MemberLikeQueries memberLikeQueries;
     private final MemberService memberService;
     private final MemberFollowerQueries memberFollowerQueries;
-    private final MemberFollowerRepository memberFollowerRepository;
+    private final MemberBlockService memberBlockService;
+    private final MemberBlockQueries memberBlockQueries;
 
     public void closeAccount(AccountId accountId, CloseAccountRequest request) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(BadRequestException::new);
         memberService.proceedClosingAccount(member, MemberDeleteCommand.request(request.getType(), request.getAdditionalInformation()));
-    }
-
-    @Transactional
-    public void updateMyProfile(AccountId accountId, MemberUpdateProfileCommand memberUpdateProfileCommand) {
-        Member memberTobeUpdated = memberRepository.findByAccountId(accountId).orElseThrow(BadRequestException::new);
-        memberTobeUpdated.updateMyProfile(
-                memberUpdateProfileCommand.getNickname(),
-                memberUpdateProfileCommand.getProfileImageSrc()
-        );
-        memberRepository.save(memberTobeUpdated);
     }
 
     public int addLike(AccountId accountId, String likeType, Long itemId) {
@@ -99,6 +90,14 @@ public class MemberFacade {
                 member.getId(),
                 likeType,
                 itemId));
+    }
+
+    public MemberBlockListView blockMember(AccountId accountId, MemberId blockMemberId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        if(member.getId().equals(blockMemberId)) throw new BadRequestException("본인 차단 안됨");
+        memberBlockService.blockMemberIfNeeded(member.getId(), blockMemberId);
+        return new MemberBlockListView(memberBlockQueries.getAllMemberBlockList(member.getId()).stream()
+                .map(memberBlock -> memberBlock.getTargetMemberId().getId()).collect(Collectors.toList()));
     }
 
     public MemberDetailProfileResponse getMyProfile(AccountId accountId) {
@@ -178,7 +177,7 @@ public class MemberFacade {
                    TimeUtils.convertToISO_8061(one.getCreatedAt()),
                    memberFollowerQueries.findFolloweredByMemberIdAndFollowerId(one.getFollowerId(), member.getId()).isPresent());
         }).collect(Collectors.toList());
-        return PageUtils.makePage(list, MEMBER_ID.name(), size, page);
+        return PageUtils.makePage(list, CREATED_AT.name(), size, page);
     }
 
     @Transactional(readOnly = true)
@@ -193,57 +192,6 @@ public class MemberFacade {
                     TimeUtils.convertToISO_8061(one.getCreatedAt()),
                     memberFollowerQueries.findFolloweredByMemberIdAndFollowerId(member.getId(), one.getMemberId()).isPresent());
         }).collect(Collectors.toList());
-        return PageUtils.makePage(list, MEMBER_ID.name(), size, page);
-    }
-
-    @Transactional
-    public void addFollower(MemberId followeredId, AccountId accountId) {
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        MemberFollower newMemberFollower = MemberFollower.newOne(
-                memberFollowerRepository.nextId(),
-                member.getId(),
-                followeredId
-        );
-        memberFollowerRepository.save(newMemberFollower);
-    }
-
-    @Transactional
-    public void deleteFollower(MemberId followeredId, AccountId accountId) {
-        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
-        MemberFollower deleteMemberFollower = memberFollowerRepository.findFolloweredByMemberIdAndFollowerId(member.getId(), followeredId).orElseThrow(MemberFollowerFoundException::new);
-        memberFollowerRepository.delete(deleteMemberFollower);
-    }
-
-    public boolean login(LoginCommand loginCommand) {
-        Account loginAccount = accountRepository.findById(loginCommand.getAccountId()).orElseThrow(AccountNotFoundException::new);
-        if(memberQueries.findByAccountId(loginAccount.getId()).isEmpty()) {
-            MemberId memberId = memberRepository.nextId();
-            Member newMember = loginAccount.createMemberFromKakao(
-                    memberId,
-                    loginAccount.getId(),
-                    loginCommand.getProfileImage(),
-                    loginCommand.getNickname(),
-                    loginCommand.getId(),
-                    loginCommand.getAgeRange(),
-                    loginCommand.getBirthday(),
-                    loginCommand.getBirthdayType(),
-                    loginCommand.getGender(),
-                    loginCommand.getConnectedAt());
-            memberRepository.save(newMember);
-            return true;
-        }
-        loginAccount.reLogin();
-        return false;
-    }
-
-    public void addInformation(MemberAddInformationCommand memberAddInformationCommand) {
-        Member updateMember = memberQueries.findByAccountId(memberAddInformationCommand.getAccountId()).orElseThrow(MemberNotFoundException::new);
-        updateMember.updateInformation(
-                memberAddInformationCommand.getMyAddressInfo(),
-                ImageListData.from(memberAddInformationCommand.getInterestingCategoryList()),
-                memberAddInformationCommand.getInterestingAddress(),
-                memberAddInformationCommand.getNickname()
-        );
-        memberRepository.save(updateMember);
+        return PageUtils.makePage(list, CREATED_AT.name(), size, page);
     }
 }

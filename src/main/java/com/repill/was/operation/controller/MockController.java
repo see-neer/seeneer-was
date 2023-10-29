@@ -4,7 +4,7 @@ import com.repill.was.global.config.JwtTokenProvider;
 import com.repill.was.global.enums.OSType;
 import com.repill.was.global.exception.BadRequestException;
 import com.repill.was.global.enums.ItemType;
-import com.repill.was.global.model.ImageListData;
+import com.repill.was.global.model.EntityListData;
 import com.repill.was.item.entity.Festival;
 import com.repill.was.item.entity.FestivalRepository;
 import com.repill.was.item.entity.Market;
@@ -54,7 +54,7 @@ public class MockController {
     public void addMockMarket() {
         marketRepository.save(Market.newOne(
                 marketRepository.nextId(),
-                ImageListData.from(List.of("https://repill-dev.s3.ap-northeast-2.amazonaws.com/test/KakaoTalk_Photo_2023-07-30-18-44-36.jpeg")),
+                EntityListData.from(List.of("https://repill-dev.s3.ap-northeast-2.amazonaws.com/test/KakaoTalk_Photo_2023-07-30-18-44-36.jpeg")),
                 "Mock Market",
                 "Mock Market Address",
                 "Mock Market Date"
@@ -80,7 +80,7 @@ public class MockController {
     public void addMockFestival() {
         festivalRepository.save(Festival.newOne(
                 festivalRepository.nextId(),
-                ImageListData.from(List.of("https://repill-dev.s3.ap-northeast-2.amazonaws.com/test/KakaoTalk_Photo_2023-07-30-18-44-36.jpeg")),
+                EntityListData.from(List.of("https://repill-dev.s3.ap-northeast-2.amazonaws.com/test/KakaoTalk_Photo_2023-07-30-18-44-36.jpeg")),
                 "Mock Festival",
                 "Mock Festival Festival",
                 LocalDateTime.now()
@@ -127,7 +127,7 @@ public class MockController {
                 ItemType.valueOf(itemType),
                 itemId,
                 "MOCK CONTENT",
-                ImageListData.from(List.of()));
+                EntityListData.from(List.of()));
         reviewRepository.save(mock_content);
     }
 

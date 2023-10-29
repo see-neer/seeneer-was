@@ -1,8 +1,8 @@
 package com.repill.was.item.entity;
 
 import com.repill.was.global.exception.BadRequestException;
-import com.repill.was.global.model.ImageListData;
-import com.repill.was.global.model.ImageListDataConverter;
+import com.repill.was.global.model.EntityListData;
+import com.repill.was.global.model.EntityListDataConverter;
 import com.repill.was.member.entity.memberLike.MemberLike;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +21,9 @@ public class Festival {
     @EmbeddedId
     FestivalId id;
 
-    @Convert(converter = ImageListDataConverter.class)
+    @Convert(converter = EntityListDataConverter.class)
     @Column(columnDefinition = "TEXT")
-    private ImageListData images;
+    private EntityListData images;
 
     @Column(columnDefinition = "VARCHAR(50)")
     private String name;
@@ -45,7 +45,7 @@ public class Festival {
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
 
-    public Festival(FestivalId id, ImageListData images, String name, String address, LocalDateTime date, boolean isClosed, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Festival(FestivalId id, EntityListData images, String name, String address, LocalDateTime date, boolean isClosed, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.images = images;
         this.name = name;
@@ -56,7 +56,7 @@ public class Festival {
         this.createdAt = createdAt;
     }
 
-    public static Festival newOne(FestivalId festivalId, ImageListData images, String name, String address, LocalDateTime date) {
+    public static Festival newOne(FestivalId festivalId, EntityListData images, String name, String address, LocalDateTime date) {
         return new Festival(
                 festivalId,
                 images,

@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.011s</div>
+<div class="counter">0.002s</div>
 <p>duration</p>
 </div>
 </td>
@@ -164,15 +164,14 @@
 	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:65)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
-Caused by: org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
-	at app//org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
-	at app//org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
-	at app//org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
-	at java.base@11.0.11/java.lang.Iterable.forEach(Iterable.java:75)
-	at app//org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
-	at app//org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
-	at app//org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:937)
-	at app//org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+Caused by: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.repill.was.WasApplication]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'festivalItemValidator' for bean class [com.repill.was.global.factory.itemvalidate.FestivalItemValidator] conflicts with existing, non-compatible bean definition of same name and class [com.repill.was.global.factory.FestivalItemValidator]
+	at app//org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188)
+	at app//org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:331)
+	at app//org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247)
+	at app//org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311)
+	at app//org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112)
+	at app//org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:748)
+	at app//org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:564)
 	at app//org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731)
 	at app//org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
 	at app//org.springframework.boot.SpringApplication.run(SpringApplication.java:307)
@@ -180,39 +179,15 @@ Caused by: org.springframework.context.ApplicationContextException: Failed to st
 	at app//org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:141)
 	at app//org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:90)
 	... 86 more
-Caused by: java.lang.NullPointerException
-	at springfox.documentation.spring.web.WebMvcPatternsRequestConditionWrapper.getPatterns(WebMvcPatternsRequestConditionWrapper.java:56)
-	at springfox.documentation.RequestHandler.sortedPaths(RequestHandler.java:113)
-	at springfox.documentation.spi.service.contexts.Orderings.lambda$byPatternsCondition$3(Orderings.java:89)
-	at java.base/java.util.Comparator.lambda$comparing$77a9974f$1(Comparator.java:469)
-	at java.base/java.util.TimSort.countRunAndMakeAscending(TimSort.java:355)
-	at java.base/java.util.TimSort.sort(TimSort.java:220)
-	at java.base/java.util.Arrays.sort(Arrays.java:1515)
-	at java.base/java.util.ArrayList.sort(ArrayList.java:1750)
-	at java.base/java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:392)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
-	at springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider.requestHandlers(WebMvcRequestHandlerProvider.java:81)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1655)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.withDefaults(AbstractDocumentationPluginsBootstrapper.java:107)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.buildContext(AbstractDocumentationPluginsBootstrapper.java:91)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.bootstrapDocumentationPlugins(AbstractDocumentationPluginsBootstrapper.java:82)
-	at springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper.start(DocumentationPluginsBootstrapper.java:100)
-	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
-	... 99 more
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'festivalItemValidator' for bean class [com.repill.was.global.factory.itemvalidate.FestivalItemValidator] conflicts with existing, non-compatible bean definition of same name and class [com.repill.was.global.factory.FestivalItemValidator]
+	at app//org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349)
+	at app//org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287)
+	at app//org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:128)
+	at app//org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:295)
+	at app//org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:249)
+	at app//org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:206)
+	at app//org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:174)
+	... 98 more
 </pre>
 </span>
 </div>
@@ -229,7 +204,7 @@ Caused by: java.lang.NullPointerException
 </thead>
 <tr>
 <td class="failures">contextLoads()</td>
-<td class="failures">0.011s</td>
+<td class="failures">0.002s</td>
 <td class="failures">failed</td>
 </tr>
 </table>
@@ -237,22 +212,22 @@ Caused by: java.lang.NullPointerException
 <div id="tab2" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>21:45:13.874 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
-21:45:13.882 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
-21:45:13.914 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.repill.was.WasApplicationTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
-21:45:13.924 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.repill.was.WasApplicationTests], using SpringBootContextLoader
-21:45:13.928 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.repill.was.WasApplicationTests]: class path resource [com/repill/was/WasApplicationTests-context.xml] does not exist
-21:45:13.928 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.repill.was.WasApplicationTests]: class path resource [com/repill/was/WasApplicationTestsContext.groovy] does not exist
-21:45:13.929 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.repill.was.WasApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
-21:45:13.929 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.repill.was.WasApplicationTests]: WasApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-21:45:13.981 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.repill.was.WasApplicationTests]
-21:45:14.040 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/Users/leesg/Desktop/REPILL/build/classes/java/main/com/repill/was/WasApplication.class]
-21:45:14.041 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.repill.was.WasApplication for test class com.repill.was.WasApplicationTests
-21:45:14.135 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.repill.was.WasApplicationTests]: using defaults.
-21:45:14.136 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-21:45:14.196 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@74a9c4b0, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@85ec632, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@1c05a54d, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@65ef722a, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@5fd9b663, org.springframework.test.context.support.DirtiesContextTestExecutionListener@214894fc, org.springframework.test.context.transaction.TransactionalTestExecutionListener@10567255, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@e362c57, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@1c4ee95c, org.springframework.test.context.event.EventPublishingTestExecutionListener@79c4715d, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@5aa360ea, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@6548bb7d, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@e27ba81, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@54336c81, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@1556f2dd, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@35e52059, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@62577d6]
-21:45:14.202 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@704b2127 testClass = WasApplicationTests, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@3ee39da0 testClass = WasApplicationTests, locations = '{}', classes = '{class com.repill.was.WasApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@f73dcd6, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@12bfd80d, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@6c6c5427, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@1e63ec0b, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@56c9bbd8, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@619bfe29, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@2a7ed1f], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
-[2023-08-31 21:45:19:6119] ?[32m[Test worker]?[0;39m ?[31mWARN ?[0;39m ?[1;37m[org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer.logDuplicateJsonObjectsWarning:?[33m78?[0;39m]?[0;39m - 
+<pre>17:15:27.213 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+17:15:27.217 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+17:15:27.232 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.repill.was.WasApplicationTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+17:15:27.237 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.repill.was.WasApplicationTests], using SpringBootContextLoader
+17:15:27.239 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.repill.was.WasApplicationTests]: class path resource [com/repill/was/WasApplicationTests-context.xml] does not exist
+17:15:27.239 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.repill.was.WasApplicationTests]: class path resource [com/repill/was/WasApplicationTestsContext.groovy] does not exist
+17:15:27.239 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.repill.was.WasApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+17:15:27.240 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.repill.was.WasApplicationTests]: WasApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+17:15:27.261 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.repill.was.WasApplicationTests]
+17:15:27.290 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/Users/leesg/Desktop/REPILL/build/classes/java/main/com/repill/was/WasApplication.class]
+17:15:27.290 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.repill.was.WasApplication for test class com.repill.was.WasApplicationTests
+17:15:27.355 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.repill.was.WasApplicationTests]: using defaults.
+17:15:27.355 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+17:15:27.367 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@7726e185, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@aa5455e, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@282308c3, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@5dda14d0, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@1db0ec27, org.springframework.test.context.support.DirtiesContextTestExecutionListener@3d9fc57a, org.springframework.test.context.transaction.TransactionalTestExecutionListener@d4ab71a, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@3b4ef7, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@1af05b03, org.springframework.test.context.event.EventPublishingTestExecutionListener@5987e932, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@1ad777f, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@5bbbdd4b, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@438bad7c, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@25230246, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@4fdf8f12, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@4a8b5227, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@54f5f647]
+17:15:27.370 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@6105f8a3 testClass = WasApplicationTests, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@2237bada testClass = WasApplicationTests, locations = '{}', classes = '{class com.repill.was.WasApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@4721d212, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@7a8fa663, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@1623134f, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4264b240, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@6cbcf243, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@3234f74e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@13b3d178], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
+[2023-10-28 17:15:27:425 ] ?[32m[Test worker]?[0;39m ?[31mWARN ?[0;39m ?[1;37m[org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer.logDuplicateJsonObjectsWarning:?[33m78?[0;39m]?[0;39m - 
 
 Found multiple occurrences of org.json.JSONObject on the class path:
 
@@ -261,48 +236,18 @@ Found multiple occurrences of org.json.JSONObject on the class path:
 
 You may wish to exclude one of them to ensure predictable runtime behavior
 
-[2023-08-31 21:45:19:6140] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.boot.StartupInfoLogger.logStarting:?[33m55?[0;39m]?[0;39m - Starting WasApplicationTests using Java 11.0.11 on LeeSgui-MacBookPro.local with PID 89812 (started by leesg in /Users/leesg/Desktop/REPILL)
-[2023-08-31 21:45:19:6143] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.boot.SpringApplication.logStartupProfileInfo:?[33m637?[0;39m]?[0;39m - The following 4 profiles are active: &quot;jwt&quot;, &quot;datasource&quot;, &quot;webclient&quot;, &quot;dev&quot;
-[2023-08-31 21:45:21:7319] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:?[33m132?[0;39m]?[0;39m - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-[2023-08-31 21:45:21:7530] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.data.repository.config.RepositoryConfigurationDelegate.registerRepositoriesIn:?[33m201?[0;39m]?[0;39m - Finished Spring Data repository scanning in 203 ms. Found 5 JPA repository interfaces.
-[2023-08-31 21:45:21:8014] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.core.log.LogAccessor.info:?[33m292?[0;39m]?[0;39m - No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
-[2023-08-31 21:45:21:8024] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.core.log.LogAccessor.info:?[33m292?[0;39m]?[0;39m - No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
-[2023-08-31 21:45:22:8823] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[com.zaxxer.hikari.HikariDataSource.&lt;init&gt;:?[33m80?[0;39m]?[0;39m - HikariPool-1 - Starting...
-[2023-08-31 21:45:23:9215] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[com.zaxxer.hikari.HikariDataSource.&lt;init&gt;:?[33m82?[0;39m]?[0;39m - HikariPool-1 - Start completed.
-[2023-08-31 21:45:23:9476] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.hibernate.jpa.internal.util.LogHelper.logPersistenceUnitInformation:?[33m31?[0;39m]?[0;39m - HHH000204: Processing PersistenceUnitInfo [name: default]
-[2023-08-31 21:45:23:9528] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.hibernate.Version.logVersion:?[33m44?[0;39m]?[0;39m - HHH000412: Hibernate ORM core version 5.6.15.Final
-[2023-08-31 21:45:23:9662] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.hibernate.annotations.common.reflection.java.JavaReflectionManager.&lt;clinit&gt;:?[33m56?[0;39m]?[0;39m - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-[2023-08-31 21:45:23:9802] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.hibernate.dialect.Dialect.&lt;init&gt;:?[33m175?[0;39m]?[0;39m - HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
-[2023-08-31 21:45:23:9942] ?[32m[Test worker]?[0;39m ?[31mWARN ?[0;39m ?[1;37m[org.hibernate.cfg.AnnotationBinder.processJoinedDiscriminatorProperties:?[33m915?[0;39m]?[0;39m - HHH000457: Joined inheritance hierarchy [com.repill.was.comment.entity.Comment] defined explicit @DiscriminatorColumn.  Legacy Hibernate behavior was to ignore the @DiscriminatorColumn.  However, as part of issue HHH-6911 we now apply the explicit @DiscriminatorColumn.  If you would prefer the legacy behavior, enable the `hibernate.discriminator.ignore_explicit_for_joined` setting (hibernate.discriminator.ignore_explicit_for_joined=true)
-[2023-08-31 21:45:24:10603] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.hibernate.tuple.PojoInstantiator.&lt;init&gt;:?[33m47?[0;39m]?[0;39m - HHH000182: No default (no-argument) constructor for class: com.repill.was.comment.entity.MarketReviewComment (class must be instantiated by Interceptor)
-[2023-08-31 21:45:24:11040] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator.initiateService:?[33m52?[0;39m]?[0;39m - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-[2023-08-31 21:45:24:11048] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory:?[33m437?[0;39m]?[0;39m - Initialized JPA EntityManagerFactory for persistence unit 'default'
-[2023-08-31 21:45:25:11384] ?[32m[Test worker]?[0;39m ?[39mDEBUG?[0;39m ?[1;37m[org.springframework.jdbc.core.JdbcTemplate.update:?[33m537?[0;39m]?[0;39m - Executing SQL update [UPDATE machine_sequence SET sequence = sequence + 1]
-[2023-08-31 21:45:25:11398] ?[32m[Test worker]?[0;39m ?[39mDEBUG?[0;39m ?[1;37m[org.springframework.jdbc.core.JdbcTemplate.query:?[33m440?[0;39m]?[0;39m - Executing SQL query [SELECT sequence FROM machine_sequence]
-[2023-08-31 21:45:26:13027] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.security.web.DefaultSecurityFilterChain.&lt;init&gt;:?[33m55?[0;39m]?[0;39m - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@388a6656, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@32b19d03, org.springframework.security.web.context.SecurityContextPersistenceFilter@4dfe14d4, org.springframework.security.web.header.HeaderWriterFilter@22277482, org.springframework.web.filter.CorsFilter@3f8090db, org.springframework.security.web.authentication.logout.LogoutFilter@13c79e0d, com.repill.was.global.exception.GlobalExceptionFilterHandler@6f1b0ead, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@23674e3d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@627dfd9f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4487dce, org.springframework.security.web.session.SessionManagementFilter@465eb466, org.springframework.security.web.access.ExceptionTranslationFilter@7eb370c5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3a44ebd5]
-[2023-08-31 21:45:27:13751] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.core.log.LogAccessor.info:?[33m174?[0;39m]?[0;39m - Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
-[2023-08-31 21:45:27:13752] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.core.log.LogAccessor.info:?[33m174?[0;39m]?[0;39m - Channel 'was.errorChannel' has 1 subscriber(s).
-[2023-08-31 21:45:27:13752] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.core.log.LogAccessor.info:?[33m292?[0;39m]?[0;39m - started bean '_org.springframework.integration.errorLogger'
-[2023-08-31 21:45:27:13755] ?[32m[Test worker]?[0;39m ?[31mWARN ?[0;39m ?[1;37m[org.springframework.context.support.AbstractApplicationContext.refresh:?[33m591?[0;39m]?[0;39m - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
-[2023-08-31 21:45:27:13756] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.core.log.LogAccessor.info:?[33m174?[0;39m]?[0;39m - Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
-[2023-08-31 21:45:27:13756] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.core.log.LogAccessor.info:?[33m174?[0;39m]?[0;39m - Channel 'was.errorChannel' has 0 subscriber(s).
-[2023-08-31 21:45:27:13756] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.core.log.LogAccessor.info:?[33m292?[0;39m]?[0;39m - stopped bean '_org.springframework.integration.errorLogger'
-[2023-08-31 21:45:27:13769] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.destroy:?[33m651?[0;39m]?[0;39m - Closing JPA EntityManagerFactory for persistence unit 'default'
-[2023-08-31 21:45:27:13773] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[com.zaxxer.hikari.HikariDataSource.close:?[33m350?[0;39m]?[0;39m - HikariPool-1 - Shutdown initiated...
-[2023-08-31 21:45:27:13791] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[com.zaxxer.hikari.HikariDataSource.close:?[33m352?[0;39m]?[0;39m - HikariPool-1 - Shutdown completed.
-[2023-08-31 21:45:27:13801] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener.logMessage:?[33m136?[0;39m]?[0;39m - 
-
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-[2023-08-31 21:45:27:13818] ?[32m[Test worker]?[0;39m ?[1;31mERROR?[0;39m ?[1;37m[org.springframework.boot.SpringApplication.reportFailure:?[33m821?[0;39m]?[0;39m - Application run failed
-org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
-	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
-	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
-	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
-	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
-	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
-	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
-	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:937)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+[2023-10-28 17:15:27:432 ] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.boot.StartupInfoLogger.logStarting:?[33m55?[0;39m]?[0;39m - Starting WasApplicationTests using Java 11.0.18 on LeeSgui-MacBookPro.local with PID 75656 (started by leesg in /Users/leesg/Desktop/REPILL)
+[2023-10-28 17:15:27:432 ] ?[32m[Test worker]?[0;39m ?[34mINFO ?[0;39m ?[1;37m[org.springframework.boot.SpringApplication.logStartupProfileInfo:?[33m637?[0;39m]?[0;39m - The following 4 profiles are active: &quot;jwt&quot;, &quot;datasource&quot;, &quot;webclient&quot;, &quot;dev&quot;
+[2023-10-28 17:15:27:553 ] ?[32m[Test worker]?[0;39m ?[31mWARN ?[0;39m ?[1;37m[org.springframework.context.support.AbstractApplicationContext.refresh:?[33m591?[0;39m]?[0;39m - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.repill.was.WasApplication]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'festivalItemValidator' for bean class [com.repill.was.global.factory.itemvalidate.FestivalItemValidator] conflicts with existing, non-compatible bean definition of same name and class [com.repill.was.global.factory.FestivalItemValidator]
+[2023-10-28 17:15:27:570 ] ?[32m[Test worker]?[0;39m ?[1;31mERROR?[0;39m ?[1;37m[org.springframework.boot.SpringApplication.reportFailure:?[33m821?[0;39m]?[0;39m - Application run failed
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.repill.was.WasApplication]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'festivalItemValidator' for bean class [com.repill.was.global.factory.itemvalidate.FestivalItemValidator] conflicts with existing, non-compatible bean definition of same name and class [com.repill.was.global.factory.FestivalItemValidator]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:331)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:748)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:564)
 	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731)
 	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307)
@@ -395,40 +340,16 @@ org.springframework.context.ApplicationContextException: Failed to start bean 'd
 	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:65)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
-Caused by: java.lang.NullPointerException: null
-	at springfox.documentation.spring.web.WebMvcPatternsRequestConditionWrapper.getPatterns(WebMvcPatternsRequestConditionWrapper.java:56)
-	at springfox.documentation.RequestHandler.sortedPaths(RequestHandler.java:113)
-	at springfox.documentation.spi.service.contexts.Orderings.lambda$byPatternsCondition$3(Orderings.java:89)
-	at java.base/java.util.Comparator.lambda$comparing$77a9974f$1(Comparator.java:469)
-	at java.base/java.util.TimSort.countRunAndMakeAscending(TimSort.java:355)
-	at java.base/java.util.TimSort.sort(TimSort.java:220)
-	at java.base/java.util.Arrays.sort(Arrays.java:1515)
-	at java.base/java.util.ArrayList.sort(ArrayList.java:1750)
-	at java.base/java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:392)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
-	at springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider.requestHandlers(WebMvcRequestHandlerProvider.java:81)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1655)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.withDefaults(AbstractDocumentationPluginsBootstrapper.java:107)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.buildContext(AbstractDocumentationPluginsBootstrapper.java:91)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.bootstrapDocumentationPlugins(AbstractDocumentationPluginsBootstrapper.java:82)
-	at springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper.start(DocumentationPluginsBootstrapper.java:100)
-	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
-	... 99 common frames omitted
-[2023-08-31 21:45:27:13823] ?[32m[Test worker]?[0;39m ?[1;31mERROR?[0;39m ?[1;37m[org.springframework.test.context.TestContextManager.prepareTestInstance:?[33m252?[0;39m]?[0;39m - Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@74a9c4b0] to prepare test instance [com.repill.was.WasApplicationTests@35d128fd]
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'festivalItemValidator' for bean class [com.repill.was.global.factory.itemvalidate.FestivalItemValidator] conflicts with existing, non-compatible bean definition of same name and class [com.repill.was.global.factory.FestivalItemValidator]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349)
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287)
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:128)
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:295)
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:249)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:206)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:174)
+	... 98 common frames omitted
+[2023-10-28 17:15:27:572 ] ?[32m[Test worker]?[0;39m ?[1;31mERROR?[0;39m ?[1;37m[org.springframework.test.context.TestContextManager.prepareTestInstance:?[33m252?[0;39m]?[0;39m - Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener@7726e185] to prepare test instance [com.repill.was.WasApplicationTests@178f268a]
 java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:98)
 	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:124)
@@ -517,15 +438,14 @@ java.lang.IllegalStateException: Failed to load ApplicationContext
 	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:65)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
-Caused by: org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
-	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
-	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
-	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
-	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
-	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
-	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
-	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:937)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+Caused by: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.repill.was.WasApplication]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'festivalItemValidator' for bean class [com.repill.was.global.factory.itemvalidate.FestivalItemValidator] conflicts with existing, non-compatible bean definition of same name and class [com.repill.was.global.factory.FestivalItemValidator]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:331)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:748)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:564)
 	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731)
 	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307)
@@ -533,39 +453,15 @@ Caused by: org.springframework.context.ApplicationContextException: Failed to st
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:141)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:90)
 	... 86 common frames omitted
-Caused by: java.lang.NullPointerException: null
-	at springfox.documentation.spring.web.WebMvcPatternsRequestConditionWrapper.getPatterns(WebMvcPatternsRequestConditionWrapper.java:56)
-	at springfox.documentation.RequestHandler.sortedPaths(RequestHandler.java:113)
-	at springfox.documentation.spi.service.contexts.Orderings.lambda$byPatternsCondition$3(Orderings.java:89)
-	at java.base/java.util.Comparator.lambda$comparing$77a9974f$1(Comparator.java:469)
-	at java.base/java.util.TimSort.countRunAndMakeAscending(TimSort.java:355)
-	at java.base/java.util.TimSort.sort(TimSort.java:220)
-	at java.base/java.util.Arrays.sort(Arrays.java:1515)
-	at java.base/java.util.ArrayList.sort(ArrayList.java:1750)
-	at java.base/java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:392)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
-	at springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider.requestHandlers(WebMvcRequestHandlerProvider.java:81)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1655)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.withDefaults(AbstractDocumentationPluginsBootstrapper.java:107)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.buildContext(AbstractDocumentationPluginsBootstrapper.java:91)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.bootstrapDocumentationPlugins(AbstractDocumentationPluginsBootstrapper.java:82)
-	at springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper.start(DocumentationPluginsBootstrapper.java:100)
-	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
-	... 99 common frames omitted
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'festivalItemValidator' for bean class [com.repill.was.global.factory.itemvalidate.FestivalItemValidator] conflicts with existing, non-compatible bean definition of same name and class [com.repill.was.global.factory.FestivalItemValidator]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349)
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287)
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:128)
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:295)
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:249)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:206)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:174)
+	... 98 common frames omitted
 </pre>
 </span>
 </div>
@@ -577,7 +473,7 @@ Caused by: java.lang.NullPointerException: null
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.0.1</a> at 2023. 8. 31. 오후 9:45:27</p>
+<a href="http://www.gradle.org">Gradle 8.0.1</a> at 2023. 10. 28. 오후 5:15:27</p>
 </div>
 </div>
 </body>

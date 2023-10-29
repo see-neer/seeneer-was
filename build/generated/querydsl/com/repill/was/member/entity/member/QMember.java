@@ -52,7 +52,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final ListPath<Address, QAddress> interestingAddress = this.<Address, QAddress>createList("interestingAddress", Address.class, QAddress.class, PathInits.DIRECT2);
 
-    public final SimplePath<com.repill.was.global.model.ImageListData> interestingCategory = createSimple("interestingCategory", com.repill.was.global.model.ImageListData.class);
+    public final SimplePath<com.repill.was.global.model.EntityListData> interestingCategory = createSimple("interestingCategory", com.repill.was.global.model.EntityListData.class);
 
     public final NumberPath<Long> kakaoUserId = createNumber("kakaoUserId", Long.class);
 

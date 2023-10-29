@@ -1,8 +1,8 @@
 package com.repill.was.item.entity;
 
 import com.repill.was.global.exception.BadRequestException;
-import com.repill.was.global.model.ImageListData;
-import com.repill.was.global.model.ImageListDataConverter;
+import com.repill.was.global.model.EntityListData;
+import com.repill.was.global.model.EntityListDataConverter;
 import com.repill.was.member.entity.memberLike.MemberLike;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +20,9 @@ public class Market {
     @EmbeddedId
     MarketId id;
 
-    @Convert(converter = ImageListDataConverter.class)
+    @Convert(converter = EntityListDataConverter.class)
     @Column(columnDefinition = "TEXT")
-    private ImageListData images;
+    private EntityListData images;
 
     @Column(columnDefinition = "VARCHAR(50)")
     private String name;
@@ -42,7 +42,7 @@ public class Market {
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
 
-    public Market(MarketId id, ImageListData images, String name, String address, String date, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Market(MarketId id, EntityListData images, String name, String address, String date, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.images = images;
         this.name = name;
@@ -52,7 +52,7 @@ public class Market {
         this.createdAt = createdAt;
     }
 
-    public static Market newOne(MarketId marketId, ImageListData images, String name, String address, String date) {
+    public static Market newOne(MarketId marketId, EntityListData images, String name, String address, String date) {
         return new Market(
                 marketId,
                 images,

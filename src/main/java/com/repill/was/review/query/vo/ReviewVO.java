@@ -1,7 +1,7 @@
 package com.repill.was.review.query.vo;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.repill.was.global.model.ImageListData;
+import com.repill.was.global.model.EntityListData;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,12 +13,12 @@ public class ReviewVO {
 
     private Long id;
     private Long itemId;
-    private ImageListData imageSrc;
+    private EntityListData imageSrc;
     private LocalDateTime date;
     private String content;
 
     @QueryProjection
-    public ReviewVO(Long id, Long itemId, ImageListData imageSrc, LocalDateTime date, String content) {
+    public ReviewVO(Long id, Long itemId, EntityListData imageSrc, LocalDateTime date, String content) {
         this.id = id;
         this.itemId = itemId;
         this.imageSrc = imageSrc;

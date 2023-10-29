@@ -8,6 +8,7 @@ import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse
 import com.repill.was.member.controller.dto.response.MemberFollowerResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
 import com.repill.was.member.controller.dto.response.view.MemberView;
+import com.repill.was.member.controller.dto.view.MemberBlockListView;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountNotFoundException;
@@ -34,6 +35,7 @@ import net.logstash.logback.util.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {SwaggerConfig.SwaggerTags.MEMBER})
@@ -41,6 +43,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MemberController {
 
+    private final MemberService memberService;
     private final MemberFacade memberFacade;
     private final AccountService accountService;
     private final AddressInfoRepository addressInfoRepository;
@@ -49,14 +52,14 @@ public class MemberController {
     @PostMapping("/create")
     public boolean login(@AuthenticationPrincipal AccountId accountId,
                                         @RequestBody MemberLoginRequest memberLoginRequest) {
-        return memberFacade.login(LoginCommand.request(memberLoginRequest, accountId));
+        return memberService.login(LoginCommand.request(memberLoginRequest, accountId));
     }
 
     @ApiOperation("회원 추가정보 업데이트")
     @PostMapping("/information")
     public void addInformation(@AuthenticationPrincipal AccountId accountId,
                                         @RequestBody MemberAddInformationRequest addMemberInformationRequest) {
-        memberFacade.addInformation(MemberAddInformationCommand.request(addMemberInformationRequest, addressInfoRepository, accountId));
+        memberService.addInformation(MemberAddInformationCommand.request(addMemberInformationRequest, addressInfoRepository, accountId));
     }
 
     @ApiOperation("닉네임 중복 확인")
@@ -110,14 +113,14 @@ public class MemberController {
     @PostMapping("/follower")
     public void addFollower(@AuthenticationPrincipal AccountId accountId,
                                 @RequestParam Long memberId) {
-        memberFacade.addFollower(new MemberId(memberId), accountId);
+        memberService.addFollower(new MemberId(memberId), accountId);
     }
 
     @ApiOperation("팔로워 목록 삭제")
     @DeleteMapping("/follower")
     public void deleteFollower(@AuthenticationPrincipal AccountId accountId,
                                    @RequestParam Long memberId) {
-        memberFacade.deleteFollower(new MemberId(memberId), accountId);
+        memberService.deleteFollower(new MemberId(memberId), accountId);
     }
 
     @ApiOperation("찜 목록 호출")
@@ -160,7 +163,7 @@ public class MemberController {
     @PutMapping("/my-profiles")
     public void modifyMyProfiles(@AuthenticationPrincipal AccountId accountId,
                                  @RequestBody MemberProfileUpdateRequest request) {
-        memberFacade.updateMyProfile(accountId, MemberUpdateProfileCommand.request(request));
+        memberService.updateMyProfile(accountId, MemberUpdateProfileCommand.request(request));
     }
 
     @ApiOperation("자기 프로필 상세 조회")
@@ -181,7 +184,13 @@ public class MemberController {
     @PostMapping("/unlike")
     public int deleteLike(@AuthenticationPrincipal AccountId accountId,
                        @RequestParam String likeType,
-                       @RequestParam Long itemId) throws InterruptedException {
+                       @RequestParam Long itemId) {
         return memberFacade.deleteLike(accountId, likeType, itemId);
+    }
+
+    @ApiOperation("멤버 차단하기")
+    @PostMapping("/{id}/block")
+    public MemberBlockListView blockMember(@PathVariable Long id, @AuthenticationPrincipal AccountId accountId) {
+        return memberFacade.blockMember(accountId, new MemberId(id));
     }
 }
