@@ -28,10 +28,17 @@ public class Market {
     private String name;
 
     @Column(columnDefinition = "VARCHAR(50)")
-    private String address;
+    private String addressDetailA;
+
+    @Column(columnDefinition = "VARCHAR(50)")
+    private String addressDetailB;
+
 
     @Column(columnDefinition = "VARCHAR(50)")
     private String date;
+
+    @Column(columnDefinition = "BIT(1) default 0", nullable = false)
+    private boolean isClosed;
 
     @Column(columnDefinition = "BIGINT(20)", nullable = false)
     private Long likeCount;
@@ -42,23 +49,29 @@ public class Market {
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
 
-    public Market(MarketId id, EntityListData images, String name, String address, String date, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Market(MarketId id, EntityListData images, String name, String addressDetailA, String addressDetailB, String date, boolean isClosed, Long likeCount, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.images = images;
         this.name = name;
-        this.address = address;
+        this.addressDetailA = addressDetailA;
+        this.addressDetailB = addressDetailB;
         this.date = date;
+        this.isClosed = isClosed;
+        this.likeCount = likeCount;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
 
-    public static Market newOne(MarketId marketId, EntityListData images, String name, String address, String date) {
+    public static Market newOne(MarketId marketId, EntityListData images, String name, String addressDetailA, String addressDetailB, String date) {
         return new Market(
                 marketId,
                 images,
                 name,
-                address,
+                addressDetailA,
+                addressDetailB,
                 date,
+                false,
+                0L,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );

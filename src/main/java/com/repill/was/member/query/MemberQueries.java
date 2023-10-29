@@ -1,6 +1,7 @@
 package com.repill.was.member.query;
 
 import com.repill.was.global.exception.BadRequestException;
+import com.repill.was.member.controller.dto.response.MemberAlarmSettingResponse;
 import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.member.Member;
@@ -27,6 +28,10 @@ public class MemberQueries {
         return memberRepository.findByAccountId(id);
     }
 
+    public Optional<Member> findByKaKaoId(Long kakaoId) {
+        return memberRepository.findByKaKaoId(kakaoId);
+    }
+
     public Optional<Member> findByMemberNickName(String nickName) {
         return memberRepository.findByMemberNickName(nickName);
     }
@@ -34,5 +39,10 @@ public class MemberQueries {
     public MemberDetailProfileResponse findMyProfileByMemberId(MemberId memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(BadRequestException::new);
         return MemberDetailProfileResponse.fromMember(member);
+    }
+
+    public MemberAlarmSettingResponse getAlarmSetting(AccountId accountId) {
+        Member member = memberRepository.findByAccountId(accountId).orElseThrow(BadRequestException::new);
+        return MemberAlarmSettingResponse.from(member);
     }
 }

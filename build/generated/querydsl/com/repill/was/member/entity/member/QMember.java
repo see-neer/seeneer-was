@@ -56,6 +56,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final NumberPath<Long> kakaoUserId = createNumber("kakaoUserId", Long.class);
 
+    public final QMemberSetting memberSetting;
+
     public final StringPath nickname = createString("nickname");
 
     public final ListPath<RecentlyViewedItem, QRecentlyViewedItem> recentlyViewedItems = this.<RecentlyViewedItem, QRecentlyViewedItem>createList("recentlyViewedItems", RecentlyViewedItem.class, QRecentlyViewedItem.class, PathInits.DIRECT2);
@@ -83,6 +85,7 @@ public class QMember extends EntityPathBase<Member> {
         this.accountId = inits.isInitialized("accountId") ? new com.repill.was.member.entity.account.QAccountId(forProperty("accountId")) : null;
         this.address = inits.isInitialized("address") ? new QAddress(forProperty("address")) : null;
         this.id = inits.isInitialized("id") ? new QMemberId(forProperty("id")) : null;
+        this.memberSetting = inits.isInitialized("memberSetting") ? new QMemberSetting(forProperty("memberSetting")) : null;
     }
 
 }

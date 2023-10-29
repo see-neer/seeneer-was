@@ -3,6 +3,7 @@ package com.repill.was.review.query;
 import com.repill.was.item.entity.FestivalId;
 import com.repill.was.item.entity.MarketId;
 import com.repill.was.member.entity.member.MemberId;
+import com.repill.was.review.entity.Review;
 import com.repill.was.review.entity.ReviewId;
 import com.repill.was.review.entity.ReviewRepository;
 import com.repill.was.review.query.vo.ReviewDetailVO;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +35,9 @@ public class ReviewQueries {
 
     public ReviewDetailVO getFestivalReviewDetail(Long id, Long itemId) {
         return reviewRepository.getFestivalReviewDetail(new ReviewId(id), new FestivalId(itemId));
+    }
+
+    public Optional<Review> getReviewDetail(ReviewId reviewId) {
+        return reviewRepository.findById(reviewId);
     }
 }

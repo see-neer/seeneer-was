@@ -29,7 +29,10 @@ public class Festival {
     private String name;
 
     @Column(columnDefinition = "VARCHAR(50)")
-    private String address;
+    private String addressDetailA;
+
+    @Column(columnDefinition = "VARCHAR(50)")
+    private String addressDetailB;
 
     @Column(columnDefinition = "VARCHAR(50)")
     private LocalDateTime date;
@@ -45,25 +48,29 @@ public class Festival {
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
 
-    public Festival(FestivalId id, EntityListData images, String name, String address, LocalDateTime date, boolean isClosed, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    public Festival(FestivalId id, EntityListData images, String name, String addressDetailA, String addressDetailB, LocalDateTime date, boolean isClosed, Long likeCount, LocalDateTime updatedAt, LocalDateTime createdAt) {
         this.id = id;
         this.images = images;
         this.name = name;
-        this.address = address;
+        this.addressDetailA = addressDetailA;
+        this.addressDetailB = addressDetailB;
         this.date = date;
         this.isClosed = isClosed;
+        this.likeCount = likeCount;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
 
-    public static Festival newOne(FestivalId festivalId, EntityListData images, String name, String address, LocalDateTime date) {
+    public static Festival newOne(FestivalId festivalId, EntityListData images, String name, String addressDetailA, String addressDetailB, LocalDateTime date) {
         return new Festival(
                 festivalId,
                 images,
                 name,
-                address,
+                addressDetailA,
+                addressDetailB,
                 date,
                 false,
+                0L,
                 LocalDateTime.now(),
                 LocalDateTime.now()
         );
@@ -77,12 +84,5 @@ public class Festival {
     public void deleteLike(MemberLike memberLike) {
         if(!memberLike.getItemId().equals(this.id.getId())) throw new BadRequestException("좋아요 취소 실패");
         this.likeCount -= 1;
-    }
-
-    private boolean isActive(LocalDateTime dateTime) {
-        if(this.date.isBefore(dateTime) && !this.isClosed) {
-            return true;
-        }
-        return false;
     }
 }

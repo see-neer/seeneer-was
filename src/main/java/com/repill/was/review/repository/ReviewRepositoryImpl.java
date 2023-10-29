@@ -120,8 +120,4 @@ public class ReviewRepositoryImpl implements ReviewRepository {
                 .where(review.id.eq(reviewId))
                 .fetchOne();
     }
-
-    private BooleanExpression cursorLt(Long cursor) {
-        return isEmpty(cursor) ? null : review.id.id.lt(cursor);
-    }
 }

@@ -57,6 +57,7 @@ public class MockController {
                 EntityListData.from(List.of("https://repill-dev.s3.ap-northeast-2.amazonaws.com/test/KakaoTalk_Photo_2023-07-30-18-44-36.jpeg")),
                 "Mock Market",
                 "Mock Market Address",
+                "Mock Market Date",
                 "Mock Market Date"
         ));
     }
@@ -82,7 +83,8 @@ public class MockController {
                 festivalRepository.nextId(),
                 EntityListData.from(List.of("https://repill-dev.s3.ap-northeast-2.amazonaws.com/test/KakaoTalk_Photo_2023-07-30-18-44-36.jpeg")),
                 "Mock Festival",
-                "Mock Festival Festival",
+                "Mock Festival Festivalqw",
+                "Mock Festival Festivalqw",
                 LocalDateTime.now()
         ));
     }

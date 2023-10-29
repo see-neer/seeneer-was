@@ -1,6 +1,7 @@
 package com.repill.was.member.entity.account;
 
 import com.repill.was.global.enums.OSType;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 @Embeddable
 @NoArgsConstructor
+@Getter
 public class Device {
 
     @Column(columnDefinition = "VARCHAR(256)", nullable = false)

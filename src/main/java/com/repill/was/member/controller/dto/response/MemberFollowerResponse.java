@@ -10,9 +10,9 @@ import java.util.List;
 @NoArgsConstructor
 public class MemberFollowerResponse {
 
-    MemberView members;
-    String followedAt;
-    boolean isFollowered;
+    private MemberView members;
+    private String followedAt;
+    private boolean isFollowered;
 
     public MemberFollowerResponse(MemberView members, String followedAt, boolean isFollowered) {
         this.members = members;

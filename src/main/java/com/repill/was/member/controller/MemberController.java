@@ -4,6 +4,7 @@ import com.repill.was.global.config.SwaggerConfig;
 import com.repill.was.global.enums.ItemType;
 import com.repill.was.member.controller.command.*;
 import com.repill.was.member.controller.dto.request.*;
+import com.repill.was.member.controller.dto.response.MemberAlarmSettingResponse;
 import com.repill.was.member.controller.dto.response.MemberDetailProfileResponse;
 import com.repill.was.member.controller.dto.response.MemberFollowerResponse;
 import com.repill.was.member.controller.dto.response.RecentlyViewedItemResponse;
@@ -44,13 +45,14 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberQueries memberQueries;
     private final MemberFacade memberFacade;
     private final AccountService accountService;
     private final AddressInfoRepository addressInfoRepository;
 
     @ApiOperation("회원가입")
     @PostMapping("/create")
-    public boolean login(@AuthenticationPrincipal AccountId accountId,
+    public MemberView login(@AuthenticationPrincipal AccountId accountId,
                                         @RequestBody MemberLoginRequest memberLoginRequest) {
         return memberService.login(LoginCommand.request(memberLoginRequest, accountId));
     }
@@ -71,9 +73,10 @@ public class MemberController {
     @ApiOperation("최근 본 목록 호출")
     @GetMapping("/recently-views")
     public Page<RecentlyViewedItemResponse> getRecentlyViewItems(@AuthenticationPrincipal AccountId accountId,
+                                                             @RequestParam String itemType,
                                                              @RequestParam int size,
                                                              @RequestParam int page) {
-        return memberFacade.getRecentlyViewItems(accountId, size, page);
+        return memberFacade.getRecentlyViewItems(accountId, ItemType.valueOf(itemType), size, page);
     }
 
     @ApiOperation("최근 본 목록 추가")
@@ -126,9 +129,10 @@ public class MemberController {
     @ApiOperation("찜 목록 호출")
     @GetMapping("/favorite-items")
     public Page<RecentlyViewedItemResponse> getFavoriteItems(@AuthenticationPrincipal AccountId accountId,
+                                                             @RequestParam String itemType,
                                                              @RequestParam int size,
                                                              @RequestParam int page) {
-        return memberFacade.getFavoriteItems(accountId, size, page);
+        return memberFacade.getFavoriteItems(accountId, ItemType.valueOf(itemType), size, page);
     }
 
     @ApiOperation("찜 목록 추가")
@@ -192,5 +196,18 @@ public class MemberController {
     @PostMapping("/{id}/block")
     public MemberBlockListView blockMember(@PathVariable Long id, @AuthenticationPrincipal AccountId accountId) {
         return memberFacade.blockMember(accountId, new MemberId(id));
+    }
+
+    @ApiOperation("알림 정보 조회")
+    @GetMapping("/alarm")
+    public MemberAlarmSettingResponse getAlarmSetting(@AuthenticationPrincipal AccountId accountId) {
+        return memberQueries.getAlarmSetting(accountId);
+    }
+
+    @ApiOperation("알림 정보 수정")
+    @PutMapping("/alarm")
+    public void updateAlarmSetting(@AuthenticationPrincipal AccountId accountId,
+                                   @RequestBody MemberAlarmSettingRequest memberAlarmSettingRequest) {
+        memberService.updateAlarmSetting(accountId, memberAlarmSettingRequest);
     }
 }

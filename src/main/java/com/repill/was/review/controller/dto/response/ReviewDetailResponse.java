@@ -2,6 +2,7 @@ package com.repill.was.review.controller.dto.response;
 
 import com.repill.was.global.utils.TimeUtils;
 import com.repill.was.member.controller.dto.response.view.MemberView;
+import com.repill.was.review.entity.Review;
 import com.repill.was.review.query.vo.ReviewDetailVO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -84,6 +84,9 @@ public class Member {
     @Column(columnDefinition = "VARCHAR(50)", nullable = false)
     private String connectedAt;
 
+    @Embedded
+    private MemberSetting memberSetting;
+
     @Column(columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime bannedAt;
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
@@ -92,7 +95,7 @@ public class Member {
     @Column(nullable = false, columnDefinition = "DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3)")
     private LocalDateTime createdAt;
 
-    protected Member(MemberId id, AccountId accountId, List<FavoriteItem> favoriteItems, List<MemberFollower> memberFollowers, List<RecentlyViewedItem> recentlyViewedItems, Address address, Address interestingAddress, EntityListData interestingCategory, String imageSrc, String nickname, AuthType authType, LocalDateTime closedAt, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt, LocalDateTime bannedAt, LocalDateTime updatedAt, LocalDateTime createdAt) {
+    protected Member(MemberId id, AccountId accountId, List<FavoriteItem> favoriteItems, List<RecentlyViewedItem> recentlyViewedItems, Address address, List<Address> interestingAddress, EntityListData interestingCategory, String imageSrc, String nickname, AuthType authType, LocalDateTime closedAt, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt, MemberSetting memberSetting, LocalDateTime bannedAt, LocalDateTime updatedAt, LocalDateTime createdAt) {
     }
 
     public Member(MemberId id, AccountId accountId, String imageSrc, String nickname, Long kakaoUserId, String ageRange, String birthday, String birthdayType, String gender, String connectedAt) {
@@ -127,19 +130,14 @@ public class Member {
 
     public void deleteFavoriteItem(FavoriteItem favoriteItem) {
         List<FavoriteItem> originalFavoriteItem = this.favoriteItems;
-        this.favoriteItems = originalFavoriteItem
-                .stream()
-                .filter(one -> !one.equals(favoriteItem))
-                .collect(Collectors.toList());
+        originalFavoriteItem.remove(favoriteItem);
+        this.favoriteItems = originalFavoriteItem;
     }
 
     public void deleteRecentlyViewedItem(RecentlyViewedItem recentlyViewedItem) {
         List<RecentlyViewedItem> originalRecentlyViewedItem = this.recentlyViewedItems;
-        this.recentlyViewedItems =
-                originalRecentlyViewedItem
-                        .stream()
-                        .filter(one -> !one.equals(recentlyViewedItem))
-                        .collect(Collectors.toList());
+        originalRecentlyViewedItem.remove(recentlyViewedItem);
+        this.recentlyViewedItems = originalRecentlyViewedItem;
     }
 
     private void createKaKaoMember(MemberId memberId,
@@ -166,6 +164,7 @@ public class Member {
         this.birthday = birthday;
         this.birthdayType = birthdayType;
         this.gender = gender;
+        this.memberSetting = MemberSetting.defaultSetting();
         this.connectedAt = connectedAt;
         this.updatedAt = LocalDateTime.now();
         this.createdAt = LocalDateTime.now();
@@ -177,12 +176,14 @@ public class Member {
                                   String nickname) {
         this.address = Address.newOne(myAddressInfo, null, null, null);
         this.interestingCategory = interestingCategoryList;
-        List<Address> collect = interestingAddress.stream().map(one -> {
-            return Address.newOne(one, null, null, null);
-        }).collect(Collectors.toList());
-        this.interestingAddress = collect;
+        this.interestingAddress = interestingAddress.stream().map(one -> {return Address.newOne(one, null, null, null);}).collect(Collectors.toList());;
         this.nickname = nickname;
     }
+
+    public void updateMemberSetting(MemberSetting memberSetting) {
+        this.memberSetting = memberSetting;
+    }
+
 
     public void updateMyProfile(String nickname, String imageSrc) {
         this.nickname = nickname;
@@ -191,9 +192,12 @@ public class Member {
 
     public void markAsClosed() {
         this.closedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();;
     }
 
-    public boolean isFollowered(MemberFollower memberFollower, MemberId followerId) {
-        return true;
+    public void markReCreatedMember(AccountId accountId) {
+        this.closedAt = null;
+        this.accountId = accountId;
+        this.updatedAt = LocalDateTime.now();;
     }
 }

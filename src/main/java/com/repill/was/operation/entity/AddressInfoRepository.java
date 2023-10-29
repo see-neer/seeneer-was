@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface AddressInfoRepository {
 
     List<AddressInfo> findAll();
-    Optional<AddressInfo> findByAddressDetailA(String addressDetailA);
-    Optional<AddressInfo> findByAddressDetailB(String addressDetailB);
+    List<AddressInfo> findByAddressDetailA(String addressDetailA);
+    List<AddressInfo> findByAddressDetailB(String addressDetailB);
     Optional<AddressInfo> findByAddressDetailAAndAddressDetailB(String addressDetailA, String addressDetailB);
 }

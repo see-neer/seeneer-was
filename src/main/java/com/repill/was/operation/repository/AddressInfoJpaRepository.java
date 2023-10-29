@@ -10,9 +10,9 @@ public interface AddressInfoJpaRepository extends JpaRepository<AddressInfo, Lon
 
     List<AddressInfo> findAll();
 
-    Optional<AddressInfo> findByAddressDetailA(String addressDetailA);
+    List<AddressInfo> findByAddressDetailA(String addressDetailA);
 
-    Optional<AddressInfo> findByAddressDetailB(String addressDetailB);
+    List<AddressInfo> findByAddressDetailB(String addressDetailB);
 
     Optional<AddressInfo> findByAddressDetailAAndAddressDetailB(String addressDetailA, String addressDetailB);
 }

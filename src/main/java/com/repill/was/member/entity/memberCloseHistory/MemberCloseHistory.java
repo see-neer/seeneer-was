@@ -1,6 +1,7 @@
 package com.repill.was.member.entity.memberCloseHistory;
 
 import com.repill.was.global.enums.ClosingAccountReason;
+import com.repill.was.global.model.EntityListData;
 import com.repill.was.global.model.EntityListDataConverter;
 import com.repill.was.member.entity.member.MemberId;
 import lombok.NoArgsConstructor;
@@ -17,12 +18,12 @@ public class MemberCloseHistory {
 
     @Convert(converter = EntityListDataConverter.class)
     @Column(columnDefinition = "VARCHAR(100)")
-    private List<String> type;
+    private EntityListData type;
 
     @Column(columnDefinition = "TEXT")
     private String additionalInformation;
 
-    public static MemberCloseHistory newOne(MemberId memberId, List<String> closingAccountReason, String additionalInformation) {
+    public static MemberCloseHistory newOne(MemberId memberId, EntityListData closingAccountReason, String additionalInformation) {
         MemberCloseHistory history = new MemberCloseHistory();
         history.memberId = memberId;
         history.type = closingAccountReason;

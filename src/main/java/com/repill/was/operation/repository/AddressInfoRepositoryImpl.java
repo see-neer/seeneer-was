@@ -39,12 +39,12 @@ public class AddressInfoRepositoryImpl implements AddressInfoRepository {
     }
 
     @Override
-    public Optional<AddressInfo> findByAddressDetailA(String addressDetailA) {
+    public List<AddressInfo> findByAddressDetailA(String addressDetailA) {
         return addressInfoJpaRepository.findByAddressDetailA(addressDetailA);
     }
 
     @Override
-    public Optional<AddressInfo> findByAddressDetailB(String addressDetailB) {
+    public List<AddressInfo> findByAddressDetailB(String addressDetailB) {
         return addressInfoJpaRepository.findByAddressDetailB(addressDetailB);
     }
 

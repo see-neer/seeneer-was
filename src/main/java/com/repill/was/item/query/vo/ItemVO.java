@@ -17,6 +17,7 @@ public class ItemVO {
     private Long id;
     private List<String> imageSrc;
     private String name;
+    private boolean isClosed;
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
 
@@ -25,6 +26,7 @@ public class ItemVO {
                 festival.getId().getId(),
                 festival.getImages().getImages(),
                 festival.getName(),
+                festival.isClosed(),
                 festival.getCreatedAt(),
                 festival.getUpdatedAt()
         );
@@ -35,6 +37,7 @@ public class ItemVO {
                 market.getId().getId(),
                 market.getImages().getImages(),
                 market.getName(),
+                market.isClosed(),
                 market.getCreatedAt(),
                 market.getUpdatedAt()
         );

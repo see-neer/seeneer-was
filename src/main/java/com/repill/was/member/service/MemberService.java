@@ -7,15 +7,14 @@ import com.repill.was.member.controller.command.MemberAddInformationCommand;
 import com.repill.was.member.controller.command.MemberDeleteCommand;
 import com.repill.was.member.controller.command.MemberUpdateProfileCommand;
 import com.repill.was.member.controller.dto.request.CloseAccountRequest;
+import com.repill.was.member.controller.dto.request.MemberAlarmSettingRequest;
+import com.repill.was.member.controller.dto.response.view.MemberView;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;
 import com.repill.was.member.entity.account.AccountNotFoundException;
 import com.repill.was.member.entity.account.AccountRepository;
 import com.repill.was.global.enums.ClosingAccountReason;
-import com.repill.was.member.entity.member.Member;
-import com.repill.was.member.entity.member.MemberId;
-import com.repill.was.member.entity.member.MemberNotFoundException;
-import com.repill.was.member.entity.member.MemberRepository;
+import com.repill.was.member.entity.member.*;
 import com.repill.was.member.entity.memberCloseHistory.MemberCloseHistory;
 import com.repill.was.member.entity.memberCloseHistory.MemberCloseHistoryRepository;
 import com.repill.was.member.entity.memberfollwer.MemberFollower;
@@ -42,9 +41,16 @@ public class MemberService {
     private final MemberCloseHistoryRepository memberCloseHistoryRepository;
 
     @Transactional
-    public boolean login(LoginCommand loginCommand) {
+    public MemberView login(LoginCommand loginCommand) {
         Account loginAccount = accountQueries.findById(loginCommand.getAccountId()).orElseThrow(AccountNotFoundException::new);
-        if(memberQueries.findByAccountId(loginAccount.getId()).isEmpty()) {
+        Optional<Member> byAccountId = memberQueries.findByAccountId(loginAccount.getId());
+        Optional<Member> byKaKaoId = memberQueries.findByKaKaoId(loginCommand.getId());
+        if(byKaKaoId.isPresent()) {
+            byKaKaoId.get().markReCreatedMember(loginCommand.getAccountId());
+            memberRepository.save(byKaKaoId.get());
+            return MemberView.newOne(byKaKaoId.get().getId().getId(), byKaKaoId.get().getNickname(), byKaKaoId.get().getImageSrc());
+        }
+        if(byAccountId.isEmpty()) {
             MemberId memberId = memberRepository.nextId();
             Member newMember = loginAccount.createMemberFromKakao(
                     memberId,
@@ -58,10 +64,11 @@ public class MemberService {
                     loginCommand.getGender(),
                     loginCommand.getConnectedAt());
             memberRepository.save(newMember);
-            return true;
+            return MemberView.newOne(memberId.getId(), newMember.getNickname(), newMember.getImageSrc());
         }
         loginAccount.reLogin();
-        return false;
+        accountRepository.save(loginAccount);
+        return MemberView.newOne(byAccountId.get().getId().getId(), byAccountId.get().getNickname(), byAccountId.get().getImageSrc());
     }
 
     @Transactional
@@ -82,6 +89,7 @@ public class MemberService {
         memberFollowerRepository.delete(deleteMemberFollower);
     }
 
+    @Transactional
     public void addInformation(MemberAddInformationCommand memberAddInformationCommand) {
         Member updateMember = memberQueries.findByAccountId(memberAddInformationCommand.getAccountId()).orElseThrow(MemberNotFoundException::new);
         updateMember.updateInformation(
@@ -110,15 +118,20 @@ public class MemberService {
         memberRepository.save(deleteMember);
         Account account = accountRepository.findById(deleteMember.getAccountId()).orElseThrow(BadRequestException::new);
         accountRepository.delete(account);
-        accountRepository.save(account);
-        memberCloseHistoryRepository.save(MemberCloseHistory.newOne(member.getId(), memberDeleteCommand.getType(), memberDeleteCommand.getAdditionalInformation()));
+        memberCloseHistoryRepository.save(MemberCloseHistory.newOne(member.getId(), EntityListData.from(memberDeleteCommand.getType()), memberDeleteCommand.getAdditionalInformation()));
     }
 
     @Transactional
-    public Member update(AccountId accountId, String newImageSrc, String newNickname, boolean hideRealName) {
-        Member memberTobeUpdated = memberRepository.findByAccountId(accountId).orElseThrow(BadRequestException::new);
-        Account account = accountRepository.findById(accountId).orElseThrow(BadRequestException::new);
-        memberRepository.save(memberTobeUpdated);
-        return memberTobeUpdated;
+    public void updateAlarmSetting(AccountId accountId, MemberAlarmSettingRequest memberAlarmSettingRequest) {
+        Member updateMember = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        updateMember.updateMemberSetting(
+                MemberSetting.newOne(
+                        memberAlarmSettingRequest.isMarketingTermsAgreed(),
+                        memberAlarmSettingRequest.isAppUpdateNotificationEnabled(),
+                        memberAlarmSettingRequest.isReviewCommentNotificationEnabled(),
+                        memberAlarmSettingRequest.isServiceNoticeNotificationEnabled()
+                )
+        );
+        memberRepository.save(updateMember);
     }
 }

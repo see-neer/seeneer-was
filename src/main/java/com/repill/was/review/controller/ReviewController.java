@@ -46,10 +46,8 @@ public class ReviewController {
     @ApiOperation("리뷰 상세 보기")
     @GetMapping("/{id}")
     public ReviewDetailResponse getReviewDetail(@AuthenticationPrincipal AccountId accountId,
-                                                                    @PathVariable("id") Long id,
-                                                                    @RequestParam Long itemId,
-                                                                    @RequestParam String itemType) {
+                                                                    @PathVariable("id") Long id) {
         memberQueries.findByAccountId(accountId).orElseThrow(() -> new BadRequestException("존재하지 않는 유저 입니다."));
-        return reviewFacade.getReviewDetail(id, itemId, ItemType.valueOf(itemType));
+        return reviewFacade.getReviewDetail(id);
     }
 }

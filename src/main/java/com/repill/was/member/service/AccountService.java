@@ -1,5 +1,6 @@
 package com.repill.was.member.service;
 
+import com.repill.was.member.controller.dto.request.MemberAlarmSettingRequest;
 import com.repill.was.member.controller.dto.request.MemberLogoutRequest;
 import com.repill.was.member.entity.account.Account;
 import com.repill.was.member.entity.account.AccountId;

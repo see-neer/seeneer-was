@@ -87,4 +87,8 @@ public class Account implements Serializable {
         this.device = this.device.reLogin();
         this.updatedAt = LocalDateTime.now();
     }
+
+    public boolean checkLogout() {
+        return this.device.getLogoutAt() != null;
+    }
 }

@@ -49,6 +49,11 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
+    public Optional<Member> findByKaKaoId(Long kakaoId) {
+        return memberJpaRepository.findByKakaoUserId(kakaoId);
+    }
+
+    @Override
     public Optional<Member> findBannedExistByDeviceId(AccountId accountId, String deviceId) {
         return Optional.ofNullable(jpaQueryFactory
                 .select(member)

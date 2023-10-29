@@ -37,7 +37,7 @@ public class MemberAddInformationCommand {
 
     private static void validateAddress(AddressInfoRepository addressInfoRepository, List<String> address){
         address.forEach(one -> {
-            addressInfoRepository.findByAddressDetailA(one).orElseThrow(AddressNotFoundException::new);
+            if(addressInfoRepository.findByAddressDetailA(one).isEmpty()) throw new AddressNotFoundException();
         });
     }
 

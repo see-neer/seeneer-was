@@ -78,7 +78,9 @@ public class SwaggerConfig {
                 .globalOperationParameters(getHeaderParameters())
                 .tags(new Tag(SwaggerTags.MEMBER, "회원 관리", 0),
                         new Tag(SwaggerTags.MAIN, "메인", 1),
-                        new Tag(SwaggerTags.REVIEW, "리뷰 관리", 2));
+                        new Tag(SwaggerTags.REVIEW, "리뷰 관리", 2),
+                        new Tag(SwaggerTags.FESTIVAL, "페스티벌 관리", 3),
+                        new Tag(SwaggerTags.MARKET, "마켓 관리", 4));
     }
 
     private ApiInfo apiInfo() {
@@ -122,5 +124,7 @@ public class SwaggerConfig {
         public static final String MEMBER = "member";
         public static final String MAIN = "main";
         public static final String REVIEW = "review";
+        public static final String FESTIVAL = "festival";
+        public static final String MARKET = "market";
     }
 }

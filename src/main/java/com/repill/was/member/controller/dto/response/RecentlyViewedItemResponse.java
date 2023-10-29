@@ -27,11 +27,13 @@ public class RecentlyViewedItemResponse {
     private List<String> images;
     private Integer score;
     private Integer reviewCount;
+    private boolean isClosed;
 
+    private boolean isLike;
     private String createdAt;
     private String updatedAt;
 
-    public RecentlyViewedItemResponse(Long itemId, String itemType, String name, String date, List<String> images, Integer score, Integer reviewCount, String createdAt, String updatedAt) {
+    public RecentlyViewedItemResponse(Long itemId, String itemType, String name, String date, List<String> images, Integer score, Integer reviewCount, boolean isClosed, boolean isLike, String createdAt, String updatedAt) {
         this.itemId = itemId;
         this.itemType = itemType;
         this.name = name;
@@ -39,6 +41,8 @@ public class RecentlyViewedItemResponse {
         this.images = images;
         this.score = score;
         this.reviewCount = reviewCount;
+        this.isClosed = isClosed;
+        this.isLike = isLike;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -46,24 +50,26 @@ public class RecentlyViewedItemResponse {
     public static RecentlyViewedItemResponse from(FavoriteItem favoriteItem, ItemValidateFactory itemValidateFactory) {
         ItemValidator validatorBy = itemValidateFactory.getValidatorBy(favoriteItem.getItemType());
         ItemVO itemInfo = validatorBy.getItemInfo(favoriteItem.getItemId());
-        return RecentlyViewedItemResponse.fromItemVO(itemInfo);
+        return RecentlyViewedItemResponse.fromItemVO(itemInfo, favoriteItem.getItemType());
     }
 
     public static RecentlyViewedItemResponse from(RecentlyViewedItem recentlyViewedItem, ItemValidateFactory itemValidateFactory) {
         ItemValidator validatorBy = itemValidateFactory.getValidatorBy(recentlyViewedItem.getItemType());
         ItemVO itemInfo = validatorBy.getItemInfo(recentlyViewedItem.getItemId());
-        return RecentlyViewedItemResponse.fromItemVO(itemInfo);
+        return RecentlyViewedItemResponse.fromItemVO(itemInfo, recentlyViewedItem.getItemType());
     }
 
-    private static RecentlyViewedItemResponse fromItemVO(ItemVO itemVO) {
+    private static RecentlyViewedItemResponse fromItemVO(ItemVO itemVO, ItemType itemType) {
         return new RecentlyViewedItemResponse(
                 itemVO.getId(),
-                ItemType.MARKET.name(),
+                itemType.name(),
                 itemVO.getName(),
                 TimeUtils.convertToISO_8061(itemVO.getCreatedAt()),
                 itemVO.getImageSrc(),
                 5,
                 100,
+                false,
+                itemVO.isClosed(),
                 TimeUtils.convertToISO_8061(itemVO.getCreatedAt()),
                 TimeUtils.convertToISO_8061(itemVO.getUpdateAt())
         );

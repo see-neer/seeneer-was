@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,5 +18,13 @@ public class MarketQueries {
 
     public Optional<Market> findById(MarketId marketId) {
         return marketRepository.findById(marketId);
+    }
+
+    public List<Market> getLists(String addressDetailA, String addressDetailB, String date, int page, int size) {
+        return marketRepository.getLists(addressDetailA, addressDetailB, date);
+    }
+
+    public Market getDetail(MarketId marketId, String addressDetailA, String addressDetailB, String date) {
+        return marketRepository.getDetail(marketId, addressDetailA, addressDetailB, date);
     }
 }

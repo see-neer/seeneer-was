@@ -115,10 +115,12 @@ public class MemberFacade {
 
     //todo Pagenation 리펙토링 필요
     @Transactional(readOnly = true)
-    public Page<RecentlyViewedItemResponse> getRecentlyViewItems(AccountId accountId, int size, int page) {
+    public Page<RecentlyViewedItemResponse> getRecentlyViewItems(AccountId accountId, ItemType itemType, int size, int page) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         List<RecentlyViewedItem> recentlyViewedItems = member.getRecentlyViewedItems();
-        List<RecentlyViewedItemResponse> list = recentlyViewedItems.parallelStream().map(one -> {
+        List<RecentlyViewedItemResponse> list = recentlyViewedItems.parallelStream()
+                .filter(one -> one.getItemType().equals(itemType))
+                .map(one -> {
             return RecentlyViewedItemResponse.from(one, itemValidateFactory);
         }).collect(Collectors.toList());
         return PageUtils.makePage(list, CREATED_AT.name(), size, page);
@@ -141,10 +143,12 @@ public class MemberFacade {
 
     //todo Pagenation 리펙토링 필요
     @Transactional(readOnly = true)
-    public Page<RecentlyViewedItemResponse> getFavoriteItems(AccountId accountId, int size, int page) {
+    public Page<RecentlyViewedItemResponse> getFavoriteItems(AccountId accountId, ItemType itemType, int size, int page) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         List<FavoriteItem> favoriteItems = member.getFavoriteItems();
-        List<RecentlyViewedItemResponse> list = favoriteItems.parallelStream().map(one -> {
+        List<RecentlyViewedItemResponse> list = favoriteItems.parallelStream()
+                .filter(one -> one.getItemType().equals(itemType))
+                .map(one -> {
             return RecentlyViewedItemResponse.from(one, itemValidateFactory);
         }).collect(Collectors.toList());
         return PageUtils.makePage(list, CREATED_AT.name(), size, page);
@@ -185,7 +189,7 @@ public class MemberFacade {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         List<MemberFollower> memberFollowers = memberFollowerQueries.findFolloweredByMemberId(member.getId());
         List<MemberFollowerResponse> list = memberFollowers.parallelStream().map(one -> {
-            Member followeredMember = memberQueries.findById(one.getFollowerId()).orElseThrow(MemberNotFoundException::new);
+            Member followeredMember = memberQueries.findById(one.getMemberId()).orElseThrow(MemberNotFoundException::new);
             MemberView memberView = MemberView.newOne(followeredMember.getId().getId(), followeredMember.getNickname(), followeredMember.getImageSrc());
             return MemberFollowerResponse.newOne(
                     memberView,

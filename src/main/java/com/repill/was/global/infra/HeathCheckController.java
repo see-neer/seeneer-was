@@ -52,10 +52,12 @@ public class HeathCheckController {
 
         String token = jwtTokenProvider.createToken(accountByDevice.get().getId().toString(), "ALL");
         Optional<Member> memberByAccountId = memberRepository.findByAccountId(accountByDevice.get().getId());
-        if(memberByAccountId.isPresent()) {
-            Member member = memberByAccountId.get();
-            memberView = new MemberView(member.getId().getId(), member.getNickname(), member.getImageSrc());
-            exsistMember = true;
+        if(memberByAccountId.isPresent() && !accountByDevice.get().checkLogout()) {
+            if(memberByAccountId.get().getClosedAt() == null) {
+                Member member = memberByAccountId.get();
+                memberView = new MemberView(member.getId().getId(), member.getNickname(), member.getImageSrc());
+                exsistMember = true;
+            }
         }
         accountByDevice.get().changeDeviceInfo(OSType.valueOf(appOS),
                 autoLoginRequest.getDeviceId(),
