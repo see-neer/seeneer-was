@@ -20,11 +20,12 @@ public class ReviewDetailResponse {
     private List<String> images;
     private String content;
     private double score;
+    private boolean isLike;
     private int likeCount;
     private Long itemId;
     private String itemType;
     private String createdAt;
-    private Comment comment;
+    private List<Comment> comments;
 
     @Getter
     @NoArgsConstructor
@@ -44,31 +45,33 @@ public class ReviewDetailResponse {
         }
     }
 
-    public ReviewDetailResponse(Long id, String title, List<String> images, String content, double score, int likeCount, Long itemId, String itemType, String createdAt, Comment comment) {
+    public ReviewDetailResponse(Long id, String title, List<String> images, String content, double score, boolean isLike, int likeCount, Long itemId, String itemType, String createdAt, List<Comment> comments) {
         this.id = id;
         this.title = title;
         this.images = images;
         this.content = content;
         this.score = score;
+        this.isLike = isLike;
         this.likeCount = likeCount;
         this.itemId = itemId;
         this.itemType = itemType;
         this.createdAt = createdAt;
-        this.comment = comment;
+        this.comments = comments;
     }
 
-    public static ReviewDetailResponse from(ReviewDetailVO reviewDetailVO, double score, int likeCount, LocalDateTime createdAt, ItemType itemType, Comment comment) {
+    public static ReviewDetailResponse from(ReviewDetailVO reviewDetailVO, double score, int likeCount, LocalDateTime createdAt, ItemType itemType, List<Comment> comments, boolean isLike) {
         return new ReviewDetailResponse(
                 reviewDetailVO.getId(),
                 reviewDetailVO.getTitle(),
                 reviewDetailVO.getImageSrc().getImages(),
                 reviewDetailVO.getContent(),
                 score,
+                isLike,
                 likeCount,
                 reviewDetailVO.getItemId(),
                 itemType.name(),
                 TimeUtils.convertToISO_8061(reviewDetailVO.getDate()),
-                comment
+                comments
         );
     }
 }
