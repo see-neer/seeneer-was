@@ -100,6 +100,14 @@ public class MemberFacade {
                 .map(memberBlock -> memberBlock.getTargetMemberId().getId()).collect(Collectors.toList()));
     }
 
+    public MemberBlockListView unblockMember(AccountId accountId, MemberId blockMemberId) {
+        Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
+        if(member.getId().equals(blockMemberId)) throw new BadRequestException("본인 차단 해제 안됨");
+        memberBlockService.unblockMemberIfNeeded(member.getId(), blockMemberId);
+        return new MemberBlockListView(memberBlockQueries.getAllMemberBlockList(member.getId()).stream()
+                .map(memberBlock -> memberBlock.getTargetMemberId().getId()).collect(Collectors.toList()));
+    }
+
     public MemberDetailProfileResponse getMyProfile(AccountId accountId) {
         Member member = memberQueries.findByAccountId(accountId).orElseThrow(MemberNotFoundException::new);
         MemberId memberIdQuery = member.getId();

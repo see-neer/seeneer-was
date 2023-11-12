@@ -198,6 +198,12 @@ public class MemberController {
         return memberFacade.blockMember(accountId, new MemberId(id));
     }
 
+    @ApiOperation("멤버 차단해제")
+    @PostMapping("/{id}/unblock")
+    public MemberBlockListView unblockMember(@PathVariable Long id, @AuthenticationPrincipal AccountId accountId) {
+        return memberFacade.unblockMember(accountId, new MemberId(id));
+    }
+
     @ApiOperation("알림 정보 조회")
     @GetMapping("/alarm")
     public MemberAlarmSettingResponse getAlarmSetting(@AuthenticationPrincipal AccountId accountId) {

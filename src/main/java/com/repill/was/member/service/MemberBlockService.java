@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +22,14 @@ public class MemberBlockService {
             return;
         }
         memberBlockRepository.save(MemberBlock.newOne(memberBlockRepository.nextId(), memberId, blockMemberId));
+    }
+
+    @Transactional
+    public void unblockMemberIfNeeded(MemberId memberId, MemberId blockMemberId) {
+        Optional<MemberBlock> byMemberIdAndTargetMemberId = memberBlockRepository.findByMemberIdAndTargetMemberId(memberId, blockMemberId);
+        if (byMemberIdAndTargetMemberId.isEmpty()) {
+            return;
+        }
+        memberBlockRepository.delete(byMemberIdAndTargetMemberId.get());
     }
 }
