@@ -42,6 +42,6 @@ public class ReviewFacade {
         Review review = reviewQueries.getReviewDetail(new ReviewId(id)).orElseThrow(ReviewNotFoundException::new);
         ItemValidator validatorBy = itemValidateFactory.getValidatorBy(review.getItemType());
         ReviewDetailVO reviewDetail = validatorBy.getReviewDetailList(id, review.getItemId());
-        return ReviewDetailResponse.from(reviewDetail, 4.3, 10, reviewDetail.getDate(), new ReviewDetailResponse.Comment(1L, new MemberView(), "@2", "@2", null));
+        return ReviewDetailResponse.from(reviewDetail, 4.3, 10, reviewDetail.getDate(), review.getItemType(), new ReviewDetailResponse.Comment(1L, new MemberView(), "@2", "@2", null));
     }
 }

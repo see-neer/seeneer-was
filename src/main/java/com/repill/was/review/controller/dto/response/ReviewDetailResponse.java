@@ -1,5 +1,6 @@
 package com.repill.was.review.controller.dto.response;
 
+import com.repill.was.global.enums.ItemType;
 import com.repill.was.global.utils.TimeUtils;
 import com.repill.was.member.controller.dto.response.view.MemberView;
 import com.repill.was.review.entity.Review;
@@ -20,6 +21,8 @@ public class ReviewDetailResponse {
     private String content;
     private double score;
     private int likeCount;
+    private Long itemId;
+    private String itemType;
     private String createdAt;
     private Comment comment;
 
@@ -41,19 +44,20 @@ public class ReviewDetailResponse {
         }
     }
 
-
-    public ReviewDetailResponse(Long id, String title, List<String> imageSrc, String content, double score, int likeCount, String createdAt, Comment comment) {
+    public ReviewDetailResponse(Long id, String title, List<String> images, String content, double score, int likeCount, Long itemId, String itemType, String createdAt, Comment comment) {
         this.id = id;
         this.title = title;
-        this.images = imageSrc;
+        this.images = images;
         this.content = content;
         this.score = score;
         this.likeCount = likeCount;
+        this.itemId = itemId;
+        this.itemType = itemType;
         this.createdAt = createdAt;
         this.comment = comment;
     }
 
-    public static ReviewDetailResponse from(ReviewDetailVO reviewDetailVO, double score, int likeCount, LocalDateTime createdAt, Comment comment) {
+    public static ReviewDetailResponse from(ReviewDetailVO reviewDetailVO, double score, int likeCount, LocalDateTime createdAt, ItemType itemType, Comment comment) {
         return new ReviewDetailResponse(
                 reviewDetailVO.getId(),
                 reviewDetailVO.getTitle(),
@@ -61,6 +65,8 @@ public class ReviewDetailResponse {
                 reviewDetailVO.getContent(),
                 score,
                 likeCount,
+                reviewDetailVO.getItemId(),
+                itemType.name(),
                 TimeUtils.convertToISO_8061(reviewDetailVO.getDate()),
                 comment
         );

@@ -59,6 +59,8 @@ public class Account implements Serializable {
             String birthdayType,
             String gender,
             String connectedAt) {
+        // todo 현재는 카카오 로그인 밖에 없음. 다른 방법이 추가되면 고도화 필요
+        // todo 파라미터를 받을 때 (command 같은) 객체로 받으면 더욱 더 추상화 및 데이터의 정합성을 지킬 수 있을거 같음.
         return new Member(
                 memberId,
                 accountId,

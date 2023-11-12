@@ -93,6 +93,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     public ReviewDetailVO getMarketReviewDetail(ReviewId reviewId, MarketId marketId) {
         return jpaQueryFactory
                 .select(new QReviewDetailVO(
+                        review.id.id,
                         market.id.id,
                         market.images,
                         review.createdAt,
@@ -109,6 +110,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     public ReviewDetailVO getFestivalReviewDetail(ReviewId reviewId, FestivalId festivalId) {
         return jpaQueryFactory
                 .select(new QReviewDetailVO(
+                        review.id.id,
                         festival.id.id,
                         festival.images,
                         review.createdAt,
