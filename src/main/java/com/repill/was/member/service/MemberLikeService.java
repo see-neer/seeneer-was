@@ -2,7 +2,11 @@ package com.repill.was.member.service;
 
 import com.repill.was.global.event.Events;
 import com.repill.was.member.controller.command.MemberLikeCommand;
+import com.repill.was.member.entity.member.Member;
+import com.repill.was.member.entity.member.MemberId;
+import com.repill.was.member.entity.member.MemberNotFoundException;
 import com.repill.was.member.entity.memberLike.*;
+import com.repill.was.member.query.MemberQueries;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +21,7 @@ public class MemberLikeService {
     private final static long waitTime = 2;
     private final static long leaseTime = 3;
     private final MemberLikeRepository memberLikeRepository;
+    private final MemberQueries memberQueries;
 //    private final RedissonClient redissonClient;
 
 
