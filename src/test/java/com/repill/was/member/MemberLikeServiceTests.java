@@ -64,7 +64,7 @@ public class MemberLikeServiceTests {
     private MemberLikeCommand createMemberLikeCommand() {
         MemberId requestMemberId = new MemberId(1L);
         String itemType = ItemType.FESTIVAL.name();
-        Long itemId = 10L;
+        Long itemId = 12L;
         return MemberLikeCommand.request(requestMemberId, itemType, itemId);
     }
 }
