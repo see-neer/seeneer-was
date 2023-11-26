@@ -48,4 +48,4 @@ https://steep-rake-10c.notion.site/See-Near-19a64e229c6044acbc6804c1691a000c
 - JPA, Hibernate를 사용한 도메인 설계
 - QueryDSL를 통한 동적쿼리 작성
 - 헥사고날 아키텍처
-- Redis를 이용한 cache & 동시성 문제 경험 확보
+- Redis를 이용한 cache & 동시성 문제 핸들링 경험 확보
