@@ -9,9 +9,43 @@
 
 https://steep-rake-10c.notion.site/See-Near-19a64e229c6044acbc6804c1691a000c
 
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+## 개발 환경
+- IntelliJ
+- Postman
+- GitHub
+- Mysql Workbench
+
+## 사용 기술
+- Java 11 openjdk
+- SpringBoot 2.5.6
+- SpringBoot Security
+- Spring Data JPA
+- QueryDSL
+- Mybatis
+- Redis
+  
+## Build tool
+- Gradle
+
+## Database
+- Mysql
+
+## Infra
+- AWS EC2
+- AWS S3
+- AWS RDS
+- Github Actions (도입 예정)
+- AWS CodeDeploy (도입 예정)
+- AWS Route53 (도입 예정)
+
+
+## 기타 주요 라이브러리
+- Lombok
+
+## 핵심 키워드
+- 스프링 부트, 스프링 시큐리티를 사용하여 웹 애플리케이션 생애 주기 기획부터 배포 유지 보수까지 전과정 개발과 운영 경험 확보
+- AWS / 리눅스 기반 CI/CD 무중단 배포 인프라 구축
+- JPA, Hibernate를 사용한 도메인 설계
+- QueryDSL를 통한 동적쿼리 작성
+- 헥사고날 아키텍처
+- Redis를 이용한 cache & 동시성 문제 경험 확보
