@@ -1,3 +1,6 @@
+
+<img width="197" alt="스크린샷 2023-11-26 오후 4 19 18" src="https://github.com/see-neer/seeneer-was/assets/62025746/e905f0b6-02ff-4818-873d-d218ec11a1b8">
+
 # 씨니어(SEENEER)
 
 시니어 세대의 라이프 생활을 돕자는 비전을 가지고 있습니다! 
