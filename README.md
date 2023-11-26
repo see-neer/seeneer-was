@@ -23,6 +23,7 @@ https://steep-rake-10c.notion.site/See-Near-19a64e229c6044acbc6804c1691a000c
 - QueryDSL
 - Mybatis
 - Redis
+- Junit5
   
 ## Build tool
 - Gradle
@@ -37,6 +38,8 @@ https://steep-rake-10c.notion.site/See-Near-19a64e229c6044acbc6804c1691a000c
 - Github Actions (도입 예정)
 - AWS CodeDeploy (도입 예정)
 - AWS Route53 (도입 예정)
+- Message Queue (도입 예정)
+- container & orchestration (도입 예정)
 
 
 ## 기타 주요 라이브러리
@@ -49,3 +52,5 @@ https://steep-rake-10c.notion.site/See-Near-19a64e229c6044acbc6804c1691a000c
 - QueryDSL를 통한 동적쿼리 작성
 - 헥사고날 아키텍처
 - Redis를 이용한 cache & 동시성 문제 핸들링 경험 확보
+- DDD 개발론 적용
+- TDD 개발론 적용 (도입 예정)
