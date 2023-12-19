@@ -2,7 +2,7 @@
 spring:
   config:
     activate:
-      on-profile: local, dev
+      on-profile: test, local, dev
 
 webclient:
   serviceProperties:
