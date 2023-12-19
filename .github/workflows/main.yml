@@ -16,7 +16,7 @@ jobs:
         with:
           host port: 3306
           container port: 3306
-          mysql database: 'repill?characterEncoding=utf8&autoReconnect=true&useSSL=false'
+          mysql database: 'repill'
           mysql root password: ${{ secrets.DB_PASSWORD }}
 
       - name: Set up JDK 11
