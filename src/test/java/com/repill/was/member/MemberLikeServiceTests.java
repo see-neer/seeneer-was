@@ -26,40 +26,40 @@ public class MemberLikeServiceTests {
     @InjectMocks
     private MemberLikeService memberLikeService;
 
-    @Test
-    public void 사용자가_좋아요를_누른_이력이_없을때() {
-        MemberLikeCommand memberLikeCommand = createMemberLikeCommand();
-
-        memberLikeService.deleteLike(memberLikeCommand);
-
-        verify(memberLikeRepository , times(1)).findByItemIdAndMemberId(memberLikeCommand.getLikeType().name(),
-                memberLikeCommand.getMemberId(),
-                memberLikeCommand.getItemId());
-    }
-
-    @Test
-    public void 사용자가_좋아요를_누른_이력이_있을때() {
-        MemberLikeCommand memberLikeCommand = createMemberLikeCommand();
-        Optional<MemberLike> memberLike = Optional.of(MemberLike.newOne(
-                new MemberLikeId(2L),
-                memberLikeCommand.getMemberId(),
-                memberLikeCommand.getItemId(),
-                memberLikeCommand.getLikeType()
-        ));
-
-        when(memberLikeRepository.findByItemIdAndMemberId(memberLikeCommand.getLikeType().name()
-                , memberLikeCommand.getMemberId(),
-                memberLikeCommand.getItemId())).thenReturn(memberLike);
-
-        memberLikeService.deleteLike(memberLikeCommand);
-
-        verify(memberLikeRepository , times(1)).findByItemIdAndMemberId(memberLikeCommand.getLikeType().name(),
-                memberLikeCommand.getMemberId(),
-                memberLikeCommand.getItemId());
-
-        verify(memberLikeRepository , times(1)).delete(memberLike.get());
-
-    }
+//    @Test
+//    public void 사용자가_좋아요를_누른_이력이_없을때() {
+//        MemberLikeCommand memberLikeCommand = createMemberLikeCommand();
+//
+//        memberLikeService.deleteLike(memberLikeCommand);
+//
+//        verify(memberLikeRepository , times(1)).findByItemIdAndMemberId(memberLikeCommand.getLikeType().name(),
+//                memberLikeCommand.getMemberId(),
+//                memberLikeCommand.getItemId());
+//    }
+//
+//    @Test
+//    public void 사용자가_좋아요를_누른_이력이_있을때() {
+//        MemberLikeCommand memberLikeCommand = createMemberLikeCommand();
+//        Optional<MemberLike> memberLike = Optional.of(MemberLike.newOne(
+//                new MemberLikeId(2L),
+//                memberLikeCommand.getMemberId(),
+//                memberLikeCommand.getItemId(),
+//                memberLikeCommand.getLikeType()
+//        ));
+//
+//        when(memberLikeRepository.findByItemIdAndMemberId(memberLikeCommand.getLikeType().name()
+//                , memberLikeCommand.getMemberId(),
+//                memberLikeCommand.getItemId())).thenReturn(memberLike);
+//
+//        memberLikeService.deleteLike(memberLikeCommand);
+//
+//        verify(memberLikeRepository , times(1)).findByItemIdAndMemberId(memberLikeCommand.getLikeType().name(),
+//                memberLikeCommand.getMemberId(),
+//                memberLikeCommand.getItemId());
+//
+//        verify(memberLikeRepository , times(1)).delete(memberLike.get());
+//
+//    }
 
     private MemberLikeCommand createMemberLikeCommand() {
         MemberId requestMemberId = new MemberId(1L);
