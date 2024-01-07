@@ -26,7 +26,7 @@ public class Device {
     @Column(columnDefinition = "DATETIME(3)")
     private LocalDateTime logoutAt;
 
-    public Device(String token, String deviceId, OSType osType, LocalDateTime logoutAt) {
+    private Device(String token, String deviceId, OSType osType, LocalDateTime logoutAt) {
         this.token = token;
         this.deviceId = deviceId;
         this.osType = osType;
@@ -38,7 +38,7 @@ public class Device {
                 token,
                 deviceId,
                 osType,
-                LocalDateTime.now()
+                null
         );
     }
 
